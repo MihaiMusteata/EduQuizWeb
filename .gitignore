@@ -55,3 +55,4 @@ appsettings.Production.json
 appsettings.json
 
 EduQuiz.Web/vite-ts/
+EduQuiz.Infrastructure/Migrations/
