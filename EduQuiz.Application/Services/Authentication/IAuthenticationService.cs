@@ -6,4 +6,5 @@ namespace EduQuiz.Application.Services.Authentication;
 public interface IAuthenticationService
 {
     Task<IdentityResult> UserSignup(UserSignupDto data);
+    Task<SignInResult> UserLogin(UserLoginDto data);
 }

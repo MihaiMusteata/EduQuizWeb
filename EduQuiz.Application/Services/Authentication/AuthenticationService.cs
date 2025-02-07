@@ -13,7 +13,7 @@ public class AuthenticationService: IAuthenticationService
         _userManager = userManager;
     }
 
-    public Task<IdentityResult> UserSignup(UserSignupDto data)
+    public async Task<IdentityResult> UserSignup(UserSignupDto data)
     {
         var user = new UserData
         {
@@ -23,6 +23,17 @@ public class AuthenticationService: IAuthenticationService
             UserName = data.Email
         };
 
-        return _userManager.CreateAsync(user, data.Password);
+        return await _userManager.CreateAsync(user, data.Password);
+    }
+
+    public async Task<SignInResult> UserLogin(UserLoginDto data)
+    {
+        var user = await _userManager.FindByEmailAsync(data.Email);
+        if (user != null && await _userManager.CheckPasswordAsync(user, data.Password))
+        {
+            return SignInResult.Success;
+        }
+        
+        return SignInResult.Failed;
     }
 }

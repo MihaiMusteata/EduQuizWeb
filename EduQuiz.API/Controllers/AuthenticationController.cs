@@ -1,6 +1,7 @@
 using EduQuiz.Application.DTOs.UserDTO;
 using EduQuiz.Application.Services.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace EduQuiz.API.Controllers;
 
@@ -25,6 +26,18 @@ public class AuthenticationController : ControllerBase
         }
 
         return BadRequest("Signup Failed");
+    }
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(UserLoginDto data)
+    {
+        var result = await _authenticationService.UserLogin(data);
+        if (result == SignInResult.Success)
+        {
+            return Ok("Login Successful");
+        }
+
+        return BadRequest("Login Failed");
     }
     
 }
