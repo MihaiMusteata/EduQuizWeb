@@ -1,7 +1,8 @@
+using EduQuiz.Application.DTOs.AuthDto;
+using EduQuiz.Application.DTOs.JwtDto;
 using EduQuiz.Application.DTOs.UserDTO;
 using EduQuiz.Application.Services.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace EduQuiz.API.Controllers;
 
@@ -27,17 +28,53 @@ public class AuthenticationController : ControllerBase
 
         return BadRequest("Signup Failed");
     }
-    
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(UserLoginDto data)
     {
         var result = await _authenticationService.UserLogin(data);
-        if (result == SignInResult.Success)
+        if (result.IsLogin)
         {
+            SetAuthCookies(result);
             return Ok("Login Successful");
         }
 
         return BadRequest("Login Failed");
     }
-    
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken()
+    {
+        var refreshToken = Request.Cookies["refreshToken"];
+        var jwtToken = Request.Cookies["jwtToken"];
+
+        if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrEmpty(jwtToken))
+        {
+            return BadRequest("Token Refresh Failed");
+        }
+
+        var result = await _authenticationService.RefreshToken(new RefreshTokenDto
+        {
+            JwtToken = jwtToken,
+            RefreshToken = refreshToken
+        });
+
+        if (!result.IsLogin) return BadRequest("Token Refresh Failed");
+
+        SetAuthCookies(result);
+        return Ok("Token Refresh Successful");
+    }
+
+    private void SetAuthCookies(LoginResponse result)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            SameSite = SameSiteMode.None,
+            Secure = true
+        };
+
+        Response.Cookies.Append("refreshToken", result.RefreshToken, cookieOptions);
+        Response.Cookies.Append("jwtToken", result.JwtToken, cookieOptions);
+    }
 }
