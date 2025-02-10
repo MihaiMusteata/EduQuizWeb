@@ -14,6 +14,7 @@ import { _contacts, _notifications } from 'src/_mock';
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
+import { allLangs } from "../../locales";
 import { NavMobile } from './nav-mobile';
 import { VerticalDivider } from './content';
 import { NavVertical } from './nav-vertical';
@@ -55,12 +56,12 @@ export type DashboardLayoutProps = LayoutBaseProps & {
 };
 
 export function DashboardLayout({
-  sx,
-  cssVars,
-  children,
-  slotProps,
-  layoutQuery = 'lg',
-}: DashboardLayoutProps) {
+                                  sx,
+                                  cssVars,
+                                  children,
+                                  slotProps,
+                                  layoutQuery = 'lg',
+                                }: DashboardLayoutProps) {
   const theme = useTheme();
 
   const settings = useSettingsContext();
@@ -136,15 +137,7 @@ export function DashboardLayout({
           <Searchbar data={navData} />
 
           {/** @slot Language popover */}
-          <LanguagePopover
-            data={[
-              { value: 'en', label: 'English', countryCode: 'GB' },
-              { value: 'fr', label: 'French', countryCode: 'FR' },
-              { value: 'vi', label: 'Vietnamese', countryCode: 'VN' },
-              { value: 'cn', label: 'Chinese', countryCode: 'CN' },
-              { value: 'ar', label: 'Arabic', countryCode: 'SA' },
-            ]}
-          />
+          <LanguagePopover data={allLangs} />
 
           {/** @slot Notifications popover */}
           <NotificationsDrawer data={_notifications} />
