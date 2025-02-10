@@ -1,11 +1,13 @@
+import { jwtDecode } from "jwt-decode";
 import { useSetState } from 'minimal-shared/hooks';
 import { useMemo, useEffect, useCallback, ReactNode } from 'react';
 
 import { AuthContext } from '../auth-context';
 import { useAxios } from "../../../axios/hooks";
+import { LoginData, UserType } from "../../types";
+import { useRouter } from "../../../routes/hooks";
 
-import type { AuthState } from '../../types';
-
+import type { AuthState, SignupData } from '../../types';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -13,12 +15,12 @@ type Props = {
 };
 
 export function AuthProvider({ children }: Props) {
-  const { state, setState } = useSetState<AuthState>({ user: null, loading: false });
-  const { axiosLogin, setJwt } = useAxios();
-
-  const login = ({ email, password }: { email: string; password: string }) =>
+  const { state, setState } = useSetState<AuthState>({ user: undefined, loading: true });
+  const { jwt, axiosLogin, axiosDefault, setJwt } = useAxios();
+  const router = useRouter();
+  const login = (request: LoginData) =>
     axiosLogin
-      .post(`auth/login`, { email, password })
+      .post(`auth/login`, request)
       .then((response) => {
         const { jwtToken } = response.data;
         sessionStorage.setItem("jwtToken", jwtToken);
@@ -28,17 +30,38 @@ export function AuthProvider({ children }: Props) {
         throw error;
       });
 
+  const signup = (request: SignupData) =>
+    axiosDefault
+      .post(`auth/signup`, request)
+      .then((response) => {
+        if (response.status === 200) {
+          router.push('/login');
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
+
   const checkUserSession = useCallback(async () => {
     try {
-      // const res = await axios.get(endpoints.auth.me);
-
-      // const {user} = res.data;
-
-      // setState({ user: { ...user, accessToken }, loading: false });
-      setState({ user: null, loading: false });
+      if (!jwt) {
+        setState({ user: undefined, loading: false });
+        return;
+      }
+      const decoded = jwtDecode<UserType>(jwt);
+      setState({
+        user: {
+          id: decoded.id,
+          email: decoded.email,
+          firstName: decoded.firstName,
+          lastName: decoded.lastName,
+          role: decoded.role,
+        },
+        loading: false
+      });
     } catch (error) {
       console.error(error);
-      setState({ user: null, loading: false });
+      setState({ user: undefined, loading: false });
     }
   }, [setState]);
 
@@ -55,12 +78,13 @@ export function AuthProvider({ children }: Props) {
 
   const memoizedValue = useMemo(
     () => ({
-      user: state.user ? { ...state.user, role: state.user?.role ?? 'admin' } : null,
+      user: state.user ? { ...state.user, role: state.user?.role ?? 'admin' } : undefined,
       checkUserSession,
       loading: status === 'loading',
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',
       login,
+      signup
     }),
     [checkUserSession, state.user, status]
   );

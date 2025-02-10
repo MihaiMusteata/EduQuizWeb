@@ -17,7 +17,7 @@ public class AuthenticationController : ControllerBase
         _authenticationService = authenticationService;
     }
 
-    [HttpPost("sign-up")]
+    [HttpPost("signup")]
     public async Task<IActionResult> Signup(UserSignupDto data)
     {
         var result = await _authenticationService.UserSignup(data);

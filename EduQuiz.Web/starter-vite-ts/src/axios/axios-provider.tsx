@@ -1,13 +1,13 @@
 import { useState, ReactNode } from "react";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
+import { endpoints } from "./endpoints";
 import { getJwt } from "../auth/context/jwt";
 import { AxiosContext } from "./context/axios-context";
-import { endpoints } from "./endpoints";
 
 export const AxiosProvider = ({ children }: { children: ReactNode }) => {
 
-  const [ jwt, setJwt ] = useState<string | undefined>(getJwt());
+  const [jwt, setJwt] = useState<string | undefined>(getJwt());
 
   const axiosInstance: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL as string,
@@ -19,6 +19,10 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
   const axiosLogin: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL as string,
     withCredentials: true,
+  });
+
+  const axiosDefault: AxiosInstance = axios.create({
+    baseURL: import.meta.env.VITE_SERVER_URL as string,
   });
 
   const postAuth = (url: string, data: any): Promise<AxiosResponse> =>
@@ -69,7 +73,9 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AxiosContext.Provider
       value={{
+        jwt,
         axiosLogin,
+        axiosDefault,
         setJwt,
         postAuth,
         getAuth,

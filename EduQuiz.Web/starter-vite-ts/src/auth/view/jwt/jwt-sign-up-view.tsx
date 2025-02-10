@@ -47,7 +47,7 @@ export function JwtSignUpView() {
 
   const showPassword = useBoolean();
 
-  const { checkUserSession } = useAuthContext();
+  const { checkUserSession, signup } = useAuthContext();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -70,12 +70,7 @@ export function JwtSignUpView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // await signUp({
-      //   email: data.email,
-      //   password: data.password,
-      //   firstName: data.firstName,
-      //   lastName: data.lastName,
-      // });
+      await signup(data);
       await checkUserSession?.();
 
       router.refresh();

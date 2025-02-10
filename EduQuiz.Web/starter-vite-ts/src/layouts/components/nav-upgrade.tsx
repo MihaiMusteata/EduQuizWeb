@@ -65,10 +65,6 @@ export function NavUpgrade({ sx, ...other }: BoxProps) {
             {user?.email}
           </Typography>
         </Box>
-
-        <Button variant="contained" href={paths.minimalStore} target="_blank" rel="noopener">
-          Upgrade to Pro
-        </Button>
       </Box>
     </Box>
   );

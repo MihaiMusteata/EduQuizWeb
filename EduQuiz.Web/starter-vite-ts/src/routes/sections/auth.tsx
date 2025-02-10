@@ -19,38 +19,6 @@ const Jwt = {
   SignUpPage: lazy(() => import('src/pages/auth/jwt/sign-up')),
 };
 
-const authJwt = {
-  path: 'jwt',
-  children: [
-    {
-      path: 'sign-in',
-      element: (
-        <GuestGuard>
-          <AuthSplitLayout
-            slotProps={{
-              section: { title: 'Hi, Welcome back' },
-            }}
-          >
-            <Jwt.SignInPage />
-          </AuthSplitLayout>
-        </GuestGuard>
-      ),
-    },
-    {
-      path: 'sign-up',
-      element: (
-        <GuestGuard>
-          <AuthSplitLayout>
-            <Jwt.SignUpPage />
-          </AuthSplitLayout>
-        </GuestGuard>
-      ),
-    },
-  ],
-};
-
-// ----------------------------------------------------------------------
-
 export const authRoutes: RouteObject[] = [
   {
     path: 'auth',
@@ -59,6 +27,31 @@ export const authRoutes: RouteObject[] = [
         <Outlet />
       </Suspense>
     ),
-    children: [authJwt],
+    children: [
+      {
+        path: 'sign-in',
+        element: (
+          <GuestGuard>
+            <AuthSplitLayout
+              slotProps={{
+                section: { title: 'Hi, Welcome back' },
+              }}
+            >
+              <Jwt.SignInPage />
+            </AuthSplitLayout>
+          </GuestGuard>
+        ),
+      },
+      {
+        path: 'sign-up',
+        element: (
+          <GuestGuard>
+            <AuthSplitLayout>
+              <Jwt.SignUpPage />
+            </AuthSplitLayout>
+          </GuestGuard>
+        ),
+      },
+    ],
   },
 ];

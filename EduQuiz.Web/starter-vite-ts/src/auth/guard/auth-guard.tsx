@@ -15,14 +15,6 @@ type AuthGuardProps = {
   children: React.ReactNode;
 };
 
-const signInPaths = {
-  jwt: paths.auth.jwt.signIn,
-  auth0: paths.auth.auth0.signIn,
-  amplify: paths.auth.amplify.signIn,
-  firebase: paths.auth.firebase.signIn,
-  supabase: paths.auth.supabase.signIn,
-};
-
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -42,10 +34,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     }
 
     if (!authenticated) {
-      const { method } = CONFIG.auth;
-
-      const signInPath = signInPaths[method];
-      const redirectPath = createRedirectPath(signInPath);
+      const redirectPath = createRedirectPath(paths.auth.jwt.signIn);
 
       router.replace(redirectPath);
 

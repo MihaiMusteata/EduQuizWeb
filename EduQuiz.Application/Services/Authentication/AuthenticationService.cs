@@ -87,8 +87,10 @@ public class AuthenticationService : IAuthenticationService
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Email, user.Email),
+            new Claim("Id", user.Id),
+            new Claim("Email", user.Email),
+            new Claim("FirstName", user.FirstName),
+            new Claim("LastName", user.LastName),
             new Claim(ClaimTypes.Name, user.UserName)
         };
 
