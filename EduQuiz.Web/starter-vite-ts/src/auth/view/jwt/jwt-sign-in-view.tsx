@@ -18,10 +18,9 @@ import { RouterLink } from 'src/routes/components';
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 
-import { useAuthContext } from '../../hooks';
+import { useAuthContext } from "../../hooks";
 import { getErrorMessage } from '../../utils';
 import { FormHead } from '../../components/form-head';
-import { signInWithPassword } from '../../context/jwt';
 
 // ----------------------------------------------------------------------
 
@@ -45,13 +44,13 @@ export function JwtSignInView() {
 
   const showPassword = useBoolean();
 
-  const { checkUserSession } = useAuthContext();
+  const { login } = useAuthContext();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const defaultValues: SignInSchemaType = {
-    email: 'demo@minimals.cc',
-    password: '@2Minimal',
+    email: 'mihai@gmail.com',
+    password: 'Mihai_2002',
   };
 
   const methods = useForm<SignInSchemaType>({
@@ -66,10 +65,7 @@ export function JwtSignInView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signInWithPassword({ email: data.email, password: data.password });
-      await checkUserSession?.();
-
-      router.refresh();
+      await login({ email: data.email, password: data.password });
     } catch (error) {
       console.error(error);
       const feedbackMessage = getErrorMessage(error);

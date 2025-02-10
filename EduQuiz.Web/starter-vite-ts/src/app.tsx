@@ -10,7 +10,8 @@ import { ProgressBar } from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
 
-import { AuthProvider } from 'src/auth/context/jwt';
+import { AuthProvider } from './auth/context/jwt';
+import { AxiosProvider } from './axios/axios-provider';
 
 // ----------------------------------------------------------------------
 
@@ -22,21 +23,23 @@ export default function App({ children }: AppProps) {
   useScrollToTop();
 
   return (
-    <AuthProvider>
-      <SettingsProvider defaultSettings={defaultSettings}>
-        <ThemeProvider
-          noSsr
-          defaultMode={themeConfig.defaultMode}
-          modeStorageKey={themeConfig.modeStorageKey}
-        >
-          <MotionLazy>
-            <ProgressBar />
-            <SettingsDrawer defaultSettings={defaultSettings} />
-            {children}
-          </MotionLazy>
-        </ThemeProvider>
-      </SettingsProvider>
-    </AuthProvider>
+    <AxiosProvider>
+      <AuthProvider>
+        <SettingsProvider defaultSettings={defaultSettings}>
+          <ThemeProvider
+            noSsr
+            defaultMode={themeConfig.defaultMode}
+            modeStorageKey={themeConfig.modeStorageKey}
+          >
+            <MotionLazy>
+              <ProgressBar />
+              <SettingsDrawer defaultSettings={defaultSettings} />
+              {children}
+            </MotionLazy>
+          </ThemeProvider>
+        </SettingsProvider>
+      </AuthProvider>
+    </AxiosProvider>
   );
 }
 

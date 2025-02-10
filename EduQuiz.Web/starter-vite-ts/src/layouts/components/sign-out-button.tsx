@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import { useRouter } from 'src/routes/hooks';
 
 import { useAuthContext } from 'src/auth/hooks';
-import { signOut } from 'src/auth/context/jwt/action';
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +21,7 @@ export function SignOutButton({ onClose, sx, ...other }: Props) {
 
   const handleLogout = useCallback(async () => {
     try {
-      await signOut();
+      // await signOut();
       await checkUserSession?.();
 
       onClose?.();

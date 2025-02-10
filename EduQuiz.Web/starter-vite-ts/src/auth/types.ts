@@ -11,4 +11,5 @@ export type AuthContextValue = {
   authenticated: boolean;
   unauthenticated: boolean;
   checkUserSession?: () => Promise<void>;
+  login: (data: { email: string; password: string }) => Promise<void>;
 };

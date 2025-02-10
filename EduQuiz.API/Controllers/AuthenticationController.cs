@@ -33,39 +33,34 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> Login(UserLoginDto data)
     {
         var result = await _authenticationService.UserLogin(data);
-        if (result.IsLogin)
-        {
-            SetAuthCookies(result);
-            return Ok("Login Successful");
-        }
-
-        return BadRequest("Login Failed");
+        if (!result.IsLogin) return BadRequest("Login Failed");
+        SetAuthCookies(result.RefreshToken);
+        return Ok(new { result.JwtToken });
     }
 
     [HttpPost("refresh-token")]
-    public async Task<IActionResult> RefreshToken()
+    public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
     {
         var refreshToken = Request.Cookies["refreshToken"];
-        var jwtToken = Request.Cookies["jwtToken"];
 
-        if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrEmpty(jwtToken))
+        if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrEmpty(request.JwtToken))
         {
             return BadRequest("Token Refresh Failed");
         }
 
         var result = await _authenticationService.RefreshToken(new RefreshTokenDto
         {
-            JwtToken = jwtToken,
+            JwtToken = request.JwtToken,
             RefreshToken = refreshToken
         });
 
         if (!result.IsLogin) return BadRequest("Token Refresh Failed");
 
-        SetAuthCookies(result);
-        return Ok("Token Refresh Successful");
+        SetAuthCookies(result.RefreshToken);
+        return Ok(new { result.JwtToken });
     }
 
-    private void SetAuthCookies(LoginResponse result)
+    private void SetAuthCookies(string refreshToken)
     {
         var cookieOptions = new CookieOptions
         {
@@ -74,7 +69,6 @@ public class AuthenticationController : ControllerBase
             Secure = true
         };
 
-        Response.Cookies.Append("refreshToken", result.RefreshToken, cookieOptions);
-        Response.Cookies.Append("jwtToken", result.JwtToken, cookieOptions);
+        Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
     }
 }

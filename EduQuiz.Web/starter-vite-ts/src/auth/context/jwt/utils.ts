@@ -1,7 +1,5 @@
 import { paths } from 'src/routes/paths';
 
-import axios from 'src/lib/axios';
-
 import { JWT_STORAGE_KEY } from './constant';
 
 // ----------------------------------------------------------------------
@@ -68,27 +66,11 @@ export function tokenExpired(exp: number) {
 }
 
 // ----------------------------------------------------------------------
-
-export async function setSession(accessToken: string | null) {
+export const getJwt = (): string | undefined => {
   try {
-    if (accessToken) {
-      sessionStorage.setItem(JWT_STORAGE_KEY, accessToken);
-
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
-      const decodedToken = jwtDecode(accessToken); // ~3 days by minimals server
-
-      if (decodedToken && 'exp' in decodedToken) {
-        tokenExpired(decodedToken.exp);
-      } else {
-        throw new Error('Invalid access token!');
-      }
-    } else {
-      sessionStorage.removeItem(JWT_STORAGE_KEY);
-      delete axios.defaults.headers.common.Authorization;
-    }
+    return sessionStorage.getItem(JWT_STORAGE_KEY) ?? undefined;
   } catch (error) {
-    console.error('Error during set session:', error);
-    throw error;
+    console.error("Error getting jwt:", error);
+    return undefined;
   }
-}
+};

@@ -1,44 +1,41 @@
 import { useSetState } from 'minimal-shared/hooks';
-import { useMemo, useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback, ReactNode } from 'react';
 
-import axios, { endpoints } from 'src/lib/axios';
-
-import { JWT_STORAGE_KEY } from './constant';
 import { AuthContext } from '../auth-context';
-import { setSession, isValidToken } from './utils';
+import { useAxios } from "../../../axios/hooks";
 
 import type { AuthState } from '../../types';
 
 // ----------------------------------------------------------------------
 
-/**
- * NOTE:
- * We only build demo at basic level.
- * Customer will need to do some extra handling yourself if you want to extend the logic and other features...
- */
-
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function AuthProvider({ children }: Props) {
-  const { state, setState } = useSetState<AuthState>({ user: null, loading: true });
+  const { state, setState } = useSetState<AuthState>({ user: null, loading: false });
+  const { axiosLogin, setJwt } = useAxios();
+
+  const login = ({ email, password }: { email: string; password: string }) =>
+    axiosLogin
+      .post(`auth/login`, { email, password })
+      .then((response) => {
+        const { jwtToken } = response.data;
+        sessionStorage.setItem("jwtToken", jwtToken);
+        setJwt(jwtToken);
+      })
+      .catch((error) => {
+        throw error;
+      });
 
   const checkUserSession = useCallback(async () => {
     try {
-      const accessToken = sessionStorage.getItem(JWT_STORAGE_KEY);
+      // const res = await axios.get(endpoints.auth.me);
 
-      if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+      // const {user} = res.data;
 
-        const res = await axios.get(endpoints.auth.me);
-
-        const { user } = res.data;
-
-        setState({ user: { ...user, accessToken }, loading: false });
-      } else {
-        setState({ user: null, loading: false });
-      }
+      // setState({ user: { ...user, accessToken }, loading: false });
+      setState({ user: null, loading: false });
     } catch (error) {
       console.error(error);
       setState({ user: null, loading: false });
@@ -63,6 +60,7 @@ export function AuthProvider({ children }: Props) {
       loading: status === 'loading',
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',
+      login,
     }),
     [checkUserSession, state.user, status]
   );

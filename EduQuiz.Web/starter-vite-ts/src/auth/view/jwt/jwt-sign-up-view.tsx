@@ -18,7 +18,6 @@ import { RouterLink } from 'src/routes/components';
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 
-import { signUp } from '../../context/jwt';
 import { useAuthContext } from '../../hooks';
 import { getErrorMessage } from '../../utils';
 import { FormHead } from '../../components/form-head';
@@ -71,12 +70,12 @@ export function JwtSignUpView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signUp({
-        email: data.email,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-      });
+      // await signUp({
+      //   email: data.email,
+      //   password: data.password,
+      //   firstName: data.firstName,
+      //   lastName: data.lastName,
+      // });
       await checkUserSession?.();
 
       router.refresh();
