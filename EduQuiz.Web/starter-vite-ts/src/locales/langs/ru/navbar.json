@@ -1,0 +1,14 @@
+{
+  "overview": {
+    "title": "Обзор",
+    "submenu": {
+      "dashboard": "Панель"
+    }
+  },
+  "management": {
+    "title": "Управление",
+    "submenu": {
+      "tools": "Инструменты"
+    }
+  }
+}

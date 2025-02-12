@@ -1,5 +1,7 @@
 import type { NavSectionProps } from 'src/components/nav-section';
 
+import { TFunction } from "i18next";
+
 import { paths } from 'src/routes/paths';
 
 import { CONFIG } from 'src/global-config';
@@ -44,38 +46,31 @@ const ICONS = {
 
 // ----------------------------------------------------------------------
 
-export const navData: NavSectionProps['data'] = [
+export const navData = (t: TFunction): NavSectionProps['data'] => [
   /**
    * Overview
    */
   {
-    subheader: 'Overview',
+    subheader: t('overview.title'),
     items: [
       {
-        title: 'One',
+        title: t('overview.submenu.dashboard'),
         path: paths.dashboard.root,
         icon: ICONS.dashboard,
         info: <Label>v{CONFIG.appVersion}</Label>,
       },
-      { title: 'Two', path: paths.dashboard.two, icon: ICONS.ecommerce },
-      { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
     ],
   },
   /**
    * Management
    */
   {
-    subheader: 'Management',
+    subheader: t('management.title'),
     items: [
       {
-        title: 'Group',
-        path: paths.dashboard.group.root,
-        icon: ICONS.user,
-        children: [
-          { title: 'Four', path: paths.dashboard.group.root },
-          { title: 'Five', path: paths.dashboard.group.five },
-          { title: 'Six', path: paths.dashboard.group.six },
-        ],
+        title: t('management.submenu.tools'),
+        path: paths.dashboard.tools,
+        icon: ICONS.kanban
       },
     ],
   },

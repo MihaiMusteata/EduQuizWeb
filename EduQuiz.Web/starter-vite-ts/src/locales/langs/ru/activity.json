@@ -1,0 +1,26 @@
+{
+  "question-type": {
+    "label": "Типы вопросов",
+    "types": {
+      "true-false": "Верно/Неверно",
+      "multiple-choice": "Множественный выбор",
+      "single-choice": "Один вариант ответа",
+      "short-answer": "Краткий ответ"
+    }
+  },
+  "add-question": "Добавить вопрос",
+  "add-answer": "Добавить ответ",
+  "hint-caption": "Это будет отображаться пользователю для помощи.",
+  "answer-hint": "Подсказка к ответу (необязательно)",
+  "question": "Вопрос",
+  "answer": "Ответ",
+  "tool-tip": {
+    "check-correct-answer": "Установите флажок, если это правильный ответ.",
+    "delete-answer": "Удалить этот ответ."
+  },
+  "add-another-question": "Добавить еще один вопрос",
+  "generate-new-activity": "Создать новую активность",
+  "select-activity-type": "Выберите тип активности",
+  "test-your-knowledge": "Проверьте свои знания",
+  "learn-with-flash-cards": "Учите и запоминайте с карточками"
+}

@@ -1,0 +1,26 @@
+{
+  "question-type": {
+    "label": "Tipuri de Întrebări",
+    "types": {
+      "true-false": "Adevărat/Fals",
+      "multiple-choice": "Variante multiple de răspuns",
+      "single-choice": "O singură variantă de răspuns",
+      "short-answer": "Răspuns Scurt"
+    }
+  },
+  "add-question": "Adaugă Întrebare",
+  "add-answer": "Adaugă Răspuns",
+  "hint-caption": "Acesta va fi afișat utilizatorului pentru ajutor.",
+  "answer-hint": "Indiciu de răspuns (opțional)",
+  "question": "Întrebare",
+  "answer": "Răspuns",
+  "tool-tip": {
+    "check-correct-answer": "Bifează dacă acesta este răspunsul corect.",
+    "delete-answer": "Șterge acest răspuns."
+  },
+  "add-another-question": "Adaugă o altă întrebare",
+  "generate-new-activity": "Generează o nouă activitate",
+  "select-activity-type": "Selectează tipul de activitate",
+  "test-your-knowledge": "Testează-ți cunoștințele",
+  "learn-with-flash-cards": "Învață și memorează cu ajutorul cardurilor"
+}

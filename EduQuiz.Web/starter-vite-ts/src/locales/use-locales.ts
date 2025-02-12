@@ -13,7 +13,6 @@ import type { LanguageValue } from './locales-config';
 
 export function useTranslate(ns?: string) {
   const { t, i18n } = useTranslation(ns);
-
   const fallback = allLangs.filter((lang) => lang.value === fallbackLng)[0];
 
   const currentLang = allLangs.find((lang) => lang.value === i18n.resolvedLanguage);
@@ -35,7 +34,6 @@ export function useTranslate(ns?: string) {
         if (currentLang) {
           dayjs.locale(currentLang.adapterLocale);
         }
-        console.log('currentLang', currentLang);
       } catch (error) {
         console.error(error);
       }

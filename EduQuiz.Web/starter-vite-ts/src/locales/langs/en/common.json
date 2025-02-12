@@ -1,2 +1,6 @@
 {
+  "editor": "Editor",
+  "settings": "Settings",
+  "cancel": "Cancel",
+  "save": "Save"
 }

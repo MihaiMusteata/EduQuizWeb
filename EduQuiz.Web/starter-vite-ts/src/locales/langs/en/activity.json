@@ -1,0 +1,26 @@
+{
+  "question-type": {
+    "label": "Question types",
+    "types": {
+      "true-false": "True/False",
+      "multiple-choice": "Multiple choice",
+      "single-choice": "Single choice",
+      "short-answer": "Short answer"
+    }
+  },
+  "add-question": "Add question",
+  "add-answer": "Add answer",
+  "hint-caption": "This will be displayed to the user for help.",
+  "answer-hint": "Answer hint (optional)",
+  "question": "Question",
+  "answer": "Answer",
+  "tool-tip": {
+    "check-correct-answer": "Check if this is the correct answer.",
+    "delete-answer": "Delete this answer."
+  },
+  "add-another-question": "Add another question",
+  "generate-new-activity": "Generate new activity",
+  "select-activity-type": "Select activity type",
+  "test-your-knowledge": "Test your knowledge",
+  "learn-with-flash-cards": "Learn and memorize with flashcards"
+}

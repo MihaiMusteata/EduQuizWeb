@@ -1,0 +1,14 @@
+{
+  "overview": {
+    "title": "General",
+    "submenu": {
+      "dashboard": "Panou de bord"
+    }
+  },
+  "management": {
+    "title": "Management",
+    "submenu": {
+      "tools": "Unelte"
+    }
+  }
+}

@@ -18,8 +18,8 @@ export type ConfigValue = {
 // ----------------------------------------------------------------------
 
 export const CONFIG: ConfigValue = {
-  appName: 'Minimal UI',
-  appVersion: packageJson.version,
+  appName: 'EduQuiz',
+  appVersion: '1.0',
   serverUrl: import.meta.env.VITE_SERVER_URL ?? '',
   assetsDir: import.meta.env.VITE_ASSETS_DIR ?? '',
   auth: {

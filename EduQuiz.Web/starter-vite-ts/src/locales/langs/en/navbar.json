@@ -1,0 +1,14 @@
+{
+  "overview": {
+    "title": "Overview",
+    "submenu": {
+      "dashboard": "Dashboard"
+    }
+  },
+  "management": {
+    "title": "Management",
+    "submenu": {
+      "tools": "Tools"
+    }
+  }
+}
