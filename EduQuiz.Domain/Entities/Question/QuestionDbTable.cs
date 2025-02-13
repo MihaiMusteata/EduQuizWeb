@@ -13,6 +13,7 @@ public class QuestionDbTable
 
     public string Text { get; set; }
     public string Type { get; set; }
+    public string Hint { get; set; }
 
     [ForeignKey("Quiz")]
     public int QuizId { get; set; }

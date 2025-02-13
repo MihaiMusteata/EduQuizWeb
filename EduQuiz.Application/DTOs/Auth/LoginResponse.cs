@@ -1,4 +1,4 @@
-namespace EduQuiz.Application.DTOs.AuthDto;
+namespace EduQuiz.Application.DTOs.Auth;
 
 public class LoginResponse
 {

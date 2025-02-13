@@ -1,6 +1,6 @@
-using EduQuiz.Application.DTOs.AuthDto;
-using EduQuiz.Application.DTOs.JwtDto;
-using EduQuiz.Application.DTOs.UserDTO;
+using EduQuiz.Application.DTOs.Auth;
+using EduQuiz.Application.DTOs.Jwt;
+using EduQuiz.Application.DTOs.User;
 using EduQuiz.Application.Services.Authentication;
 using Microsoft.AspNetCore.Mvc;
 

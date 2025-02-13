@@ -1,4 +1,4 @@
-namespace EduQuiz.Application.DTOs.JwtDto;
+namespace EduQuiz.Application.DTOs.Jwt;
 
 public class RefreshTokenDto
 {

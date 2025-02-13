@@ -1,5 +1,8 @@
 using System.Text;
+using EduQuiz.Application.Services.Answer;
 using EduQuiz.Application.Services.Authentication;
+using EduQuiz.Application.Services.Question;
+using EduQuiz.Application.Services.Quiz;
 using EduQuiz.Domain.Entities.User;
 using EduQuiz.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,6 +27,9 @@ builder.Services.AddIdentity<UserData, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IQuizService, QuizService>();
+builder.Services.AddScoped<IAnswerService, AnswerService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 

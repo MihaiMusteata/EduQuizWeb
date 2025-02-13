@@ -1,4 +1,4 @@
-namespace EduQuiz.Application.DTOs.UserDTO;
+namespace EduQuiz.Application.DTOs.User;
 
 public class UserSignupDto
 {

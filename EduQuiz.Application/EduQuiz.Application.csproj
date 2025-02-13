@@ -15,8 +15,4 @@
       <ProjectReference Include="..\EduQuiz.Infrastructure\EduQuiz.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Mappers\" />
-    </ItemGroup>
-
 </Project>
