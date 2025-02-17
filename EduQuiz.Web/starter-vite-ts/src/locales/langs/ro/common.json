@@ -2,5 +2,7 @@
   "editor": "Editor",
   "settings": "Setări",
   "cancel": "Anulare",
-  "save": "Salvare"
+  "save": "Salvare",
+  "true": "Adevărat",
+  "false": "Fals"
 }

@@ -1,65 +1,75 @@
 import { useState } from "react";
 
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Typography, Container } from '@mui/material';
+import { Container, Button, Tooltip } from '@mui/material';
 
 import { useTranslate } from "../../../locales";
-import { HoverCard } from "../../../components/hover-card";
+import { Question, Quiz } from "../../../types/quiz";
 import { QuestionEditCard } from "../components/question-edit-card";
 import { QuestionViewCard } from "../components/question-view-card";
 
-export function QuizEditorTab() {
+type Props = {
+  questions: Question[];
+  setQuestions: (questions: Question[]) => void;
+};
+
+export function QuizEditorTab({ questions, setQuestions }: Props) {
   const { t } = useTranslate('activity');
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [isEditing, setIsEditing] = useState(true);
 
   const addQuestion = () => {
-    setQuestions((prevQuestions) => [...prevQuestions, {}]); // Adaugă un obiect gol pentru fiecare întrebare
+    setIsEditing(true);
   };
 
   const removeQuestion = (index: number) => {
-    setQuestions((prevQuestions) => prevQuestions.filter((_, i) => i !== index)); // Șterge întrebarea de la indexul respectiv
   };
 
-  const saveQuestion = (index: number) => {
-    console.log('Saving question at index', index);
-  };
+  const handleSave = (question: Question) => {
+    setIsEditing(false);
+    setQuestions([...questions, question]);
+  }
 
   return (
     <Container sx={{ width: '100%' }}>
 
-      <QuestionViewCard
-        index={0}
-        answers={[
-          { text: 'Answer 1', correct: true },
-          { text: 'Answer 2', correct: false },
-          { text: 'Answer 3', correct: false },
-          { text: 'Answer 4', correct: false },
-        ]}
-        question='This is a sample question'
-        onDelete={() => console.log('Delete question')}
-        onEdit={() => console.log('Edit question')}
-      />
+      {
+        questions.map((question, index) => (
+          <QuestionViewCard
+            key={index}
+            index={index}
+            question={question}
+            onDelete={() => removeQuestion(index)}
+            onEdit={() => console.log('Edit question')}
+          />
+        ))
+      }
 
-      {questions.map((_, index) => (
-        <QuestionEditCard
-          key={index}
-          index={index}
-          onCancel={removeQuestion}
-          onSave={saveQuestion}
-        />
-      ))}
+      {
+        isEditing &&
+        <QuestionEditCard onSave={handleSave} />
+      }
 
-      <HoverCard
-        onClick={addQuestion}
-        sx={{ p: 2, mt: 3, width: '100%', marginBottom: "40px" }}
-      >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            {t('add-another-question')}
-          </Typography>
-          <AddIcon sx={{ fontSize: 20 }} />
-        </Box>
-      </HoverCard>
+      <div style={{ marginBottom: '70px' }}>
+        <Tooltip
+          title={t('tool-tip.add-new-question')}
+          arrow
+          disableHoverListener={!isEditing}
+          disableTouchListener={!isEditing}
+        >
+          <div>
+            <Button
+              variant='outlined'
+              onClick={addQuestion}
+              sx={{ p: 2, mt: 3, justifyContent: 'space-between', border: '1px solid #ddd' }}
+              endIcon={<AddIcon />}
+              disabled={isEditing}
+              fullWidth
+            >
+              {t('add-new-question')}
+            </Button>
+          </div>
+        </Tooltip>
+      </div>
     </Container>
   );
 }

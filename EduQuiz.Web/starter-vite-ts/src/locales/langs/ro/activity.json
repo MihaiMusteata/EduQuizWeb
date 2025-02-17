@@ -8,19 +8,20 @@
       "short-answer": "Răspuns Scurt"
     }
   },
-  "add-question": "Adaugă Întrebare",
-  "add-answer": "Adaugă Răspuns",
+  "add-answer": "Adaugă răspuns",
   "hint-caption": "Acesta va fi afișat utilizatorului pentru ajutor.",
   "answer-hint": "Indiciu de răspuns (opțional)",
   "question": "Întrebare",
   "answer": "Răspuns",
   "tool-tip": {
-    "check-correct-answer": "Bifează dacă acesta este răspunsul corect.",
-    "delete-answer": "Șterge acest răspuns."
+    "check-correct-answer": "Bifează dacă acesta este răspunsul corect",
+    "delete-answer": "Șterge acest răspuns",
+    "add-new-question": "Ar trebui să salvezi întrebarea înainte de a adăuga alta"
   },
-  "add-another-question": "Adaugă o altă întrebare",
+  "add-new-question": "Adaugă o nouă întrebare",
   "generate-new-activity": "Generează o nouă activitate",
   "select-activity-type": "Selectează tipul de activitate",
   "test-your-knowledge": "Testează-ți cunoștințele",
-  "learn-with-flash-cards": "Învață și memorează cu ajutorul cardurilor"
+  "learn-with-flash-cards": "Învață și memorează cu ajutorul cardurilor",
+  "short-answer-label": "Răspuns scurt"
 }

@@ -16,11 +16,13 @@
   "answer": "Ответ",
   "tool-tip": {
     "check-correct-answer": "Установите флажок, если это правильный ответ.",
-    "delete-answer": "Удалить этот ответ."
+    "delete-answer": "Удалить этот ответ.",
+    "add-new-question": "Вы должны сохранить вопрос, прежде чем добавить другой"
   },
-  "add-another-question": "Добавить еще один вопрос",
+  "add-new-question": "Добавить еще один вопрос",
   "generate-new-activity": "Создать новую активность",
   "select-activity-type": "Выберите тип активности",
   "test-your-knowledge": "Проверьте свои знания",
-  "learn-with-flash-cards": "Учите и запоминайте с карточками"
+  "learn-with-flash-cards": "Учите и запоминайте с карточками",
+  "short-answer-label": "Краткий ответ"
 }

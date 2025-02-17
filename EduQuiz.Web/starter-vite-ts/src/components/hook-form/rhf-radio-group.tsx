@@ -19,7 +19,7 @@ import { HelperText } from './help-text';
 export type RHFRadioGroupProps = RadioGroupProps & {
   name: string;
   label?: string;
-  options: { label: string; value: string }[];
+  options: { label?: string; value: string }[];
   helperText?: React.ReactNode;
   slotProps?: {
     wrapper?: FormControlProps;

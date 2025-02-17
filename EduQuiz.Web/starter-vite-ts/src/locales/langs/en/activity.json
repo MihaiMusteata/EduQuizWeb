@@ -16,11 +16,13 @@
   "answer": "Answer",
   "tool-tip": {
     "check-correct-answer": "Check if this is the correct answer.",
-    "delete-answer": "Delete this answer."
+    "delete-answer": "Delete this answer.",
+    "add-new-question": "You should save the question before adding another one"
   },
-  "add-another-question": "Add another question",
+  "add-new-question": "Add new question",
   "generate-new-activity": "Generate new activity",
   "select-activity-type": "Select activity type",
   "test-your-knowledge": "Test your knowledge",
-  "learn-with-flash-cards": "Learn and memorize with flashcards"
+  "learn-with-flash-cards": "Learn and memorize with flashcards",
+  "short-answer-label": "Short answer"
 }

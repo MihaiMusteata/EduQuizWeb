@@ -5,7 +5,7 @@ export type Answer = {
 
 export type Question = {
   text: string;
-  type: 'true/false' | 'multiple-choice' | 'single-choice' | 'short-answer';
+  type: QuestionType | undefined;
   hint?: string;
   answers: Answer[];
 };
@@ -15,3 +15,5 @@ export type Quiz = {
   visibility: 'public' | 'private';
   questions: Question[];
 };
+
+export type QuestionType = 'true/false' | 'multiple-choice' | 'single-choice' | 'short-answer' ;

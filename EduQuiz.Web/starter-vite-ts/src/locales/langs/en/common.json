@@ -2,5 +2,7 @@
   "editor": "Editor",
   "settings": "Settings",
   "cancel": "Cancel",
-  "save": "Save"
+  "save": "Save",
+  "true": "True",
+  "false": "False"
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EduQuiz.API.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/quiz")]
 [ApiController]
 [Authorize]
 public class QuizController : BaseController
