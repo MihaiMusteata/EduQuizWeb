@@ -24,5 +24,16 @@
   "select-activity-type": "Select activity type",
   "test-your-knowledge": "Test your knowledge",
   "learn-with-flash-cards": "Learn and memorize with flashcards",
-  "short-answer-label": "Short answer"
+  "short-answer-label": "Short answer",
+  "visibility": {
+    "label": "Visibility",
+    "public": {
+      "label": "Public",
+      "description": "Anyone can access this activity."
+    },
+    "private": {
+      "label": "Private",
+      "description": "Only you can access this activity."
+    }
+  }
 }

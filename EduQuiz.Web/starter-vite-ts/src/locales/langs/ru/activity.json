@@ -24,5 +24,16 @@
   "select-activity-type": "Выберите тип активности",
   "test-your-knowledge": "Проверьте свои знания",
   "learn-with-flash-cards": "Учите и запоминайте с карточками",
-  "short-answer-label": "Краткий ответ"
+  "short-answer-label": "Краткий ответ",
+  "visibility": {
+    "label": "Видимость",
+    "public": {
+      "label": "Публичный",
+      "description": "Любой может получить доступ к этой активности."
+    },
+    "private": {
+      "label": "Частный",
+      "description": "Только вы можете получить доступ к этой активности."
+    }
+  }
 }

@@ -1,6 +1,5 @@
 import Divider from "@mui/material/Divider";
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Card,
   Box,
@@ -13,6 +12,8 @@ import {
   Tooltip,
   Radio
 } from '@mui/material';
+
+import { Iconify } from "src/components/iconify";
 
 import { Question } from "../../../types/quiz";
 import { useTranslate } from "../../../locales";
@@ -96,7 +97,7 @@ export function QuestionViewCard({ index, question, onEdit, onDelete }: Question
         </Tooltip>
         <Tooltip title="Delete question" arrow>
           <IconButton onClick={onDelete}>
-            <DeleteIcon fontSize='small' />
+            <Iconify width={20} icon="solar:trash-bin-trash-bold" />
           </IconButton>
         </Tooltip>
       </Box>

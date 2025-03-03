@@ -12,8 +12,9 @@ export type Question = {
 
 export type Quiz = {
   title: string;
-  visibility: 'public' | 'private';
+  visibility: Visibility;
   questions: Question[];
 };
 
 export type QuestionType = 'true/false' | 'multiple-choice' | 'single-choice' | 'short-answer' ;
+export type Visibility = 'public' | 'private';

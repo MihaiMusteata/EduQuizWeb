@@ -23,5 +23,16 @@
   "select-activity-type": "Selectează tipul de activitate",
   "test-your-knowledge": "Testează-ți cunoștințele",
   "learn-with-flash-cards": "Învață și memorează cu ajutorul cardurilor",
-  "short-answer-label": "Răspuns scurt"
+  "short-answer-label": "Răspuns scurt",
+  "visibility": {
+    "label": "Vizibilitate",
+    "public": {
+      "label": "Public",
+      "description": "Oricine poate accesa această activitate."
+    },
+    "private": {
+      "label": "Privat",
+      "description": "Doar tu poți accesa această activitate."
+    }
+  }
 }

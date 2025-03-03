@@ -1,10 +1,10 @@
 import { TFunction } from "i18next";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import { TextField, Checkbox, Box, IconButton, Tooltip, Radio } from '@mui/material';
 
 import { Field } from 'src/components/hook-form';
+import { Iconify } from 'src/components/iconify';
 
 import { FieldsSchemaType } from "../schema";
 import { Answer, QuestionType } from "../../../types/quiz";
@@ -83,7 +83,7 @@ export function ChoiceBasedQuestion({ totalAnswers, setTotalAnswers, setValue, g
                 onClick={() => handleDeleteAnswer(index)}
                 sx={{ padding: '4px' }}
               >
-                <DeleteIcon />
+                <Iconify width={24} icon="solar:trash-bin-trash-bold" />
               </IconButton>
             </Tooltip>
           </Box>
@@ -128,7 +128,7 @@ export function ChoiceBasedQuestion({ totalAnswers, setTotalAnswers, setValue, g
           disabled
           sx={{ padding: '4px' }}
         >
-          <DeleteIcon />
+          <Iconify width={24} icon="solar:trash-bin-trash-bold" />
         </IconButton>
       </Box>
     </>

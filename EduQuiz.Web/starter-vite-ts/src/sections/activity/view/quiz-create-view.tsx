@@ -3,20 +3,42 @@ import { varAlpha } from "minimal-shared/utils";
 
 import { Tab, Tabs, Container } from "@mui/material";
 
-import { Question } from "../../../types/quiz";
+import { useAxios } from "../../../axios/hooks";
 import { useTranslate } from "../../../locales";
+import { useRouter } from "../../../routes/hooks";
 import { QuizEditorTab } from "./quiz-editor-tab";
+import { Question, Quiz } from "../../../types/quiz";
 import { QuizSettingsTab } from "./quiz-settings-tab";
 
 export function QuizCreateView() {
   const { t } = useTranslate('common');
+  const router = useRouter();
 
+  const { postAuth } = useAxios();
   const [currentTab, setCurrentTab] = useState('Editor');
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [quiz, setQuiz] = useState<Quiz>({
+    title: '',
+    visibility: 'public',
+    questions: [],
+  });
 
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   }, []);
+
+  const handleSetQuestions = (questions: Question[]) => {
+    setQuiz({ ...quiz, questions: questions });
+  };
+
+  const handleSave = async () => {
+    await postAuth('/quiz/create', quiz)
+      .then((response) => {
+        router.refresh();
+      })
+      .catch((error) => {
+        console.error('Error creating quiz', error);
+      });
+  };
 
   return (
     <Container sx={{ width: { xs: '100%', lg: '70%', xl: '60%' } }}>
@@ -43,13 +65,12 @@ export function QuizCreateView() {
       </Tabs>
       {
         currentTab === 'Editor' &&
-        <QuizEditorTab questions={questions} setQuestions={setQuestions} />
+        <QuizEditorTab questions={quiz.questions} setQuestions={handleSetQuestions} />
       }
       {
         currentTab === 'Settings' &&
-        <QuizSettingsTab />
+        <QuizSettingsTab onSubmit={handleSave} quiz={quiz} setQuiz={setQuiz} />
       }
     </Container>
-
   );
 }
