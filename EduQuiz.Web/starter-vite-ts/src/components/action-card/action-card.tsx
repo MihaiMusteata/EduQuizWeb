@@ -1,13 +1,21 @@
 import Box from "@mui/material/Box";
-import { CardContent, Typography } from "@mui/material";
+import { Typography, CardContent } from "@mui/material";
 
-import { ActionCardProps } from "./type";
 import { HoverCard } from "../hover-card";
+
+import type { ActionCardProps } from "./type";
 
 export function ActionCard({ title, image, description, onClick, sx }: ActionCardProps) {
   return (
     <HoverCard onClick={onClick} sx={sx}>
-      <CardContent>
+      <CardContent
+        sx={{
+          padding: 2,
+          '&.MuiCardContent-root': {
+            paddingBottom: 2,
+          }
+        }}
+      >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Box
             sx={{

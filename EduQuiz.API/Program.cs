@@ -1,4 +1,5 @@
 using System.Text;
+using EduQuiz.API.Middleware;
 using EduQuiz.Application.Services.Answer;
 using EduQuiz.Application.Services.Authentication;
 using EduQuiz.Application.Services.Question;
@@ -74,7 +75,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseTimeZoneMiddleware();
 app.UseHttpsRedirection();
 
 app.UseCors();

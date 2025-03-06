@@ -12,7 +12,9 @@ import { FlagIcon } from 'src/components/flag-icon';
 import { CustomPopover } from 'src/components/custom-popover';
 import { varTap, varHover, transitionTap } from 'src/components/animate';
 
-import { LanguageValue, useTranslate } from "../../locales";
+import { useTranslate } from "../../locales";
+
+import type { LanguageValue} from "../../locales";
 
 // ----------------------------------------------------------------------
 

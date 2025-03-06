@@ -2,16 +2,18 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import { Form, Field } from 'src/components/hook-form';
 
+import { FieldsSchema } from "../schema";
 import { useTranslate } from '../../../locales';
 import { TrueFalseQuestion } from "./true-false-question";
-import { FieldsSchema, FieldsSchemaType } from "../schema";
-import { Question, QuestionType } from '../../../types/quiz';
 import { ChoiceBasedQuestion } from "./choice-based-question";
 import { ShortAnswerQuestion } from "./short-answer-question";
+
+import type { FieldsSchemaType } from "../schema";
+import type { Question, QuestionType } from '../../../types/quiz';
 
 type Props = {
   onSave: (question: Question) => void;

@@ -1,22 +1,23 @@
 import Divider from "@mui/material/Divider";
 import EditIcon from '@mui/icons-material/Edit';
 import {
-  Card,
   Box,
+  Card,
+  List,
+  Radio,
+  Tooltip,
+  Checkbox,
+  ListItem,
   Typography,
   IconButton,
-  Checkbox,
-  List,
-  ListItem,
-  ListItemText,
-  Tooltip,
-  Radio
+  ListItemText
 } from '@mui/material';
 
 import { Iconify } from "src/components/iconify";
 
-import { Question } from "../../../types/quiz";
 import { useTranslate } from "../../../locales";
+
+import type { Question } from "../../../types/quiz";
 
 type QuestionViewCardProps = {
   index: number;

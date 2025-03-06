@@ -1,18 +1,19 @@
 import {
-  Button,
-  Card,
   Box,
+  Card,
+  Radio,
+  Button,
   Container,
-  FormControlLabel,
+  TextField,
   Typography,
   RadioGroup,
-  Radio,
-  TextField
+  FormControlLabel
 } from "@mui/material";
 
 import { useTranslate } from "../../../locales";
 import { Iconify } from "../../../components/iconify";
-import { Quiz, Visibility } from "../../../types/quiz";
+
+import type { Quiz, Visibility } from "../../../types/quiz";
 
 type Props = {
   quiz: Quiz;

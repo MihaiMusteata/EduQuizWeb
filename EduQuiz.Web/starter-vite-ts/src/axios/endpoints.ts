@@ -9,6 +9,7 @@ export const endpoints = {
     create: '/quiz/create',
     update: '/quiz/update',
     delete: (id: number | string) => `/quiz/delete/${id}`,
+    userQuizzes: '/quiz/user/quizzes',
   },
   question: {
     update: '/question/update',

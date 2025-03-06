@@ -1,13 +1,13 @@
-import { TFunction } from "i18next";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import type { TFunction } from "i18next";
+import type { UseFormSetValue, UseFormGetValues } from "react-hook-form";
 
-import { TextField, Checkbox, Box, IconButton, Tooltip, Radio } from '@mui/material';
+import { Box, Radio, Tooltip, Checkbox, TextField, IconButton } from '@mui/material';
 
 import { Field } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 
-import { FieldsSchemaType } from "../schema";
-import { Answer, QuestionType } from "../../../types/quiz";
+import type { FieldsSchemaType } from "../schema";
+import type { Answer, QuestionType } from "../../../types/quiz";
 
 type Props = {
   totalAnswers: number;

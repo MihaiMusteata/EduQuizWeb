@@ -1,0 +1,15 @@
+{
+  "tools-page": {
+    "title": "Tools",
+    "description": "Enhance your learning experience with intelligent tools designed to simplify studying, generate dynamic quizzes, and streamline knowledge assessment effortlessly. ",
+    "tools": {
+      "manual-quiz": {
+        "title": "Manual Quiz",
+        "description": "Create a new activity manually."
+      }
+    }
+  },
+  "library-page": {
+    "title": "My Library"
+  }
+}

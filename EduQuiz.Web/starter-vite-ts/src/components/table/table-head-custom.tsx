@@ -77,7 +77,7 @@ export function TableHeadCustom({
             align={headCell.align || 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={[
-              { width: headCell.width },
+              { width: headCell.width ?? 'auto' },
               ...(Array.isArray(headCell.sx) ? headCell.sx : [headCell.sx]),
             ]}
           >

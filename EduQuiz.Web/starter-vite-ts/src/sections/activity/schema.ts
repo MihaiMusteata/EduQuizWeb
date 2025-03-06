@@ -1,6 +1,6 @@
 import { z as zod } from "zod";
 
-import { Question } from "../../types/quiz";
+import type { Question } from "../../types/quiz";
 
 export type FieldsSchemaType = {
   question: Question;

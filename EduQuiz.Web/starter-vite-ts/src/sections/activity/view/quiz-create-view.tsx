@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState, useCallback } from "react";
 import { varAlpha } from "minimal-shared/utils";
 
 import { Tab, Tabs, Container } from "@mui/material";
@@ -7,8 +7,9 @@ import { useAxios } from "../../../axios/hooks";
 import { useTranslate } from "../../../locales";
 import { useRouter } from "../../../routes/hooks";
 import { QuizEditorTab } from "./quiz-editor-tab";
-import { Question, Quiz } from "../../../types/quiz";
 import { QuizSettingsTab } from "./quiz-settings-tab";
+
+import type { Quiz, Question } from "../../../types/quiz";
 
 export function QuizCreateView() {
   const { t } = useTranslate('common');
@@ -27,7 +28,7 @@ export function QuizCreateView() {
   }, []);
 
   const handleSetQuestions = (questions: Question[]) => {
-    setQuiz({ ...quiz, questions: questions });
+    setQuiz({ ...quiz, questions });
   };
 
   const handleSave = async () => {

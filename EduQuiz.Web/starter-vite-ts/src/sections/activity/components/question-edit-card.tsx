@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-import { Card, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
+import { Card, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 import { QuestionForm } from "./question-form";
 import { useTranslate } from "../../../locales";
-import { Question, QuestionType } from "../../../types/quiz";
+
+import type { Question, QuestionType } from "../../../types/quiz";
 
 type Props = {
   onSave: (question: Question) => void;

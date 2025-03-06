@@ -2,7 +2,8 @@
   "overview": {
     "title": "Overview",
     "submenu": {
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "library": "My Library"
     }
   },
   "management": {

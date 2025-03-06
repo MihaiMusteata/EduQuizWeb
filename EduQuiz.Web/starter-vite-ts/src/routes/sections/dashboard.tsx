@@ -17,6 +17,7 @@ import { ActivityCreateDialog } from "../../sections/activity";
 
 const IndexPage = lazy(() => import('src/pages/dashboard/one'));
 const ToolsPage = lazy(() => import('src/pages/dashboard/tools'));
+const LibraryPage = lazy(() => import('src/pages/dashboard/library'));
 // ----------------------------------------------------------------------
 
 function SuspenseOutlet() {
@@ -41,6 +42,7 @@ export const dashboardRoutes: RouteObject[] = [
     children: [
       { element: <IndexPage />, index: true },
       { path: 'tools', element: <ToolsPage /> },
+      { path: 'library', element: <LibraryPage /> }
     ]
   },
   {

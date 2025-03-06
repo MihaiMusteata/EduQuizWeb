@@ -1,2 +1,2 @@
-export * from './hover-card';
 export * from './type';
+export * from './hover-card';

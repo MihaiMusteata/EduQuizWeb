@@ -1,4 +1,5 @@
 using EduQuiz.Application.DTOs.Quiz;
+using EduQuiz.Application.Extensions;
 using EduQuiz.Application.Mappers.Quiz;
 using EduQuiz.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -69,5 +70,22 @@ public class QuizService : IQuizService
         await _context.SaveChangesAsync();
 
         return IdentityResult.Success;
+    }
+
+    public async Task<List<QuizGeneralData>> GetUserQuizzesAsync(string userId)
+    {
+        var quizzes = await _context.Quizzes
+            .Where(x => x.UserId == userId)
+            .Select(x => new QuizGeneralData
+            {
+                Id = x.Id,
+                Title = x.Title,
+                CreatedAt = x.CreatedAt.ToUserTimeZone(),
+                Visibility = x.Visibility,
+                TotalQuestions = x.Questions.Count
+            })
+            .ToListAsync();
+        
+        return quizzes;
     }
 }

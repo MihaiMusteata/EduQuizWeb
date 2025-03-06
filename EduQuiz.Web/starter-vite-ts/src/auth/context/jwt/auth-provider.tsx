@@ -1,13 +1,15 @@
+import type { ReactNode } from 'react';
+
 import { jwtDecode } from "jwt-decode";
 import { useSetState } from 'minimal-shared/hooks';
-import { useMemo, useEffect, useCallback, ReactNode } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 
 import { AuthContext } from '../auth-context';
 import { useAxios } from "../../../axios/hooks";
-import { LoginData, UserType } from "../../types";
 import { useRouter } from "../../../routes/hooks";
 
-import type { AuthState, SignupData } from '../../types';
+import type { UserType, LoginData , AuthState, SignupData } from "../../types";
+
 // ----------------------------------------------------------------------
 
 type Props = {

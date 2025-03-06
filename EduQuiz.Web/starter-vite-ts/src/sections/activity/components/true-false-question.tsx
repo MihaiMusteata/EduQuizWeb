@@ -1,10 +1,11 @@
-import { TFunction } from "i18next";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import type { TFunction } from "i18next";
+import type { UseFormSetValue, UseFormGetValues } from "react-hook-form";
 
 import { Box } from "@mui/material";
 
-import { FieldsSchemaType } from "../schema";
 import { Field } from "../../../components/hook-form";
+
+import type { FieldsSchemaType } from "../schema";
 
 type Props = {
   updateAnswers: boolean;

@@ -1,7 +1,6 @@
-import { TFunction } from "i18next";
-import { varAlpha } from "minimal-shared/utils";
+import type { TFunction } from "i18next";
 
-import { Grid, Box, Typography } from "@mui/material";
+import { Box, Grid, Divider, Typography } from "@mui/material";
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -14,9 +13,9 @@ import { ActionCard } from "../../../components/action-card";
 
 const tools = (t: TFunction, router: any) => [
   {
-    title: t('tools.manual-quiz.title'),
+    title: t('tools-page.tools.manual-quiz.title'),
     image: `${CONFIG.assetsDir}/assets/icons/activity/ic-manual.png`,
-    description: t('tools.manual-quiz.description'),
+    description: t('tools-page.tools.manual-quiz.description'),
     onClick: () => {
       router.push('/create')
     }
@@ -24,31 +23,26 @@ const tools = (t: TFunction, router: any) => [
 ];
 
 export function ToolsView() {
-  const { t } = useTranslate('tools-page');
+  const { t } = useTranslate('pages');
   const router = useRouter();
 
   return (
-    <DashboardContent maxWidth="xl" sx={{
-      borderTop: (theme) => ({
-        lg: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.12)}`,
-      }),
-    }}>
+    <DashboardContent>
       <Box sx={{ mb: 2 }}>
         <Typography variant="h4" sx={{ mb: 1 }}>
-          {t('title')}
+          {t('tools-page.title')}
         </Typography>
         <Typography
           sx={{ color: 'text.secondary' }}
-        >{t('description')}🚀</Typography>
+        >{t('tools-page.description')}🚀</Typography>
       </Box>
+      <Divider sx={{ mb: 5 }} />
       <Grid container spacing={3}>
         {
           tools(t, router).map((card, index) => (
-            <>
-              <Grid item xs={12} md={6} lg={6} xl={4} key={index}>
+            <Grid item xs={12} md={6} lg={4} key={index}>
                 <ActionCard {...card} />
               </Grid>
-            </>
           ))
         }
       </Grid>

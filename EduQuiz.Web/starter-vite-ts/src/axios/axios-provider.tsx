@@ -1,5 +1,8 @@
-import { useState, ReactNode } from "react";
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import type { ReactNode } from "react";
+import type { AxiosInstance, AxiosResponse } from "axios";
+
+import axios from "axios";
+import { useState } from "react";
 
 import { endpoints } from "./endpoints";
 import { getJwt } from "../auth/context/jwt";
@@ -13,6 +16,7 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
     baseURL: import.meta.env.VITE_SERVER_URL as string,
     headers: {
       Authorization: jwt ? `Bearer ${jwt}` : undefined,
+      'X-User-Time-Zone': Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
   });
 
@@ -28,8 +32,10 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
   const postAuth = (url: string, data: any): Promise<AxiosResponse> =>
     axiosInstance.post(url, data);
 
-  const getAuth = (url: string, options?: any): Promise<AxiosResponse> =>
-    axiosInstance.get(url, options);
+  const getAuth = async <T = any>(url: string, options?: any): Promise<T> => {
+    const response = await axiosInstance.get<T>(url, options);
+    return response.data;
+  };
 
   axiosInstance.interceptors.request.use(
     async (config) => {
@@ -59,6 +65,7 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
 
           return axios(originalRequest);
         } catch (er) {
+          console.log("RefreshError : ", er);
           sessionStorage.removeItem("jwtToken");
         }
       } else if (error.response.status === 403) {

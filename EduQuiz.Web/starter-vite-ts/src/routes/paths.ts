@@ -20,6 +20,7 @@ export const paths = {
   dashboard: {
     root: ROOTS.DASHBOARD,
     tools: `${ROOTS.DASHBOARD}/tools`,
+    library: `${ROOTS.DASHBOARD}/library`,
   },
   // ACTIVITY
   activity: {

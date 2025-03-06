@@ -35,5 +35,9 @@
       "label": "Private",
       "description": "Only you can access this activity."
     }
-  }
+  },
+  "add-new-activity": "Add new activity",
+  "total-questions": "Total questions",
+  "created-at": "Created at",
+  "category": "Category"
 }

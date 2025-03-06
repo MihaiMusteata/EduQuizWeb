@@ -2,7 +2,8 @@
   "overview": {
     "title": "General",
     "submenu": {
-      "dashboard": "Panou de bord"
+      "dashboard": "Panou de bord",
+      "library": "Biblioteca mea"
     }
   },
   "management": {

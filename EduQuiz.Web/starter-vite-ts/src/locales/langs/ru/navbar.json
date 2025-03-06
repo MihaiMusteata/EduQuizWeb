@@ -2,7 +2,8 @@
   "overview": {
     "title": "Обзор",
     "submenu": {
-      "dashboard": "Панель"
+      "dashboard": "Панель",
+      "library": "Моя библиотека"
     }
   },
   "management": {

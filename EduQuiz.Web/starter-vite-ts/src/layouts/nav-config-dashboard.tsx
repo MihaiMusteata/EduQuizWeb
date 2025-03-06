@@ -1,6 +1,5 @@
+import type { TFunction } from "i18next";
 import type { NavSectionProps } from 'src/components/nav-section';
-
-import { TFunction } from "i18next";
 
 import { paths } from 'src/routes/paths';
 
@@ -59,6 +58,11 @@ export const navData = (t: TFunction): NavSectionProps['data'] => [
         icon: ICONS.dashboard,
         info: <Label>v{CONFIG.appVersion}</Label>,
       },
+      {
+        title: t('overview.submenu.library'),
+        path: paths.dashboard.library,
+        icon: ICONS.folder,
+      }
     ],
   },
   /**

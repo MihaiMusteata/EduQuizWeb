@@ -1,12 +1,13 @@
 import { useState } from "react";
 
 import AddIcon from '@mui/icons-material/Add';
-import { Container, Button, Tooltip } from '@mui/material';
+import { Button, Tooltip, Container } from '@mui/material';
 
 import { useTranslate } from "../../../locales";
-import { Question, Quiz } from "../../../types/quiz";
 import { QuestionEditCard } from "../components/question-edit-card";
 import { QuestionViewCard } from "../components/question-view-card";
+
+import type { Question} from "../../../types/quiz";
 
 type Props = {
   questions: Question[];

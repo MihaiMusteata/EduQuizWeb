@@ -3,7 +3,7 @@ import { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { DialogActions, DialogContent, Grid } from "@mui/material";
+import { Grid, DialogActions, DialogContent } from "@mui/material";
 
 import { CONFIG } from "../../global-config";
 import { useTranslate } from "../../locales";
