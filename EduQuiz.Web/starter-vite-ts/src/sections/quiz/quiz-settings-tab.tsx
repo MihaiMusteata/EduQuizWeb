@@ -1,3 +1,5 @@
+import type { Quiz, Visibility } from "src/types/quiz";
+
 import {
   Box,
   Card,
@@ -10,10 +12,9 @@ import {
   FormControlLabel
 } from "@mui/material";
 
-import { useTranslate } from "../../../locales";
-import { Iconify } from "../../../components/iconify";
+import { useTranslate } from "src/locales";
 
-import type { Quiz, Visibility } from "../../../types/quiz";
+import { Iconify } from "../../components/iconify";
 
 type Props = {
   quiz: Quiz;
@@ -37,7 +38,7 @@ export function QuizSettingsTab({ onSubmit, quiz, setQuiz }: Props) {
       >
         <TextField
           value={quiz.title}
-          label='Title'
+          label={tCommon('title')}
           fullWidth
           onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
           sx={{

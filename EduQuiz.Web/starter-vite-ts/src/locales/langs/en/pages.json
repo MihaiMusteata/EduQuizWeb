@@ -3,8 +3,8 @@
     "title": "Tools",
     "description": "Enhance your learning experience with intelligent tools designed to simplify studying, generate dynamic quizzes, and streamline knowledge assessment effortlessly. ",
     "tools": {
-      "manual-quiz": {
-        "title": "Manual Quiz",
+      "manual-activity": {
+        "title": "Manual",
         "description": "Create a new activity manually."
       }
     }

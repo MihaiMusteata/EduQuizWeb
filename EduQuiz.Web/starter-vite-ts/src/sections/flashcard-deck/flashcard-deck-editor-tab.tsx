@@ -1,58 +1,62 @@
+import type { Flashcard} from "src/types/flashcard";
+
 import { useState } from "react";
 
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Tooltip, Container } from '@mui/material';
 
-import { useTranslate } from "../../../locales";
-import { QuestionEditCard } from "../components/question-edit-card";
-import { QuestionViewCard } from "../components/question-view-card";
+import { useTranslate } from "src/locales";
 
-import type { Question} from "../../../types/quiz";
+import { FlashcardView } from "./components/flashcard-view";
+import { FlashcardEditForm } from "./components/flashcard-edit-form";
 
 type Props = {
-  questions: Question[];
-  setQuestions: (questions: Question[]) => void;
+  flashcards: Flashcard[];
+  setFlashcards: (flashcards: Flashcard[]) => void;
 };
 
-export function QuizEditorTab({ questions, setQuestions }: Props) {
+export function FlashcardDeckEditorTab({ flashcards, setFlashcards }: Props) {
   const { t } = useTranslate('activity');
   const [isEditing, setIsEditing] = useState(true);
 
-  const addQuestion = () => {
+  const addFlashcard = () => {
     setIsEditing(true);
   };
 
-  const removeQuestion = (index: number) => {
+  const removeFlashcard = (index: number) => {
   };
 
-  const handleSave = (question: Question) => {
+  const editFlashcard = (index: number) => {
+  };
+
+  const handleSave = (flashcard: Flashcard) => {
     setIsEditing(false);
-    setQuestions([...questions, question]);
+    setFlashcards([...flashcards, flashcard]);
   }
 
   return (
     <Container sx={{ width: '100%' }}>
 
       {
-        questions.map((question, index) => (
-          <QuestionViewCard
+        flashcards.map((flashcard, index) => (
+          <FlashcardView
             key={index}
             index={index}
-            question={question}
-            onDelete={() => removeQuestion(index)}
-            onEdit={() => console.log('Edit question')}
+            flashcard={flashcard}
+            onDelete={() => removeFlashcard(index)}
+            onEdit={() => editFlashcard(index)}
           />
         ))
       }
 
       {
         isEditing &&
-        <QuestionEditCard onSave={handleSave} />
+        <FlashcardEditForm onSave={handleSave} />
       }
 
       <div style={{ marginBottom: '70px' }}>
         <Tooltip
-          title={t('tool-tip.add-new-question')}
+          title={t('tool-tip.add-new-flashcard')}
           arrow
           disableHoverListener={!isEditing}
           disableTouchListener={!isEditing}
@@ -60,13 +64,13 @@ export function QuizEditorTab({ questions, setQuestions }: Props) {
           <div>
             <Button
               variant='outlined'
-              onClick={addQuestion}
+              onClick={addFlashcard}
               sx={{ p: 2, mt: 3, justifyContent: 'space-between', border: '1px solid #ddd' }}
               endIcon={<AddIcon />}
               disabled={isEditing}
               fullWidth
             >
-              {t('add-new-question')}
+              {t('add-new-flashcard')}
             </Button>
           </div>
         </Tooltip>

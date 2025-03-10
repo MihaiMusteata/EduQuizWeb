@@ -6,6 +6,7 @@ import { paths } from 'src/routes/paths';
 import { CONFIG } from 'src/global-config';
 
 import { Label } from 'src/components/label';
+import { Iconify } from "src/components/iconify";
 import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -74,7 +75,7 @@ export const navData = (t: TFunction): NavSectionProps['data'] => [
       {
         title: t('management.submenu.tools'),
         path: paths.dashboard.tools,
-        icon: ICONS.kanban
+        icon: <Iconify width={24} icon="nimbus:tools" />
       },
     ],
   },

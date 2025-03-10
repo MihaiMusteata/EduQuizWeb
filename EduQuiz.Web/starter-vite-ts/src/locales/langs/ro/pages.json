@@ -3,8 +3,8 @@
     "title": "Instrumente",
     "description": "Îmbunătățește-ți experiența de învățare cu instrumente inteligente concepute pentru a simplifica studiul, a genera teste dinamice și a eficientiza evaluarea cunoștințelor fără efort. ",
     "tools": {
-      "manual-quiz": {
-        "title": "Quiz Manual",
+      "manual-activity": {
+        "title": "Manual",
         "description": "Creează o nouă activitate manual."
       }
     }

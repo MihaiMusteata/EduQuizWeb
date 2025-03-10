@@ -16,9 +16,11 @@
   "tool-tip": {
     "check-correct-answer": "Bifează dacă acesta este răspunsul corect",
     "delete-answer": "Șterge acest răspuns",
-    "add-new-question": "Ar trebui să salvezi întrebarea înainte de a adăuga alta"
+    "add-new-question": "Ar trebui să salvezi întrebarea înainte de a adăuga alta",
+    "add-new-flashcard": "Ar trebui să salvezi cartonașul înainte de a adăuga altul"
   },
   "add-new-question": "Adaugă o nouă întrebare",
+  "add-new-flashcard": "Adaugă un nou cartonaș",
   "generate-new-activity": "Generează o nouă activitate",
   "select-activity-type": "Selectează tipul de activitate",
   "test-your-knowledge": "Testează-ți cunoștințele",
@@ -38,5 +40,7 @@
   "add-new-activity": "Adaugă o nouă activitate",
   "total-questions": "Numărul total de întrebări",
   "created-at": "Data creării",
-  "category": "Categoria"
+  "category": "Categoria",
+  "front-side-text": "Partea frontală",
+  "back-side-text": "Partea dorsală"
 }

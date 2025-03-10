@@ -13,12 +13,10 @@ namespace EduQuiz.API.Controllers;
 public class QuizController : BaseController
 {
     private readonly IQuizService _quizService;
-    private readonly UserManager<UserData> _userManager;
 
-    public QuizController(IQuizService quizService, UserManager<UserData> userManager)
+    public QuizController(IQuizService quizService)
     {
         _quizService = quizService;
-        _userManager = userManager;
     }
 
     [HttpPost("create")]

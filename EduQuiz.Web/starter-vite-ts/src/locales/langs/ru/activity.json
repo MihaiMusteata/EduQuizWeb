@@ -15,11 +15,13 @@
   "question": "Вопрос",
   "answer": "Ответ",
   "tool-tip": {
-    "check-correct-answer": "Установите флажок, если это правильный ответ.",
+    "check-correct-answer": "Отметьте, если это правильный ответ",
     "delete-answer": "Удалить этот ответ.",
-    "add-new-question": "Вы должны сохранить вопрос, прежде чем добавить другой"
+    "add-new-question": "Вы должны сохранить вопрос перед добавлением другого",
+    "add-new-flashcard": "Вы должны сохранить карточку перед добавлением другой"
   },
   "add-new-question": "Добавить еще один вопрос",
+  "add-new-flashcard": "Добавить новую карточку",
   "generate-new-activity": "Создать новую активность",
   "select-activity-type": "Выберите тип активности",
   "test-your-knowledge": "Проверьте свои знания",
@@ -39,5 +41,7 @@
   "add-new-activity": "Добавить новую активность",
   "total-questions": "Всего вопросов",
   "created-at": "Создано в",
-  "category": "Категория"
+  "category": "Категория",
+  "front-side-text": "Лицевая сторона",
+  "back-side-text": "Обратная сторона"
 }

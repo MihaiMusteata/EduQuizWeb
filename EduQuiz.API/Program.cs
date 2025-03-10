@@ -2,6 +2,7 @@ using System.Text;
 using EduQuiz.API.Middleware;
 using EduQuiz.Application.Services.Answer;
 using EduQuiz.Application.Services.Authentication;
+using EduQuiz.Application.Services.FlashcardDeckService;
 using EduQuiz.Application.Services.Question;
 using EduQuiz.Application.Services.Quiz;
 using EduQuiz.Domain.Entities.User;
@@ -31,6 +32,8 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IQuizService, QuizService>();
 builder.Services.AddScoped<IAnswerService, AnswerService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IFlashcardDeckService, FlashcardDeckService>();
+builder.Services.AddScoped<IFlashcardDeckService, FlashcardDeckService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 

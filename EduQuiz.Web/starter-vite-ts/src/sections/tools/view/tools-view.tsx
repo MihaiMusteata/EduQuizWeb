@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 
-import { Box, Grid, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, Grid2 as Grid } from "@mui/material";
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -13,9 +13,9 @@ import { ActionCard } from "../../../components/action-card";
 
 const tools = (t: TFunction, router: any) => [
   {
-    title: t('tools-page.tools.manual-quiz.title'),
+    title: t('tools-page.tools.manual-activity.title'),
     image: `${CONFIG.assetsDir}/assets/icons/activity/ic-manual.png`,
-    description: t('tools-page.tools.manual-quiz.description'),
+    description: t('tools-page.tools.manual-activity.description'),
     onClick: () => {
       router.push('/create')
     }
@@ -40,7 +40,7 @@ export function ToolsView() {
       <Grid container spacing={3}>
         {
           tools(t, router).map((card, index) => (
-            <Grid item xs={12} md={6} lg={4} key={index}>
+            <Grid size={{ xs: 12, md: 6, lg: 4 }} key={index}>
                 <ActionCard {...card} />
               </Grid>
           ))

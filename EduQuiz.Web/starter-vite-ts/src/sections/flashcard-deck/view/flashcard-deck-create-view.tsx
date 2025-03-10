@@ -3,41 +3,43 @@ import { varAlpha } from "minimal-shared/utils";
 
 import { Tab, Tabs, Container } from "@mui/material";
 
+import { paths } from "../../../routes/paths";
 import { useAxios } from "../../../axios/hooks";
 import { useTranslate } from "../../../locales";
 import { useRouter } from "../../../routes/hooks";
-import { QuizEditorTab } from "./quiz-editor-tab";
-import { QuizSettingsTab } from "./quiz-settings-tab";
+import { endpoints } from "../../../axios/endpoints";
+import { FlashcardDeckEditorTab } from "../flashcard-deck-editor-tab";
+import { FlashcardDeckSettingsTab } from "../flashcard-deck-settings-tab";
 
-import type { Quiz, Question } from "../../../types/quiz";
+import type { Flashcard, FlashcardDeck } from "../../../types/flashcard";
 
-export function QuizCreateView() {
+export function FlashcardDeckCreateView() {
   const { t } = useTranslate('common');
   const router = useRouter();
 
   const { postAuth } = useAxios();
   const [currentTab, setCurrentTab] = useState('Editor');
-  const [quiz, setQuiz] = useState<Quiz>({
+  const [flashcardDeck, setFlashcardDeck] = useState<FlashcardDeck>({
     title: '',
     visibility: 'public',
-    questions: [],
+    flashcards: [],
   });
 
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   }, []);
 
-  const handleSetQuestions = (questions: Question[]) => {
-    setQuiz({ ...quiz, questions });
+  const handleSetFlashcards = (flashcards: Flashcard[]) => {
+    setFlashcardDeck({ ...flashcardDeck, flashcards });
   };
 
   const handleSave = async () => {
-    await postAuth('/quiz/create', quiz)
+    await postAuth(endpoints.flashcardDeck.create, flashcardDeck)
       .then((response) => {
-        router.refresh();
+        router.push(paths.dashboard.library);
       })
       .catch((error) => {
-        console.error('Error creating quiz', error);
+        console.error('Error creating flashcard deck', error);
       });
   };
 
@@ -66,11 +68,11 @@ export function QuizCreateView() {
       </Tabs>
       {
         currentTab === 'Editor' &&
-        <QuizEditorTab questions={quiz.questions} setQuestions={handleSetQuestions} />
+        <FlashcardDeckEditorTab flashcards={flashcardDeck.flashcards} setFlashcards={handleSetFlashcards} />
       }
       {
         currentTab === 'Settings' &&
-        <QuizSettingsTab onSubmit={handleSave} quiz={quiz} setQuiz={setQuiz} />
+        <FlashcardDeckSettingsTab onSubmit={handleSave} flashcardDeck={flashcardDeck} setFlashcardDeck={setFlashcardDeck} />
       }
     </Container>
   );

@@ -1,4 +1,6 @@
 using EduQuiz.Domain.Entities.Answer;
+using EduQuiz.Domain.Entities.Flashcard;
+using EduQuiz.Domain.Entities.FlashcardDeck;
 using EduQuiz.Domain.Entities.Question;
 using EduQuiz.Domain.Entities.Quiz;
 using EduQuiz.Domain.Entities.User;
@@ -22,6 +24,8 @@ public class EduQuizDbContext : IdentityDbContext<UserData>
     public DbSet<QuizDbTable> Quizzes { get; set; }
     public DbSet<QuestionDbTable> Questions { get; set; }
     public DbSet<AnswerDbTable> Answers { get; set; }
+    public DbSet<FlashcardDeckDbTable> FlashcardDeck { get; set; }
+    public DbSet<FlashcardDbTable> Flashcards { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

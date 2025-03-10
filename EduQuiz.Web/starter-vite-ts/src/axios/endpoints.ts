@@ -19,4 +19,7 @@ export const endpoints = {
     update: '/answer/update',
     delete: (id: number | string) => `/answer/delete/${id}`,
   },
+  flashcardDeck: {
+    create: '/flashcard-deck/create',
+  }
 }

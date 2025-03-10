@@ -8,10 +8,11 @@ import { DashboardLayout } from 'src/layouts/dashboard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
 
+import { ActivityCreateDialog } from 'src/sections/acitvity/view/activity-create-dialog';
+
 import { AuthGuard } from 'src/auth/guard';
 
 import { usePathname } from '../hooks';
-import { ActivityCreateDialog } from "../../sections/activity";
 
 // ----------------------------------------------------------------------
 
@@ -47,6 +48,6 @@ export const dashboardRoutes: RouteObject[] = [
   },
   {
     path: 'create',
-    element: CONFIG.auth.skip ? <ActivityCreateDialog /> : <AuthGuard><ActivityCreateDialog /></AuthGuard>
+    element: <AuthGuard><ActivityCreateDialog /></AuthGuard>
   }
 ];
