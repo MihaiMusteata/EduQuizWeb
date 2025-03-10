@@ -1,8 +1,8 @@
 {
-  "name": "@minimal-kit/starter-vite-ts",
-  "author": "Minimals",
-  "version": "6.3.0",
-  "description": "Vite Starter & TypeScript",
+  "name": "@musteata-mihail/eduquiz",
+  "author": "Musteata Mihail",
+  "version": "1.0.0",
+  "description": "EduQuiz - Teza de licență, o platformă educațională pentru generarea testelor și evaluare online",
   "private": true,
   "type": "module",
   "scripts": {
@@ -24,7 +24,7 @@
     "tsc:print": "npx tsc --showConfig"
   },
   "engines": {
-    "node": "20.x"
+    "node": "23.x"
   },
   "packageManager": "yarn@1.22.22",
   "dependencies": {

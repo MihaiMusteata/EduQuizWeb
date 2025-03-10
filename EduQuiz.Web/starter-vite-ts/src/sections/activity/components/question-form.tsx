@@ -47,7 +47,6 @@ export function QuestionForm({ onSave, questionType }: Props) {
     handleSubmit,
     setValue,
     getValues,
-    formState: { errors }
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {

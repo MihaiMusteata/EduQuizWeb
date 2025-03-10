@@ -32,7 +32,6 @@ import type { GeneralQuiz } from "../../../types/quiz";
 export function LibraryView() {
   const { t: tPages } = useTranslate('pages');
   const { t: tActivity } = useTranslate('activity');
-  const { t: tCommon } = useTranslate('common');
   const router = useRouter();
   const { getAuth } = useAxios();
   const { state, setState } = useSetState<LibraryFilters>({ activity: 'All' });
@@ -56,6 +55,7 @@ export function LibraryView() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

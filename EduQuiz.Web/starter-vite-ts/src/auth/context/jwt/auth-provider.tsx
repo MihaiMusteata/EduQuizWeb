@@ -8,7 +8,7 @@ import { AuthContext } from '../auth-context';
 import { useAxios } from "../../../axios/hooks";
 import { useRouter } from "../../../routes/hooks";
 
-import type { UserType, LoginData , AuthState, SignupData } from "../../types";
+import type { UserType, LoginData, AuthState, SignupData } from "../../types";
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: Props) {
       console.error(error);
       setState({ user: undefined, loading: false });
     }
-  }, [setState]);
+  }, [setState, jwt]);
 
   useEffect(() => {
     checkUserSession();
@@ -88,6 +88,7 @@ export function AuthProvider({ children }: Props) {
       login,
       signup
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [checkUserSession, state.user, status]
   );
 

@@ -1,0 +1,100 @@
+services:
+#  frontend:
+#    build:
+#      context: ./EduQuiz.Web/starter-vite-ts
+#    ports:
+#      - 3000:3000
+#    networks:
+#      - eduquizweb-network
+#    depends_on:
+#      - backend
+
+  backend:
+    build:
+      context: .
+      target: final
+    ports:
+      - 8080:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=EduQuiz;Username=postgres;Password=postgres
+    networks:
+      - eduquizweb-network
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: EduQuiz
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - eduquizweb-network
+volumes:
+  postgres:
+    driver: local
+
+networks:
+  eduquizweb-network:
+    driver: bridge
+
+
+#services:
+#  frontend:
+#    build:
+#      context: ./EduQuiz.Web/starter-vite-ts
+#      dockerfile: Dockerfile
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - eduquiz-network
+#    depends_on:
+#      - backend
+#
+#  backend:
+#    build:
+#      context: .
+#      dockerfile: EduQuiz.API/Dockerfile
+#      target: final
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+#      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=EduQuiz;Username=postgres;Password=postgres
+#    networks:
+#      - eduquiz-network
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#
+#  postgres:
+#    image: postgres:latest
+#    restart: always
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: EduQuiz
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres:/var/lib/postgresql/data
+#    networks:
+#      - eduquiz-network
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U postgres"]
+#      interval: 5s
+#      retries: 5
+#
+#volumes:
+#  postgres:
+#    driver: local
+#
+#networks:
+#  eduquiz-network:
+#    driver: bridge
