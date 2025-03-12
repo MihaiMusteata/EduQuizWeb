@@ -1,15 +1,15 @@
+import type { LibraryItem } from "src/types/library";
+
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
 import { ActivityCard } from "./activity-card";
 
-import type { GeneralQuiz } from "../../types/quiz";
-
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: GeneralQuiz;
+  row: LibraryItem;
 };
 
 export function ActivityTableRow({ row }: Props) {
@@ -26,10 +26,10 @@ export function ActivityTableRow({ row }: Props) {
       >
         <ActivityCard
           title={row.title}
-          totalQuestions={row.totalQuestions}
+          totalItems={row.totalItems}
           visibility={row.visibility}
           createdAt={row.createdAt}
-          category="quiz"
+          activity={row.activity}
         />
       </TableCell>
     </TableRow>

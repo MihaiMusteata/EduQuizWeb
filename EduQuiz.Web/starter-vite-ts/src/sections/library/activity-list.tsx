@@ -1,9 +1,8 @@
 import type { TFunction } from "i18next";
+import type { LibraryItem } from "src/types/library";
 import type {
   TableHeadCellProps
 } from 'src/components/table';
-
-import { useState, useEffect } from "react";
 
 import { Table, TableBody } from "@mui/material";
 
@@ -20,8 +19,6 @@ import {
 
 import { ActivityTableRow } from "./activity-table-row";
 
-import type { GeneralQuiz } from "../../types/quiz";
-
 const TABLE_HEAD = (t: TFunction): TableHeadCellProps[] => [
   {
     id: 'activity-card',
@@ -33,19 +30,16 @@ const TABLE_HEAD = (t: TFunction): TableHeadCellProps[] => [
 ];
 
 type Props = {
-  data: GeneralQuiz[];
+  data: LibraryItem[];
 }
 
 export function ActivityList({ data }: Props) {
   const table = useTable();
-  const [dataFiltered, setDataFiltered] = useState<GeneralQuiz[]>(data);
+
   const { t } = useTranslate('common');
 
-  const notFound = (!dataFiltered.length);
+  const notFound = (!data.length);
 
-  useEffect(() => {
-    setDataFiltered(data);
-  }, [data]);
   return (
     <>
       <Table size={table.dense ? 'small' : 'medium'} sx={{ width: '100%' }}>
@@ -53,13 +47,13 @@ export function ActivityList({ data }: Props) {
           order={table.order}
           orderBy={table.orderBy}
           headCells={TABLE_HEAD(t)}
-          rowCount={dataFiltered.length}
+          rowCount={data.length}
           numSelected={table.selected.length}
           onSort={table.onSort}
         />
 
         <TableBody>
-          {dataFiltered
+          {data
             .slice(
               table.page * table.rowsPerPage,
               table.page * table.rowsPerPage + table.rowsPerPage
@@ -74,7 +68,7 @@ export function ActivityList({ data }: Props) {
 
           <TableEmptyRows
             height={table.dense ? 56 : 56 + 20}
-            emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
+            emptyRows={emptyRows(table.page, table.rowsPerPage, data.length)}
           />
 
           <TableNoData notFound={notFound} />
@@ -84,7 +78,7 @@ export function ActivityList({ data }: Props) {
       <TablePaginationCustom
         page={table.page}
         dense={table.dense}
-        count={dataFiltered.length}
+        count={data.length}
         rowsPerPage={table.rowsPerPage}
         onPageChange={table.onChangePage}
         onChangeDense={table.onChangeDense}

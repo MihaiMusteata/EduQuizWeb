@@ -1,4 +1,4 @@
-import type { LibraryFilters } from 'src/types/library';
+import type { LibraryItem, LibraryFilters } from 'src/types/library';
 
 import { varAlpha } from "minimal-shared/utils";
 import { useSetState } from 'minimal-shared/hooks';
@@ -15,42 +15,57 @@ import {
   InputAdornment
 } from '@mui/material';
 
+import { paths } from "src/routes/paths";
 import { useRouter } from 'src/routes/hooks';
 
+import { useTranslate } from "src/locales";
+import { useAxios } from "src/axios/hooks";
+import { endpoints } from "src/axios/endpoints";
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
-import { useTranslate } from "../../../locales";
-import { useAxios } from "../../../axios/hooks";
 import { ActivityList } from "../activity-list";
-import { endpoints } from "../../../axios/endpoints";
-
-import type { GeneralQuiz } from "../../../types/quiz";
 
 export function LibraryView() {
   const { t: tPages } = useTranslate('pages');
   const { t: tActivity } = useTranslate('activity');
   const router = useRouter();
   const { getAuth } = useAxios();
-  const { state, setState } = useSetState<LibraryFilters>({ activity: 'All' });
-  const [data, setData] = useState<GeneralQuiz[]>([]);
+
+  const [tableData, setTableData] = useState<LibraryItem[]>([]);
+
+  const filters = useSetState<LibraryFilters>({ search: '', activity: 'All' });
+  const { state: currentFilters, setState: updateFilters } = filters;
+
+  const dataFiltered = applyFilter({
+    inputData: tableData,
+    filters: currentFilters
+  });
 
   const getData = async () => {
-    const res = await getAuth<GeneralQuiz[]>(endpoints.quiz.userQuizzes);
-    setData(res);
+    const res = await getAuth<LibraryItem[]>(endpoints.library.get);
+    setTableData(res);
   }
 
   const handleAddNewActivity = () => {
-    router.push('/create');
+    router.push(paths.activity.create);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateFilters({ search: event.target.value });
+  };
+
+  const handleResetSearch = () => {
+    updateFilters({ search: '', activity: 'All' });
   };
 
   const handleFilterActivity = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
-      setState({ activity: newValue });
+      updateFilters({ activity: newValue });
     },
-    [setState]
+    [updateFilters]
   );
 
   useEffect(() => {
@@ -93,7 +108,7 @@ export function LibraryView() {
               boxShadow: `inset 0 -2px 0 0 ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
             }),
           ]}
-          value={state.activity}
+          value={currentFilters.activity}
           onChange={handleFilterActivity}
         >
           {['All', 'Quizzes', 'Flashcards'].map((tab) => (
@@ -104,14 +119,14 @@ export function LibraryView() {
               label={tab}
               icon={
                 <Label
-                  variant={(tab === state.activity && 'filled') || 'soft'}
+                  variant={(tab === currentFilters.activity && 'filled') || 'soft'}
                   color={(tab === 'Quizzes' && 'info') ||
                     (tab === 'Flashcards' && 'warning') ||
                     'default'}
                 >
-                  {tab === 'All' && data.length}
-                  {tab === 'Quizzes' && data.length}
-                  {tab === 'Flashcards' && data.length}
+                  {tab === 'All' && tableData.length}
+                  {tab === 'Quizzes' && tableData.filter((item) => item.activity === 'Quizzes').length}
+                  {tab === 'Flashcards' && tableData.filter((item) => item.activity === 'Flashcards').length}
                 </Label>
               }
               sx={{ textTransform: 'capitalize' }}
@@ -132,6 +147,8 @@ export function LibraryView() {
             fullWidth
             size='small'
             placeholder="Search..."
+            value={currentFilters.search}
+            onChange={handleSearch}
             sx={{ mr: 1 }}
             slotProps={{
               input: {
@@ -143,13 +160,32 @@ export function LibraryView() {
               },
             }}
           />
-          <Button variant='soft' color='primary'>
-            Search
+          <Button variant='soft' color='primary' onClick={handleResetSearch}>
+            Reset
           </Button>
         </Box>
-        <ActivityList data={data} />
+        <ActivityList data={dataFiltered} />
       </Card>
 
     </DashboardContent>
   );
+}
+
+type ApplyFilterProps = {
+  inputData: LibraryItem[];
+  filters: LibraryFilters;
+}
+
+function applyFilter({ inputData, filters }: ApplyFilterProps) {
+  const { activity, search } = filters;
+
+  if (activity !== 'All') {
+    inputData = inputData.filter((item) => item.activity === activity);
+  }
+
+  if (search) {
+    inputData = inputData.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()));
+  }
+
+  return inputData;
 }

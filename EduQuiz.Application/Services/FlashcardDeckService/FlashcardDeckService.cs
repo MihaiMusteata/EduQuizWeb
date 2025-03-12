@@ -19,7 +19,7 @@ public class FlashcardDeckService : IFlashcardDeckService
         var newFlashcardDeck = flashcardDeckDto.ToEntity(userId);
         try
         {
-            await _context.FlashcardDeck.AddAsync(newFlashcardDeck);
+            await _context.FlashcardDecks.AddAsync(newFlashcardDeck);
             await _context.SaveChangesAsync();
             return IdentityResult.Success;
         }
@@ -31,7 +31,7 @@ public class FlashcardDeckService : IFlashcardDeckService
 
     public async Task<IdentityResult> UpdateFlashcardDeckAsync(FlashcardDeckDto flashcardDeckDto)
     {
-        var oldFlashcardDeck = await _context.FlashcardDeck.FindAsync(flashcardDeckDto.Id);
+        var oldFlashcardDeck = await _context.FlashcardDecks.FindAsync(flashcardDeckDto.Id);
         if (oldFlashcardDeck is null)
         {
             return IdentityResult.Failed(new IdentityError { Description = "Flashcard Deck Not Found" });
@@ -42,7 +42,7 @@ public class FlashcardDeckService : IFlashcardDeckService
 
         try
         {
-            _context.FlashcardDeck.Update(oldFlashcardDeck);
+            _context.FlashcardDecks.Update(oldFlashcardDeck);
             await _context.SaveChangesAsync();
         }
         catch (Exception e)
@@ -55,7 +55,7 @@ public class FlashcardDeckService : IFlashcardDeckService
 
     public async Task<IdentityResult> DeleteFlashcardDeckAsync(int id)
     {
-        var flashcardDeck = await _context.FlashcardDeck.FindAsync(id);
+        var flashcardDeck = await _context.FlashcardDecks.FindAsync(id);
         if (flashcardDeck is null)
         {
             return IdentityResult.Failed(new IdentityError { Description = "Flashcard Deck Not Found" });
@@ -63,7 +63,7 @@ public class FlashcardDeckService : IFlashcardDeckService
 
         try
         {
-            _context.FlashcardDeck.Remove(flashcardDeck);
+            _context.FlashcardDecks.Remove(flashcardDeck);
             await _context.SaveChangesAsync();
         }
         catch (Exception e)

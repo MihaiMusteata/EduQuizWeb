@@ -19,12 +19,12 @@ import type { Visibility } from "../../types/quiz";
 type Props = {
   title: string,
   visibility: Visibility,
-  totalQuestions: number,
+  totalItems: number,
   createdAt: string,
-  category: string,
+  activity: string,
 }
 
-export function ActivityCard({ title, visibility, totalQuestions, createdAt, category }: Props) {
+export function ActivityCard({ title, visibility, totalItems, createdAt, activity }: Props) {
   const { t } = useTranslate('activity');
   const menuActions = usePopover();
 
@@ -75,9 +75,9 @@ export function ActivityCard({ title, visibility, totalQuestions, createdAt, cat
             </Typography>
             <Label
               variant='soft'
-              color={category === 'quiz' ? 'info' : 'warning'}
+              color={activity === 'Quizzes' ? 'info' : 'warning'}
             >
-              {category}
+              {activity}
             </Label>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
@@ -99,7 +99,7 @@ export function ActivityCard({ title, visibility, totalQuestions, createdAt, cat
               {t('total-questions')}:
             </Typography>
             <Typography variant="body2">
-              {totalQuestions}
+              {totalItems}
             </Typography>
           </Box>
 

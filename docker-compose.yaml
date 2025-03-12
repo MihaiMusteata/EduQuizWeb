@@ -1,0 +1,51 @@
+services:
+  backend:
+    build:
+      context: .  
+      target: final
+    ports:
+      - "0.0.0.0:5000:8080"
+    container_name: backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=EduQuiz;Username=postgres;Password=postgres
+      - FrontendUrls=http://192.168.1.9:8081
+    networks:
+      - eduquizweb-network
+    depends_on:
+      - postgres
+
+  proxy:
+    build:
+      context: ./EduQuiz.Web/starter-vite-ts
+    image: nginx:latest
+    ports:
+      - "0.0.0.0:8081:80"
+    container_name: proxy
+    networks:
+      - eduquizweb-network
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: EduQuiz
+    ports:
+      - "5432:5432"
+    container_name: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - eduquizweb-network
+
+volumes:
+  postgres:
+    driver: local
+
+networks:
+  eduquizweb-network:
+    driver: bridge

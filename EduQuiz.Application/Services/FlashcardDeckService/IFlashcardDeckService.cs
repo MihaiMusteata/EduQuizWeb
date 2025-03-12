@@ -1,5 +1,4 @@
 using EduQuiz.Application.DTOs.FlashcardDeck;
-using EduQuiz.Application.DTOs.Question;
 using Microsoft.AspNetCore.Identity;
 
 namespace EduQuiz.Application.Services.FlashcardDeckService;

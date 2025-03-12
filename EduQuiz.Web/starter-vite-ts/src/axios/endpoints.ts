@@ -9,7 +9,6 @@ export const endpoints = {
     create: '/quiz/create',
     update: '/quiz/update',
     delete: (id: number | string) => `/quiz/delete/${id}`,
-    userQuizzes: '/quiz/user/quizzes',
   },
   question: {
     update: '/question/update',
@@ -21,5 +20,8 @@ export const endpoints = {
   },
   flashcardDeck: {
     create: '/flashcard-deck/create',
+  },
+  library: {
+    get: '/library/my-library',
   }
 }

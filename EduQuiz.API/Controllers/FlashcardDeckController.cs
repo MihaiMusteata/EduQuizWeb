@@ -1,8 +1,6 @@
 using EduQuiz.Application.DTOs.FlashcardDeck;
 using EduQuiz.Application.Services.FlashcardDeckService;
-using EduQuiz.Domain.Entities.User;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduQuiz.API.Controllers;

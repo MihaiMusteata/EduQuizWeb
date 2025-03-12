@@ -24,7 +24,7 @@ public class EduQuizDbContext : IdentityDbContext<UserData>
     public DbSet<QuizDbTable> Quizzes { get; set; }
     public DbSet<QuestionDbTable> Questions { get; set; }
     public DbSet<AnswerDbTable> Answers { get; set; }
-    public DbSet<FlashcardDeckDbTable> FlashcardDeck { get; set; }
+    public DbSet<FlashcardDeckDbTable> FlashcardDecks { get; set; }
     public DbSet<FlashcardDbTable> Flashcards { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,7 +1,6 @@
 using EduQuiz.Application.DTOs.FlashcardDeck;
 using EduQuiz.Application.Mappers.Flashcard;
 using EduQuiz.Domain.Entities.FlashcardDeck;
-using EduQuiz.Domain.Entities.Question;
 
 namespace EduQuiz.Application.Mappers.FlashcardDeck;
 

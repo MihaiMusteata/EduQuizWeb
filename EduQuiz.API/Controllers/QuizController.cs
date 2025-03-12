@@ -1,8 +1,6 @@
 using EduQuiz.Application.DTOs.Quiz;
 using EduQuiz.Application.Services.Quiz;
-using EduQuiz.Domain.Entities.User;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduQuiz.API.Controllers;
@@ -67,13 +65,5 @@ public class QuizController : BaseController
         }
 
         return BadRequest($"Quiz Deletion Failed: {result.Errors}");
-    }
-    
-    [HttpGet("user/quizzes")]
-    public async Task<IActionResult> GetUserQuizzes()
-    {
-        var userId = GetUserIdFromJwt();
-        var quizzes = await _quizService.GetUserQuizzesAsync(userId);
-        return Ok(quizzes);
     }
 }
