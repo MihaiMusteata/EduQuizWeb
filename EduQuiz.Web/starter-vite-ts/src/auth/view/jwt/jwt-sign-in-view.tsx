@@ -1,3 +1,5 @@
+import type { TFunction } from "i18next";
+
 import { z as zod } from 'zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -15,6 +17,8 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
+import { useTranslate } from "src/locales";
+
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 
@@ -24,23 +28,26 @@ import { FormHead } from '../../components/form-head';
 
 // ----------------------------------------------------------------------
 
-export type SignInSchemaType = zod.infer<typeof SignInSchema>;
+export type SignInSchemaType = zod.infer<ReturnType<typeof createSignInSchema>>;
 
-export const SignInSchema = zod.object({
-  email: zod
-    .string()
-    .min(1, { message: 'Email is required!' })
-    .email({ message: 'Email must be a valid email address!' }),
-  password: zod
-    .string()
-    .min(1, { message: 'Password is required!' })
-    .min(6, { message: 'Password must be at least 6 characters!' }),
-});
+export const createSignInSchema = (t: TFunction) =>
+  zod.object({
+    email: zod
+      .string()
+      .min(1, { message: t('required.email') })
+      .email({ message: t('invalid.email') }),
+    password: zod
+      .string()
+      .min(1, { message: t('required.password') })
+      .min(6, { message: t('password.minLength', { length: 6 }) }),
+  });
 
 // ----------------------------------------------------------------------
 
 export function JwtSignInView() {
   const router = useRouter();
+
+  const { t } = useTranslate('auth');
 
   const showPassword = useBoolean();
 
@@ -49,12 +56,12 @@ export function JwtSignInView() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const defaultValues: SignInSchemaType = {
-    email: 'mihai@gmail.com',
-    password: 'Mihai_2002',
+    email: '',
+    password: '',
   };
 
   const methods = useForm<SignInSchemaType>({
-    resolver: zodResolver(SignInSchema),
+    resolver: zodResolver(createSignInSchema(t)),
     defaultValues,
   });
 
@@ -76,7 +83,7 @@ export function JwtSignInView() {
 
   const renderForm = () => (
     <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>
-      <Field.Text name="email" label="Email address" slotProps={{ inputLabel: { shrink: true } }} />
+      <Field.Text name="email" label={t('email.label')} slotProps={{ inputLabel: { shrink: true } }} />
 
       <Box sx={{ gap: 1.5, display: 'flex', flexDirection: 'column' }}>
         <Link
@@ -86,13 +93,13 @@ export function JwtSignInView() {
           color="inherit"
           sx={{ alignSelf: 'flex-end' }}
         >
-          Forgot password?
+          {t('forgotPassword')}
         </Link>
 
         <Field.Text
           name="password"
-          label="Password"
-          placeholder="6+ characters"
+          label={t('password.label')}
+          placeholder={t('password.placeholder', { length: 6 })}
           type={showPassword.value ? 'text' : 'password'}
           slotProps={{
             inputLabel: { shrink: true },
@@ -118,9 +125,9 @@ export function JwtSignInView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Sign in..."
+        loadingIndicator={t('connectAccount.loadingIndicator')}
       >
-        Sign in
+        {t('connectAccount.label')}
       </LoadingButton>
     </Box>
   );
@@ -128,12 +135,12 @@ export function JwtSignInView() {
   return (
     <>
       <FormHead
-        title="Sign in to your account"
+        title={t('connectYourAccount')}
         description={
           <>
-            {`Don’t have an account? `}
+            {`${t('dontHaveAccount')} `}
             <Link component={RouterLink} href={paths.auth.jwt.signUp} variant="subtitle2">
-              Get started
+              {t('signUp')}
             </Link>
           </>
         }

@@ -24,6 +24,7 @@ export function QuizEditorTab({ questions, setQuestions }: Props) {
   };
 
   const removeQuestion = (index: number) => {
+    setQuestions(questions.filter((_, i) => i !== index));
   };
 
   const handleSave = (question: Question) => {

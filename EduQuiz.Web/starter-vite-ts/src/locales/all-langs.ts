@@ -13,16 +13,6 @@ import {
 
 export const allLangs = [
   {
-    value: 'en',
-    label: 'English',
-    countryCode: 'GB',
-    adapterLocale: 'en',
-    numberFormat: { code: 'en-US', currency: 'USD' },
-    systemValue: {
-      components: { ...enUSDate.components, ...enUSDataGrid.components },
-    },
-  },
-  {
     value: 'ro',
     label: 'Română',
     countryCode: 'MD',
@@ -30,6 +20,16 @@ export const allLangs = [
     numberFormat: { code: 'ro-RO', currency: 'MDL' },
     systemValue: {
       components: { ...roRODate.components, ...roRODataGrid.components },
+    },
+  },
+  {
+    value: 'en',
+    label: 'English',
+    countryCode: 'GB',
+    adapterLocale: 'en',
+    numberFormat: { code: 'en-US', currency: 'USD' },
+    systemValue: {
+      components: { ...enUSDate.components, ...enUSDataGrid.components },
     },
   },
   {

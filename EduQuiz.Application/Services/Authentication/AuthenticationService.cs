@@ -40,7 +40,9 @@ public class AuthenticationService : IAuthenticationService
             UserName = $"{data.FirstName}{data.LastName}"
         };
 
-        return await _userManager.CreateAsync(user, data.Password);
+        var response = await _userManager.CreateAsync(user, data.Password);
+
+        return response;
     }
 
     public async Task<LoginResponse> UserLogin(UserLoginDto data)
