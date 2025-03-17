@@ -9,11 +9,14 @@ import type { Question, QuestionType } from "../../../types/quiz";
 
 type Props = {
   onSave: (question: Question) => void;
+  onCancel: () => void;
+  initialData?: Question;
 };
 
-export function QuestionEditCard({ onSave }: Props) {
-  const [questionType, setQuestionType] = useState<QuestionType| undefined>(undefined);
+export function QuestionEditCard({ onSave, onCancel, initialData }: Props) {
+  const [questionType, setQuestionType] = useState<QuestionType| undefined>(initialData?.type);
   const { t } = useTranslate('activity');
+
   return (
     <Card sx={{ border: '1px solid #ddd', borderRadius: '10px', padding: 2, marginTop: 2 }}>
       {
@@ -21,7 +24,7 @@ export function QuestionEditCard({ onSave }: Props) {
           <FormControl fullWidth>
             <InputLabel>{t('question-type.label')}</InputLabel>
             <Select
-              value={questionType}
+              value={questionType ?? ''}
               label={t('question-type.label')}
               onChange={(e) => setQuestionType(e.target.value as QuestionType)}
               sx={{
@@ -42,7 +45,7 @@ export function QuestionEditCard({ onSave }: Props) {
             </Select>
           </FormControl>
           :
-          <QuestionForm onSave={onSave} questionType={questionType} />
+          <QuestionForm onSave={onSave} onCancel={onCancel} questionType={questionType} initialData={initialData}  />
       }
     </Card>
   );

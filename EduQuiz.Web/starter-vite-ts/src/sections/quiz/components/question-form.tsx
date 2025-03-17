@@ -17,41 +17,60 @@ import type { Question, QuestionType } from '../../../types/quiz';
 
 type Props = {
   onSave: (question: Question) => void;
+  onCancel: () => void;
   questionType: QuestionType;
+  initialData?: Question;
 }
 
-export function QuestionForm({ onSave, questionType }: Props) {
+export function QuestionForm({ onSave, onCancel, questionType, initialData }: Props) {
   const { t } = useTranslate('activity');
   const { t: tCommon } = useTranslate('common');
-  const [totalAnswers, setTotalAnswers] = useState(questionType === 'multiple-choice' || questionType === 'single-choice' ? 4 : 1);
+  const [totalAnswers, setTotalAnswers] = useState(
+    questionType === 'multiple-choice' || questionType === 'single-choice'
+      ? initialData?.answers.length || 4
+      : 1
+  );
   const [updateAnswers, setUpdateAnswers] = useState(false);
 
   const methods = useForm<FieldsSchemaType>({
     resolver: zodResolver(FieldsSchema),
     defaultValues: {
       question: {
+        id: initialData?.id || '',
         type: questionType,
-        answers: questionType === 'multiple-choice' || questionType === 'single-choice' ? [
-          { text: '', isCorrect: false },
-          { text: '', isCorrect: false },
-          { text: '', isCorrect: false },
-          { text: '', isCorrect: false },
-        ] : [
-          { text: '', isCorrect: true },
-        ],
-      }
-    }
+        text: initialData?.text || '',
+        answers: initialData?.answers || (
+          questionType === 'multiple-choice' || questionType === 'single-choice'
+            ? [
+              { id:'', text: '', isCorrect: false },
+              { id:'', text: '', isCorrect: false },
+              { id:'', text: '', isCorrect: false },
+              { id:'', text: '', isCorrect: false },
+            ]
+            : [{ id:'', text: '', isCorrect: true }]
+        ),
+        hint: initialData?.hint || '',
+      },
+    },
   });
+
 
   const {
     handleSubmit,
     setValue,
     getValues,
+    reset,
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     onSave(data.question);
   });
+
+  const handleCancel = () => {
+    reset();
+    onCancel();
+  }
+
 
   return (
     <Form methods={methods} onSubmit={onSubmit}>
@@ -106,7 +125,7 @@ export function QuestionForm({ onSave, questionType }: Props) {
           }
         }} />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, marginTop: 2 }}>
-        <Button variant='outlined' color='inherit' onClick={() => console.log('cancel')}>
+        <Button variant='outlined' color='inherit' onClick={handleCancel}>
           {tCommon('cancel')}
         </Button>
         <Button variant='contained' color='primary' type='submit'>

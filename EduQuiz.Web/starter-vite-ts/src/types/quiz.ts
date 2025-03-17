@@ -1,9 +1,11 @@
 export type Answer = {
+  id: string;
   text: string;
   isCorrect: boolean;
 };
 
 export type Question = {
+  id: string;
   text: string;
   type: QuestionType | undefined;
   hint?: string;
@@ -11,18 +13,11 @@ export type Question = {
 };
 
 export type Quiz = {
+  id: string;
   title: string;
   visibility: Visibility;
   questions: Question[];
 };
 
-export type GeneralQuiz = {
-  id: string;
-  title: string;
-  visibility: Visibility;
-  createdAt: string;
-  totalQuestions: number;
-};
-
-export type QuestionType = 'true/false' | 'multiple-choice' | 'single-choice' | 'short-answer' ;
+export type QuestionType = 'true/false' | 'multiple-choice' | 'single-choice' | 'short-answer' | undefined;
 export type Visibility = 'public' | 'private';

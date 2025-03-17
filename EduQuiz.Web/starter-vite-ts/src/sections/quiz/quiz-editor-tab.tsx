@@ -1,4 +1,4 @@
-import type { Question} from "src/types/quiz";
+import type { Question } from "src/types/quiz";
 
 import { useState } from "react";
 
@@ -17,47 +17,59 @@ type Props = {
 
 export function QuizEditorTab({ questions, setQuestions }: Props) {
   const { t } = useTranslate('activity');
-  const [isEditing, setIsEditing] = useState(true);
-
+  const [editingIndex, setEditingIndex] = useState<number | undefined>(undefined)
   const addQuestion = () => {
-    setIsEditing(true);
+    setEditingIndex(questions.length);
   };
 
   const removeQuestion = (index: number) => {
     setQuestions(questions.filter((_, i) => i !== index));
   };
 
-  const handleSave = (question: Question) => {
-    setIsEditing(false);
-    setQuestions([...questions, question]);
+  const handleSave = (question: Question, index: number | undefined) => {
+    if (index !== undefined) {
+      const updatedQuestions = [...questions];
+      updatedQuestions[index] = question;
+      setQuestions(updatedQuestions);
+    } else {
+      setQuestions([...questions, question]);
+    }
+    setEditingIndex(undefined);
+  }
+
+  const handleCancel = () => {
+    setEditingIndex(undefined);
   }
 
   return (
     <Container sx={{ width: '100%' }}>
-
       {
         questions.map((question, index) => (
-          <QuestionViewCard
-            key={index}
-            index={index}
-            question={question}
-            onDelete={() => removeQuestion(index)}
-            onEdit={() => console.log('Edit question')}
-          />
+          editingIndex === index ? (
+            <QuestionEditCard key={index} onSave={(q) => handleSave(q, index)} onCancel={handleCancel} initialData={question} />
+          ) : (
+            <QuestionViewCard
+              key={index}
+              index={index}
+              question={question}
+              onDelete={() => removeQuestion(index)}
+              onEdit={() => setEditingIndex(index)}
+            />
+          )
         ))
       }
 
       {
-        isEditing &&
-        <QuestionEditCard onSave={handleSave} />
-      }
+        editingIndex === questions.length && (
+          <QuestionEditCard onSave={(q) => handleSave(q, undefined)} onCancel={handleCancel}/>
+        )}
 
       <div style={{ marginBottom: '70px' }}>
         <Tooltip
           title={t('tool-tip.add-new-question')}
           arrow
-          disableHoverListener={!isEditing}
-          disableTouchListener={!isEditing}
+          disableHoverListener={editingIndex === undefined}
+          disableTouchListener={editingIndex === undefined}
         >
           <div>
             <Button
@@ -65,7 +77,7 @@ export function QuizEditorTab({ questions, setQuestions }: Props) {
               onClick={addQuestion}
               sx={{ p: 2, mt: 3, justifyContent: 'space-between', border: '1px solid #ddd' }}
               endIcon={<AddIcon />}
-              disabled={isEditing}
+              disabled={editingIndex === questions.length}
               fullWidth
             >
               {t('add-new-question')}

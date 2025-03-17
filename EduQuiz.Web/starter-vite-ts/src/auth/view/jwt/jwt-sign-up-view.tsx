@@ -112,7 +112,7 @@ export function JwtSignUpView() {
       <Field.Text
         name="password"
         label={t("password.label")}
-        placeholder={t('password.placeholder', { leght: 6 })}
+        placeholder={t('password.placeholder', { length: 6 })}
         type={showPassword.value ? 'text' : 'password'}
         slotProps={{
           inputLabel: { shrink: true },

@@ -2,11 +2,12 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/global-config';
 
-import { ToolsView } from "../../../sections/tools/view";
+import { QuizCreateView } from 'src/sections/quiz/view';
+
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `Tools | Dashboard - ${CONFIG.appName}` };
+const metadata = { title: `Create a new quiz | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
   return (
@@ -15,7 +16,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <ToolsView />
+      <QuizCreateView />
     </>
   );
 }

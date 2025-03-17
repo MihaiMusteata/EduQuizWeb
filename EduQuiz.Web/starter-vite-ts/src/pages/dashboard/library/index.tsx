@@ -4,8 +4,6 @@ import { CONFIG } from 'src/global-config';
 
 import { LibraryView } from "../../../sections/library/view";
 
-
-
 // ----------------------------------------------------------------------
 
 const metadata = { title: `My Library | Dashboard - ${CONFIG.appName}` };

@@ -32,7 +32,7 @@ public class QuizController : BaseController
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetQuizById(int id)
+    public async Task<IActionResult> GetQuizById(string id)
     {
         var quiz = await _quizService.GetQuizByIdAsync(id);
         if (quiz == null)
@@ -56,7 +56,7 @@ public class QuizController : BaseController
     }
     
     [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteQuiz(int id)
+    public async Task<IActionResult> DeleteQuiz(string id)
     {
         var result = await _quizService.DeleteQuizAsync(id);
         if (result.Succeeded)

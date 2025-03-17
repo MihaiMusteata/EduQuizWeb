@@ -8,7 +8,7 @@ namespace EduQuiz.Domain.Entities.Quiz;
 public class QuizDbTable
 {
     [Key]
-    public int Id { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string Title { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

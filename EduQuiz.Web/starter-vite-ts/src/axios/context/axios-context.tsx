@@ -8,7 +8,9 @@ interface AuthContextProps {
   axiosDefault: AxiosInstance;
   setJwt: (jwt: string) => void;
   postAuth: (url: string, data: any) => Promise<AxiosResponse>;
+  putAuth: (url: string, data: any) => Promise<AxiosResponse>;
   getAuth: <T = any>(url: string, options?: any) => Promise<T>;
+  isLoading: boolean;
 }
 
 export const AxiosContext = createContext<AuthContextProps | undefined>(undefined);

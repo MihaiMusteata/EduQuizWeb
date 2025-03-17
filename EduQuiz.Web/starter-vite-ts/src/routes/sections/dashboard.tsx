@@ -19,6 +19,10 @@ import { usePathname } from '../hooks';
 const IndexPage = lazy(() => import('src/pages/dashboard/one'));
 const ToolsPage = lazy(() => import('src/pages/dashboard/tools'));
 const LibraryPage = lazy(() => import('src/pages/dashboard/library'));
+// Quiz
+const QuizCreatePage = lazy(() => import('src/pages/dashboard/quiz/new'));
+const QuizEditPage = lazy(() => import('src/pages/dashboard/quiz/edit'));
+
 // ----------------------------------------------------------------------
 
 function SuspenseOutlet() {
@@ -43,11 +47,20 @@ export const dashboardRoutes: RouteObject[] = [
     children: [
       { element: <IndexPage />, index: true },
       { path: 'tools', element: <ToolsPage /> },
-      { path: 'library', element: <LibraryPage /> }
+      { path: 'library', element: <LibraryPage /> },
+      {
+        path: 'activity',
+        children: [
+          { path: 'create', element: <ActivityCreateDialog /> },
+          {
+            path: 'quiz',
+            children: [
+              { path: 'new', element: <QuizCreatePage /> },
+              { path: 'edit/:id', element: <QuizEditPage /> }
+            ]
+          }
+        ],
+      },
     ]
   },
-  {
-    path: 'create',
-    element: <AuthGuard><ActivityCreateDialog /></AuthGuard>
-  }
 ];

@@ -22,9 +22,10 @@ type Props = {
   totalItems: number,
   createdAt: string,
   activity: string,
+  editHref: string,
 }
 
-export function ActivityCard({ title, visibility, totalItems, createdAt, activity }: Props) {
+export function ActivityCard({ title, visibility, totalItems, createdAt, activity, editHref }: Props) {
   const { t } = useTranslate('activity');
   const menuActions = usePopover();
 
@@ -37,7 +38,7 @@ export function ActivityCard({ title, visibility, totalItems, createdAt, activit
     >
       <MenuList>
         <li>
-          <MenuItem href="/edit" component={RouterLink} onClick={() => menuActions.onClose()}>
+          <MenuItem href={editHref} component={RouterLink} onClick={() => menuActions.onClose()}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>

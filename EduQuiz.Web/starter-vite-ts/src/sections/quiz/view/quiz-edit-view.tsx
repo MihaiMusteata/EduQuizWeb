@@ -1,11 +1,18 @@
+import type { Quiz } from "src/types/quiz";
+
 import { FullScreenDialog } from "src/components/dialog/full-screen-dialog";
 
 import { QuizEditNewForm } from "../quiz-edit-new-form";
 
-export function QuizCreateView() {
+
+type Props = {
+  quiz?: Quiz;
+}
+
+export function QuizEditView({ quiz }: Props) {
   return (
     <FullScreenDialog>
-      <QuizEditNewForm />
+      <QuizEditNewForm currentQuiz={quiz} />
     </FullScreenDialog>
-  );
+  )
 }

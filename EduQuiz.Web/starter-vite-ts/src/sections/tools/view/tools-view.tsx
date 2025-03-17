@@ -2,11 +2,13 @@ import type { TFunction } from "i18next";
 
 import { Box, Divider, Typography, Grid2 as Grid } from "@mui/material";
 
+import { paths } from "src/routes/paths";
+import { useRouter } from "src/routes/hooks";
+
+import { CONFIG } from "src/global-config";
+import { useTranslate } from "src/locales";
 import { DashboardContent } from 'src/layouts/dashboard';
 
-import { CONFIG } from "../../../global-config";
-import { useTranslate } from "../../../locales";
-import { useRouter } from "../../../routes/hooks";
 import { ActionCard } from "../../../components/action-card";
 
 // ----------------------------------------------------------------------
@@ -17,7 +19,7 @@ const tools = (t: TFunction, router: any) => [
     image: `${CONFIG.assetsDir}/assets/icons/activity/ic-manual.png`,
     description: t('tools-page.tools.manual-activity.description'),
     onClick: () => {
-      router.push('/create')
+      router.push(paths.activity.create);
     }
   }
 ];

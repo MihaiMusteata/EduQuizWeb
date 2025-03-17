@@ -7,11 +7,11 @@ namespace EduQuiz.Domain.Entities.Flashcard;
 public class FlashcardDbTable
 {
     [Key]
-    public int Id { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string FrontSideText { get; set; }
     public string BackSideText { get; set; }
     public string? Hint { get; set; }
     [ForeignKey(("FlashcardDeck"))]
-    public int FlashcardDeckId { get; set; }
+    public string FlashcardDeckId { get; set; }
     public FlashcardDeckDbTable FlashcardDeck { get; set; }
 }

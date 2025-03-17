@@ -7,13 +7,13 @@ namespace EduQuiz.Domain.Entities.Answer;
 public class AnswerDbTable
 {
     [Key]
-    public int Id { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     
     public string Text { get; set; }
     public bool IsCorrect { get; set; }
     
     [ForeignKey("Question")]
-    public int QuestionId { get; set; }
+    public string QuestionId { get; set; }
     
     [InverseProperty("Answers")]
     public QuestionDbTable Question { get; set; }

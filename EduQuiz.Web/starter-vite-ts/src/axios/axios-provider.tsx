@@ -1,8 +1,13 @@
 import type { ReactNode } from "react";
-import type { AxiosInstance, AxiosResponse } from "axios";
+import type { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 
 import axios from "axios";
 import { useState } from "react";
+
+import { paths } from "src/routes/paths";
+import { useRouter } from "src/routes/hooks";
+
+import { toast } from 'src/components/snackbar';
 
 import { endpoints } from "./endpoints";
 import { getJwt } from "../auth/context/jwt";
@@ -11,6 +16,8 @@ import { AxiosContext } from "./context/axios-context";
 export const AxiosProvider = ({ children }: { children: ReactNode }) => {
 
   const [jwt, setJwt] = useState<string | undefined>(getJwt());
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const axiosInstance: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL as string,
@@ -28,14 +35,6 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
   const axiosDefault: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL as string,
   });
-
-  const postAuth = (url: string, data: any): Promise<AxiosResponse> =>
-    axiosInstance.post(url, data);
-
-  const getAuth = async <T = any>(url: string, options?: any): Promise<T> => {
-    const response = await axiosInstance.get<T>(url, options);
-    return response.data;
-  };
 
   axiosInstance.interceptors.request.use(
     async (config) => {
@@ -76,6 +75,40 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
       return Promise.reject(error);
     },
   );
+  const requestHandler = async <T = any>(request: () => Promise<AxiosResponse<T>>): Promise<T> => {
+    try {
+      setIsLoading(true);
+      const response = await request();
+      return response.data;
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        const error = e as AxiosError;
+        switch (error.response?.status) {
+          case 403:
+            router.push(paths.page403);
+            break;
+          case 404:
+            router.push(paths.page404);
+            break;
+          case 500:
+            router.push(paths.page500);
+            break;
+          default:
+            toast.error("S-a produs o eroare.");
+        }
+      } else {
+        toast.error("Eroare necunoscută.");
+        console.error("Unexpected error:", e);
+      }
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const postAuth = (url: string, data: any) => requestHandler(() => axiosInstance.post(url, data));
+  const putAuth = (url: string, data: any) => requestHandler(() => axiosInstance.put(url, data));
+  const getAuth = <T = any>(url: string, options?: any) => requestHandler(() => axiosInstance.get<T>(url, options));
 
   return (
     <AxiosContext.Provider
@@ -85,7 +118,9 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         axiosDefault,
         setJwt,
         postAuth,
+        putAuth,
         getAuth,
+        isLoading,
       }}
     >
       {children}

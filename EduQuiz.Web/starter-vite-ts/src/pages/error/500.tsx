@@ -2,11 +2,11 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/global-config';
 
-import { ToolsView } from "../../../sections/tools/view";
+import { View500 } from 'src/sections/error';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `Tools | Dashboard - ${CONFIG.appName}` };
+const metadata = { title: `500 Internal server error! | Error - ${CONFIG.appName}` };
 
 export default function Page() {
   return (
@@ -15,7 +15,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <ToolsView />
+      <View500 />
     </>
   );
 }
