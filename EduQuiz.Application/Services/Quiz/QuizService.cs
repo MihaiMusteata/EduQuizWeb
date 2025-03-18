@@ -1,9 +1,9 @@
 using EduQuiz.Application.DTOs.Answer;
 using EduQuiz.Application.DTOs.Question;
 using EduQuiz.Application.DTOs.Quiz;
+using EduQuiz.Application.Mappers.Answer;
 using EduQuiz.Application.Mappers.Question;
 using EduQuiz.Application.Mappers.Quiz;
-using EduQuiz.Domain.Entities.Answer;
 using EduQuiz.Domain.Entities.Question;
 using EduQuiz.Domain.Entities.Quiz;
 using EduQuiz.Infrastructure;
@@ -36,12 +36,13 @@ public class QuizService : IQuizService
         }
     }
 
-    public async Task<QuizDto?> GetQuizByIdAsync(string id)
+    public async Task<QuizDto?> GetQuizByIdAsync(Guid id)
     {
         var quiz = await _context.Quizzes
-            .Include(x => x.Questions)
-            .ThenInclude(x => x.Answers)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .Include(x => x.Questions.OrderBy(q => q.Id))
+            .ThenInclude(x => x.Answers.OrderBy(a => a.Id))
+            .OrderBy(x => x.Id)
+            .FirstOrDefaultAsync(x => x.TrackingId == id);
 
         return quiz?.ToDto();
     }
@@ -51,91 +52,96 @@ public class QuizService : IQuizService
         var oldQuiz = await _context.Quizzes
             .Include(q => q.Questions)
             .ThenInclude(q => q.Answers)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(q => q.Id == quizDto.Id);
-    
+            .FirstOrDefaultAsync(q => q.TrackingId == quizDto.Id);
+
         if (oldQuiz is null)
         {
             return IdentityResult.Failed(new IdentityError { Description = "Quiz Not Found" });
         }
-    
+
         oldQuiz.Title = quizDto.Title;
         oldQuiz.Visibility = quizDto.Visibility;
-    
+
         UpdateQuestions(oldQuiz, quizDto.Questions);
-    
+
         _context.Quizzes.Update(oldQuiz);
-        await _context.SaveChangesAsync();
-        return IdentityResult.Success;
-    }
-    
-    private void UpdateQuestions(QuizDbTable quiz, List<QuestionDto> updatedQuestionsDto)
-    {
-        var existingQuestionsDict = quiz.Questions.ToDictionary(q => q.Id);
-        var updatedQuestionIds = updatedQuestionsDto.Select(q => q.Id).ToHashSet();
-    
-        var questionsToRemove = quiz.Questions.Where(q => !updatedQuestionIds.Contains(q.Id)).ToList();
-        _context.Questions.RemoveRange(questionsToRemove);
-    
-        foreach (var updatedQuestionDto in updatedQuestionsDto)
+
+        try
         {
-            if (existingQuestionsDict.TryGetValue(updatedQuestionDto.Id, out var existingQuestion))
-            {
-                existingQuestion.Text = updatedQuestionDto.Text;
-                existingQuestion.Type = updatedQuestionDto.Type;
-                existingQuestion.Hint = updatedQuestionDto.Hint;
-    
-                UpdateAnswers(existingQuestion, updatedQuestionDto.Answers);
-                _context.Questions.Update(existingQuestion);
-            }
-            else
-            {
-                var newQuestion = new QuestionDbTable
-                {
-                    Text = updatedQuestionDto.Text,
-                    Type = updatedQuestionDto.Type,
-                    Hint = updatedQuestionDto.Hint,
-                    Answers = updatedQuestionDto.Answers.Select(a => new AnswerDbTable
-                    {
-                        Text = a.Text,
-                        IsCorrect = a.IsCorrect
-                    }).ToList()
-                };
-                quiz.Questions.Add(newQuestion);
-            }
+            await _context.SaveChangesAsync();
+            return IdentityResult.Success;
         }
-    }
-    
-    private void UpdateAnswers(QuestionDbTable question, List<AnswerDto> updatedAnswersDto)
-    {
-        var existingAnswersDict = question.Answers.ToDictionary(a => a.Id);
-        var updatedAnswerIds = updatedAnswersDto.Select(a => a.Id).ToHashSet();
-    
-        var answersToRemove = question.Answers.Where(a => !updatedAnswerIds.Contains(a.Id)).ToList();
-        _context.Answers.RemoveRange(answersToRemove);
-    
-        foreach (var updatedAnswerDto in updatedAnswersDto)
+        catch (Exception e)
         {
-            if (existingAnswersDict.TryGetValue(updatedAnswerDto.Id, out var existingAnswer))
-            {
-                existingAnswer.Text = updatedAnswerDto.Text;
-                existingAnswer.IsCorrect = updatedAnswerDto.IsCorrect;
-                _context.Answers.Update(existingAnswer);
-            }
-            else
-            {
-                question.Answers.Add(new AnswerDbTable
-                {
-                    Text = updatedAnswerDto.Text,
-                    IsCorrect = updatedAnswerDto.IsCorrect
-                });
-            }
+            return IdentityResult.Failed(new IdentityError { Description = $"Exception: {e.Message}" });
         }
     }
 
-    public async Task<IdentityResult> DeleteQuizAsync(string id)
+    private void UpdateQuestions(QuizDbTable quiz, List<QuestionDto> updatedQuestionsDto)
     {
-        var quiz = await _context.Quizzes.FindAsync(id);
+        var updatedQuestionIds = updatedQuestionsDto.Select(q => q.Id).ToHashSet();
+
+        var questionsToRemove = quiz.Questions.Where(q => !updatedQuestionIds.Contains(q.TrackingId)).ToList();
+        _context.Questions.RemoveRange(questionsToRemove);
+
+        var questionsToUpdate = quiz.Questions
+            .Where(q => updatedQuestionIds.Contains(q.TrackingId)).ToList();
+
+        foreach (var question in questionsToUpdate)
+        {
+            var questionToUpdate = question;
+            var updatedQuestionDto = updatedQuestionsDto.First(q => q.Id == questionToUpdate.TrackingId);
+            questionToUpdate.Text = updatedQuestionDto.Text;
+            questionToUpdate.Type = updatedQuestionDto.Type;
+            questionToUpdate.Hint = updatedQuestionDto.Hint;
+
+            UpdateAnswers(questionToUpdate, updatedQuestionDto.Answers);
+            _context.Questions.Update(questionToUpdate);
+        }
+
+        var questionsToAdd = updatedQuestionsDto
+            .Where(q => q.Id is null || q.Id == Guid.Empty)
+            .Select(q => q.ToEntity())
+            .ToList();
+
+        _context.Questions.AddRange(questionsToAdd);
+       
+        quiz.Questions.AddRange(questionsToAdd);
+    }
+
+    private void UpdateAnswers(QuestionDbTable question, List<AnswerDto> updatedAnswersDto)
+    {
+        var updatedAnswerIds = updatedAnswersDto.Select(a => a.Id).ToHashSet();
+
+        var answersToRemove = question.Answers.Where(a => !updatedAnswerIds.Contains(a.TrackingId)).ToList();
+        _context.Answers.RemoveRange(answersToRemove);
+
+        var answersToUpdate = question.Answers
+            .Where(a => updatedAnswerIds.Contains(a.TrackingId)).ToList();
+
+        foreach (var answer in answersToUpdate)
+        {
+            var answerToUpdate = answer;
+            var updatedAnswerDto = updatedAnswersDto.First(a => a.Id == answerToUpdate.TrackingId);
+            answerToUpdate.Text = updatedAnswerDto.Text;
+            answerToUpdate.IsCorrect = updatedAnswerDto.IsCorrect;
+
+            _context.Answers.Update(answerToUpdate);
+        }
+
+        var answersToAdd = updatedAnswersDto
+            .Where(a => a.Id is null || a.Id == Guid.Empty)
+            .Select(a => a.ToEntity())
+            .ToList();
+
+        _context.Answers.AddRange(answersToAdd);
+
+        question.Answers.AddRange(answersToAdd);
+    }
+
+    public async Task<IdentityResult> DeleteQuizAsync(Guid id)
+    {
+        var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.TrackingId == id);
         if (quiz is null)
         {
             return IdentityResult.Failed(new IdentityError { Description = "Quiz Not Found" });

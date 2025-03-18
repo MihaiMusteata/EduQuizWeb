@@ -6,5 +6,5 @@ namespace EduQuiz.Application.Services.Question;
 public interface IQuestionService
 {
     Task<IdentityResult> UpdateQuestionAsync(QuestionDto questionDto);
-    Task<IdentityResult> DeleteQuestionAsync(int id);
+    Task<IdentityResult> DeleteQuestionAsync(Guid id);
 }

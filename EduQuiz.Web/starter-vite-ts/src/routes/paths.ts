@@ -33,6 +33,10 @@ export const paths = {
     quiz: {
       new: `${ROOTS.ACTIVITY}/quiz/new`,
       edit: (id: string) => `${ROOTS.ACTIVITY}/quiz/edit/${id}`,
+    },
+    flashcardDeck: {
+      new: `${ROOTS.ACTIVITY}/flashcard-deck/new`,
+      edit: (id: string) => `${ROOTS.ACTIVITY}/flashcard-deck/edit/${id}`,
     }
   }
 };

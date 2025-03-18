@@ -15,16 +15,18 @@ import type { FieldsSchemaType } from "../schema";
 
 type Props = {
   onSave: (flashcard: Flashcard) => void;
+  onCancel: () => void;
+  initialData?: Flashcard;
 };
 
-export function FlashcardEditForm({ onSave }: Props) {
+export function FlashcardEditForm({ onSave, onCancel, initialData }: Props) {
   const { t } = useTranslate('activity');
   const { t: tCommon } = useTranslate('common');
 
   const methods = useForm<FieldsSchemaType>({
     resolver: zodResolver(FieldsSchema),
     defaultValues: {
-      flashcard: {
+      flashcard: initialData ?? {
         frontSideText: '',
         backSideText: '',
       }
@@ -33,11 +35,18 @@ export function FlashcardEditForm({ onSave }: Props) {
 
   const {
     handleSubmit,
+    reset,
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     onSave(data.flashcard);
   });
+
+  const handleCancel = () => {
+    reset();
+    onCancel();
+  }
+
 
   return (
     <Card sx={{ border: '1px solid #ddd', borderRadius: '10px', padding: 2, marginTop: 2 }}>
@@ -76,7 +85,7 @@ export function FlashcardEditForm({ onSave }: Props) {
           }}
         />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, marginTop: 2 }}>
-          <Button variant='outlined' color='inherit' onClick={() => console.log('cancel')}>
+          <Button variant='outlined' color='inherit' onClick={onCancel}>
             {tCommon('cancel')}
           </Button>
           <Button variant='contained' color='primary' type='submit'>

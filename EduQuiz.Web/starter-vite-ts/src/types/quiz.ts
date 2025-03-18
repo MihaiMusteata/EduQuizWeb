@@ -1,11 +1,11 @@
 export type Answer = {
-  id: string;
+  id?: string;
   text: string;
   isCorrect: boolean;
 };
 
 export type Question = {
-  id: string;
+  id?: string;
   text: string;
   type: QuestionType | undefined;
   hint?: string;
@@ -13,7 +13,7 @@ export type Question = {
 };
 
 export type Quiz = {
-  id: string;
+  id?: string;
   title: string;
   visibility: Visibility;
   questions: Question[];

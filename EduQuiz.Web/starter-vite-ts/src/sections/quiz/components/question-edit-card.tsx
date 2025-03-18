@@ -49,4 +49,4 @@ export function QuestionEditCard({ onSave, onCancel, initialData }: Props) {
       }
     </Card>
   );
-};
+}

@@ -6,6 +6,7 @@ namespace EduQuiz.Application.Services.FlashcardDeckService;
 public interface IFlashcardDeckService
 {
     Task<IdentityResult> CreateFlashcardDeckAsync(FlashcardDeckDto flashcardDeckDto, string userId);
-    Task<IdentityResult> DeleteFlashcardDeckAsync(int id);
+    Task<FlashcardDeckDto?> GetFlashcardDeckByIdAsync(Guid id);
     Task<IdentityResult> UpdateFlashcardDeckAsync(FlashcardDeckDto flashcardDeckDto);
+    Task<IdentityResult> DeleteFlashcardDeckAsync(Guid id);
 }

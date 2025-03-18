@@ -1,4 +1,4 @@
-import type { Flashcard} from "src/types/flashcard";
+import type { Flashcard } from "src/types/flashcard";
 
 import { useState } from "react";
 
@@ -17,49 +17,61 @@ type Props = {
 
 export function FlashcardDeckEditorTab({ flashcards, setFlashcards }: Props) {
   const { t } = useTranslate('activity');
-  const [isEditing, setIsEditing] = useState(true);
+  const [editingIndex, setEditingIndex] = useState<number | undefined>(undefined)
 
   const addFlashcard = () => {
-    setIsEditing(true);
+    setEditingIndex(flashcards.length);
   };
 
   const removeFlashcard = (index: number) => {
+    setFlashcards(flashcards.filter((_, i) => i !== index));
   };
 
-  const editFlashcard = (index: number) => {
-  };
+  const handleSave = (flashcard: Flashcard, index: number | undefined) => {
+    if (index !== undefined) {
+      const updatedFlashcards = [...flashcards];
+      updatedFlashcards[index] = flashcard;
+      setFlashcards(updatedFlashcards);
+    } else {
+      setFlashcards([...flashcards, flashcard]);
+    }
+    setEditingIndex(undefined);
+  }
 
-  const handleSave = (flashcard: Flashcard) => {
-    setIsEditing(false);
-    setFlashcards([...flashcards, flashcard]);
+  const handleCancel = () => {
+    setEditingIndex(undefined);
   }
 
   return (
     <Container sx={{ width: '100%' }}>
-
       {
         flashcards.map((flashcard, index) => (
-          <FlashcardView
-            key={index}
-            index={index}
-            flashcard={flashcard}
-            onDelete={() => removeFlashcard(index)}
-            onEdit={() => editFlashcard(index)}
-          />
+          editingIndex === index ? (
+            <FlashcardEditForm key={index} onSave={(q) => handleSave(q, index)} onCancel={handleCancel}
+                               initialData={flashcard} />
+          ) : (
+            <FlashcardView
+              key={index}
+              index={index}
+              flashcard={flashcard}
+              onDelete={() => removeFlashcard(index)}
+              onEdit={() => setEditingIndex(index)}
+            />
+          )
         ))
       }
 
       {
-        isEditing &&
-        <FlashcardEditForm onSave={handleSave} />
-      }
+        editingIndex === flashcards.length && (
+          <FlashcardEditForm onSave={(q) => handleSave(q, editingIndex)} onCancel={handleCancel} />
+        )}
 
       <div style={{ marginBottom: '70px' }}>
         <Tooltip
           title={t('tool-tip.add-new-flashcard')}
           arrow
-          disableHoverListener={!isEditing}
-          disableTouchListener={!isEditing}
+          disableHoverListener={editingIndex === undefined}
+          disableTouchListener={editingIndex === undefined}
         >
           <div>
             <Button
@@ -67,7 +79,7 @@ export function FlashcardDeckEditorTab({ flashcards, setFlashcards }: Props) {
               onClick={addFlashcard}
               sx={{ p: 2, mt: 3, justifyContent: 'space-between', border: '1px solid #ddd' }}
               endIcon={<AddIcon />}
-              disabled={isEditing}
+              disabled={editingIndex === flashcards.length}
               fullWidth
             >
               {t('add-new-flashcard')}

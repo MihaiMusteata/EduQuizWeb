@@ -6,5 +6,8 @@
   "true": "Adevărat",
   "false": "Fals",
   "activity": "Activitate",
-  "title": "Titlu"
+  "title": "Titlu",
+  "deleting": "Se șterge...",
+  "deleted": "Șters",
+  "error": "Eroare"
 }

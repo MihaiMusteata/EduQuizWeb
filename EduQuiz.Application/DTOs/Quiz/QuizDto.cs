@@ -4,7 +4,7 @@ namespace EduQuiz.Application.DTOs.Quiz;
 
 public class QuizDto
 {
-    public string? Id { get; set; }
+    public Guid? Id { get; set; }
     public string Title { get; set; }
     public DateTime CreatedAt { get; set; }
     public string Visibility { get; set; }

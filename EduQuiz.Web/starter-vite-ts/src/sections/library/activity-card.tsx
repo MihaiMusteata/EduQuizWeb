@@ -1,3 +1,5 @@
+import type { LibraryItem } from "src/types/library";
+
 import { usePopover } from "minimal-shared/hooks";
 
 import Button from "@mui/material/Button";
@@ -6,28 +8,28 @@ import MenuItem from "@mui/material/MenuItem";
 import { Box, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 
+import { RouterLink } from "src/routes/components";
+
 import { useTranslate } from 'src/locales';
 
 import { Label } from 'src/components/label';
-
-import { Iconify } from "../../components/iconify";
-import { RouterLink } from "../../routes/components";
-import { CustomPopover } from "../../components/custom-popover";
-
-import type { Visibility } from "../../types/quiz";
+import { Iconify } from "src/components/iconify";
+import { CustomPopover } from "src/components/custom-popover";
 
 type Props = {
-  title: string,
-  visibility: Visibility,
-  totalItems: number,
-  createdAt: string,
-  activity: string,
-  editHref: string,
+  item: LibraryItem;
+  editHref: string;
+  onDelete: (id: string) => void;
 }
 
-export function ActivityCard({ title, visibility, totalItems, createdAt, activity, editHref }: Props) {
+export function ActivityCard({ item, editHref, onDelete }: Props) {
   const { t } = useTranslate('activity');
   const menuActions = usePopover();
+
+  const handleDelete = () => {
+    menuActions.onClose();
+    onDelete(item.id);
+  }
 
   const renderMenuActions = () => (
     <CustomPopover
@@ -45,9 +47,7 @@ export function ActivityCard({ title, visibility, totalItems, createdAt, activit
         </li>
 
         <MenuItem
-          onClick={() => {
-            menuActions.onClose();
-          }}
+          onClick={handleDelete}
           sx={{ color: 'error.main' }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
@@ -67,7 +67,7 @@ export function ActivityCard({ title, visibility, totalItems, createdAt, activit
             fontWeight='bold'
             sx={{ mb: 1 }}
           >
-            {title}
+            {item.title}
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
@@ -76,9 +76,9 @@ export function ActivityCard({ title, visibility, totalItems, createdAt, activit
             </Typography>
             <Label
               variant='soft'
-              color={activity === 'Quizzes' ? 'info' : 'warning'}
+              color={item.activity === 'Quizzes' ? 'info' : 'warning'}
             >
-              {activity}
+              {item.activity}
             </Label>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
@@ -86,10 +86,10 @@ export function ActivityCard({ title, visibility, totalItems, createdAt, activit
               {t('visibility.label')}:
             </Typography>
             <Typography variant="body2">
-              {visibility === 'public' ? t('visibility.public.label') : t('visibility.private.label')}
+              {item.visibility === 'public' ? t('visibility.public.label') : t('visibility.private.label')}
             </Typography>
             {
-              visibility === 'public' ?
+              item.visibility === 'public' ?
                 <Iconify width={16} icon="solar:lock-keyhole-minimalistic-unlocked-bold-duotone" /> :
                 <Iconify width={16} icon="solar:lock-keyhole-minimalistic-locked-bold-duotone" />
             }
@@ -100,7 +100,7 @@ export function ActivityCard({ title, visibility, totalItems, createdAt, activit
               {t('total-questions')}:
             </Typography>
             <Typography variant="body2">
-              {totalItems}
+              {item.totalItems}
             </Typography>
           </Box>
 
@@ -109,7 +109,7 @@ export function ActivityCard({ title, visibility, totalItems, createdAt, activit
               {t('created-at')}:
             </Typography>
             <Typography variant="body2">
-              {createdAt}
+              {item.createdAt}
             </Typography>
           </Box>
         </Box>

@@ -110,6 +110,8 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
   const putAuth = (url: string, data: any) => requestHandler(() => axiosInstance.put(url, data));
   const getAuth = <T = any>(url: string, options?: any) => requestHandler(() => axiosInstance.get<T>(url, options));
 
+  const deleteAuth = (url: string) => requestHandler(() => axiosInstance.delete(url));
+
   return (
     <AxiosContext.Provider
       value={{
@@ -120,6 +122,7 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         postAuth,
         putAuth,
         getAuth,
+        deleteAuth,
         isLoading,
       }}
     >

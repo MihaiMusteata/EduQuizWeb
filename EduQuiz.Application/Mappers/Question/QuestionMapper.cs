@@ -10,10 +10,10 @@ public static class QuestionMapper
     {
         return new QuestionDto
         {
-            Id = entity.Id,
+            Id = entity.TrackingId,
             Text = entity.Text,
             Type = entity.Type,
-            Hint = entity.Hint,
+            Hint = entity.Hint ?? string.Empty,
             Answers = entity.Answers.Select(x => x.ToDto()).ToList()
         };
     }

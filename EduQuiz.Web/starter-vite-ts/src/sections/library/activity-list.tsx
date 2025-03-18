@@ -31,9 +31,10 @@ const TABLE_HEAD = (t: TFunction): TableHeadCellProps[] => [
 
 type Props = {
   data: LibraryItem[];
+  onDelete: (id: string) => void;
 }
 
-export function ActivityList({ data }: Props) {
+export function ActivityList({ data, onDelete }: Props) {
   const table = useTable();
 
   const { t } = useTranslate('common');
@@ -62,6 +63,7 @@ export function ActivityList({ data }: Props) {
               <ActivityTableRow
                 key={row.id}
                 row={row}
+                onDelete={onDelete}
               />
 
             ))}

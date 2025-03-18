@@ -27,12 +27,14 @@ import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
 import { ActivityList } from "../activity-list";
+import { toast } from "../../../components/snackbar";
 
 export function LibraryView() {
   const { t: tPages } = useTranslate('pages');
   const { t: tActivity } = useTranslate('activity');
+  const { t: tCommon } = useTranslate('common');
   const router = useRouter();
-  const { getAuth } = useAxios();
+  const { getAuth, deleteAuth } = useAxios();
 
   const [tableData, setTableData] = useState<LibraryItem[]>([]);
 
@@ -60,6 +62,24 @@ export function LibraryView() {
   const handleResetSearch = () => {
     updateFilters({ search: '', activity: 'All' });
   };
+
+  const handleDelete = async (id: string) => {
+    const activity = tableData.find(item => item.id === id)?.activity;
+    const url = activity === 'Quizzes' ? endpoints.quiz.delete(id) : endpoints.flashcardDeck.delete(id);
+    const promise = deleteAuth(url);
+    try {
+      toast.promise(promise, {
+        loading: tCommon('deleting'),
+        success: tCommon('deleted'),
+        error: tCommon('error')
+      });
+
+      await promise
+      setTableData(tableData.filter(item => item.id !== id));
+    } catch (error) {
+      console.error("Error deleting activity", error);
+    }
+  }
 
   const handleFilterActivity = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
@@ -164,7 +184,7 @@ export function LibraryView() {
             Reset
           </Button>
         </Box>
-        <ActivityList data={dataFiltered} />
+        <ActivityList data={dataFiltered} onDelete={handleDelete} />
       </Card>
 
     </DashboardContent>

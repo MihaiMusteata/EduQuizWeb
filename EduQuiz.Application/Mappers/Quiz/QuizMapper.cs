@@ -10,7 +10,7 @@ public static class QuizMapper
     {
         return new QuizDto
         {
-            Id = entity.Id,
+            Id = entity.TrackingId,
             Title = entity.Title,
             Visibility = entity.Visibility,
             CreatedAt = entity.CreatedAt,

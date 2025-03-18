@@ -5,21 +5,16 @@ export const endpoints = {
     refresh: '/auth/refresh-token',
   },
   quiz: {
-    get: (id: number | string) => `/quiz/${id}`,
+    get: (id: string) => `/quiz/${id}`,
     create: '/quiz/create',
     update: '/quiz/update',
-    delete: (id: number | string) => `/quiz/delete/${id}`,
-  },
-  question: {
-    update: '/question/update',
-    delete: (id: number | string) => `/question/delete/${id}`,
-  },
-  answer: {
-    update: '/answer/update',
-    delete: (id: number | string) => `/answer/delete/${id}`,
+    delete: (id: string) => `/quiz/${id}`,
   },
   flashcardDeck: {
     create: '/flashcard-deck/create',
+    get: (id: string) => `/flashcard-deck/${id}`,
+    update: '/flashcard-deck/update',
+    delete: (id: string) => `/flashcard-deck/${id}`,
   },
   library: {
     get: '/library/my-library',

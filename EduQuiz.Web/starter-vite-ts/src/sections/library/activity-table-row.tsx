@@ -12,13 +12,15 @@ import { ActivityCard } from "./activity-card";
 
 type Props = {
   row: LibraryItem;
+  onDelete: (id: string) => void;
 };
 
 type ActivityPathGenerator = (id: string) => string;
 
-export function ActivityTableRow({ row }: Props) {
+export function ActivityTableRow({ row, onDelete }: Props) {
   const hrefMap: Record<string, ActivityPathGenerator> = {
     Quizzes: (id: string) => paths.activity.quiz.edit(id),
+    Flashcards: (id: string) => paths.activity.flashcardDeck.edit(id),
   };
 
   return (
@@ -32,11 +34,8 @@ export function ActivityTableRow({ row }: Props) {
         }}
       >
         <ActivityCard
-          title={row.title}
-          totalItems={row.totalItems}
-          visibility={row.visibility}
-          createdAt={row.createdAt}
-          activity={row.activity}
+          item={row}
+          onDelete={onDelete}
           editHref={hrefMap[row.activity](row.id)}
         />
       </TableCell>

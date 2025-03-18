@@ -9,7 +9,7 @@ public static class AnswerMapper
     {
         return new AnswerDto
         {
-            Id = entity.Id,
+            Id = entity.TrackingId,
             Text = entity.Text,
             IsCorrect = entity.IsCorrect
         };

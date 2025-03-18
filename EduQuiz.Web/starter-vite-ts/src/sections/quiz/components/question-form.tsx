@@ -36,18 +36,18 @@ export function QuestionForm({ onSave, onCancel, questionType, initialData }: Pr
     resolver: zodResolver(FieldsSchema),
     defaultValues: {
       question: {
-        id: initialData?.id || '',
+        id: initialData?.id,
         type: questionType,
         text: initialData?.text || '',
         answers: initialData?.answers || (
           questionType === 'multiple-choice' || questionType === 'single-choice'
             ? [
-              { id:'', text: '', isCorrect: false },
-              { id:'', text: '', isCorrect: false },
-              { id:'', text: '', isCorrect: false },
-              { id:'', text: '', isCorrect: false },
+              { text: '', isCorrect: false },
+              { text: '', isCorrect: false },
+              { text: '', isCorrect: false },
+              { text: '', isCorrect: false },
             ]
-            : [{ id:'', text: '', isCorrect: true }]
+            : [{ text: '', isCorrect: true }]
         ),
         hint: initialData?.hint || '',
       },

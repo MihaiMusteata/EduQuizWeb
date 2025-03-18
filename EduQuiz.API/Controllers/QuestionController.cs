@@ -29,8 +29,8 @@ public class QuestionController : BaseController
         return BadRequest($"Question Update Failed: {result.Errors}");
     }
 
-    [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteQuestion(int id)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteQuestion(Guid id)
     {
         var result = await _questionService.DeleteQuestionAsync(id);
         if (result.Succeeded)

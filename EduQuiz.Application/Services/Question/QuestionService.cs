@@ -1,6 +1,7 @@
 using EduQuiz.Application.DTOs.Question;
 using EduQuiz.Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduQuiz.Application.Services.Question;
 
@@ -31,9 +32,9 @@ public class QuestionService : IQuestionService
         return IdentityResult.Success;
     }
 
-    public async Task<IdentityResult> DeleteQuestionAsync(int id)
+    public async Task<IdentityResult> DeleteQuestionAsync(Guid id)
     {
-        var question = await _context.Questions.FindAsync(id);
+        var question = await _context.Questions.FirstOrDefaultAsync(q => q.TrackingId == id);
         if (question is null)
         {
             return IdentityResult.Failed(new IdentityError { Description = "Question Not Found" });

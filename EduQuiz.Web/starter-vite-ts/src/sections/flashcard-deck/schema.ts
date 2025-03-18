@@ -8,6 +8,7 @@ export type FieldsSchemaType = {
 
 export const FieldsSchema = zod.object({
   flashcard: zod.object({
+    id: zod.string().optional(),
     frontSideText: zod.string(),
     backSideText: zod.string(),
     hint: zod.string().optional(),

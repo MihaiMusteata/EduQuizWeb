@@ -7,14 +7,16 @@ namespace EduQuiz.Domain.Entities.Answer;
 public class AnswerDbTable
 {
     [Key]
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid TrackingId { get; set; } = Guid.NewGuid();
+
     public string Text { get; set; }
     public bool IsCorrect { get; set; }
-    
-    [ForeignKey("Question")]
-    public string QuestionId { get; set; }
-    
-    [InverseProperty("Answers")]
-    public QuestionDbTable Question { get; set; }
+
+    [ForeignKey("Question")] public int QuestionId { get; set; }
+
+    [InverseProperty("Answers")] public QuestionDbTable Question { get; set; }
 }

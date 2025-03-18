@@ -32,7 +32,7 @@ public class QuizController : BaseController
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetQuizById(string id)
+    public async Task<IActionResult> GetQuizById(Guid id)
     {
         var quiz = await _quizService.GetQuizByIdAsync(id);
         if (quiz == null)
@@ -55,8 +55,8 @@ public class QuizController : BaseController
         return BadRequest($"Quiz Update Failed: {result.Errors}");
     }
     
-    [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteQuiz(string id)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteQuiz(Guid id)
     {
         var result = await _quizService.DeleteQuizAsync(id);
         if (result.Succeeded)

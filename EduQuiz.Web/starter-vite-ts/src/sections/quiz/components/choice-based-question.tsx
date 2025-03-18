@@ -23,7 +23,7 @@ type Props = {
 export function ChoiceBasedQuestion({ totalAnswers, setTotalAnswers, setValue, getValues, questionType, t, updateAnswers, setUpdateAnswers }: Props) {
   const handleAddAnswer = () => {
     setTotalAnswers(totalAnswers + 1);
-    const newAnswer: Answer = { id: '', text: '', isCorrect: false };
+    const newAnswer: Answer = { text: '', isCorrect: false };
     setValue(`question.answers.${totalAnswers}`, newAnswer);
   };
 

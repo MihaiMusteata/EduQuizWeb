@@ -9,10 +9,10 @@ public static class FlashcardMapper
     {
         return new FlashcardDto
         {
-            Id = entity.Id,
+            Id = entity.TrackingId,
             FrontSideText = entity.FrontSideText,
             BackSideText = entity.BackSideText,
-            Hint = entity.Hint
+            Hint = entity.Hint ?? string.Empty
         };
     }
 
@@ -22,7 +22,7 @@ public static class FlashcardMapper
         {
             FrontSideText = dto.FrontSideText,
             BackSideText = dto.BackSideText,
-            Hint = dto.Hint,
+            Hint = dto.Hint
         };
     }
     

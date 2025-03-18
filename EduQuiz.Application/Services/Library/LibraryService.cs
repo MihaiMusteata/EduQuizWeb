@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EduQuiz.Application.Services.Library;
 
-public class LibraryService: ILibraryService
+public class LibraryService : ILibraryService
 {
     private readonly EduQuizDbContext _context;
 
@@ -22,7 +22,7 @@ public class LibraryService: ILibraryService
             .Where(x => x.UserId == userId)
             .Select(x => new LibraryItemDto
             {
-                Id = x.Id,
+                Id = x.TrackingId,
                 Activity = "Quizzes",
                 Title = x.Title,
                 CreatedAt = x.CreatedAt.ToUserTimeZone(),
@@ -35,7 +35,7 @@ public class LibraryService: ILibraryService
             .Where(x => x.UserId == userId)
             .Select(x => new LibraryItemDto
             {
-                Id = x.Id,
+                Id = x.TrackingId,
                 Activity = "Flashcards",
                 Title = x.Title,
                 CreatedAt = x.CreatedAt.ToUserTimeZone(),
@@ -43,7 +43,7 @@ public class LibraryService: ILibraryService
                 TotalItems = x.Flashcards.Count
             })
             .ToListAsync());
-        
-        return libraryItems;
+
+        return libraryItems.OrderBy(x => x.CreatedAt).ToList();
     }
 }

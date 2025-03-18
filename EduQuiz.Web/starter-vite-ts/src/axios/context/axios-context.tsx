@@ -10,6 +10,7 @@ interface AuthContextProps {
   postAuth: (url: string, data: any) => Promise<AxiosResponse>;
   putAuth: (url: string, data: any) => Promise<AxiosResponse>;
   getAuth: <T = any>(url: string, options?: any) => Promise<T>;
+  deleteAuth: (url: string) => Promise<AxiosResponse>;
   isLoading: boolean;
 }
 

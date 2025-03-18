@@ -6,5 +6,8 @@
   "true": "True",
   "false": "False",
   "activity": "Activity",
-  "title": "Title"
+  "title": "Title",
+  "deleting": "Deleting...",
+  "deleted": "Deleted",
+  "error": "Error"
 }

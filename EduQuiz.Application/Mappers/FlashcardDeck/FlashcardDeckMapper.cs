@@ -10,7 +10,7 @@ public static class FlashcardDeckMapper
     {
         return new FlashcardDeckDto
         {
-            Id = entity.Id,
+            Id = entity.TrackingId,
             Title = entity.Title,
             CreatedAt = entity.CreatedAt,
             Visibility = entity.Visibility,
@@ -23,7 +23,6 @@ public static class FlashcardDeckMapper
         return new FlashcardDeckDbTable
         {
             Title = dto.Title,
-            CreatedAt = dto.CreatedAt,
             Visibility = dto.Visibility,
             UserId = userId,
             Flashcards = dto.Flashcards.Select(x => x.ToEntity()).ToList()

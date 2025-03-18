@@ -6,6 +6,7 @@ import { usePathname } from 'src/routes/hooks';
 
 import { themeConfig, ThemeProvider } from 'src/theme';
 
+import { Snackbar } from 'src/components/snackbar';
 import { ProgressBar } from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
@@ -35,6 +36,7 @@ export default function App({ children }: AppProps) {
                 modeStorageKey={themeConfig.modeStorageKey}
               >
                 <MotionLazy>
+                  <Snackbar />
                   <ProgressBar />
                   <SettingsDrawer defaultSettings={defaultSettings} />
                   {children}

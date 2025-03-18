@@ -41,7 +41,7 @@ export function ActivityCreateDialog() {
             title="Flash Cards"
             image={`${CONFIG.assetsDir}/assets/icons/activity/ic-flash-cards.png`}
             description={t('learn-with-flash-cards')}
-            onClick={() => router.push(paths.activity.flashcards.new)}
+            onClick={() => router.push(paths.activity.flashcardDeck.new)}
           />
         </Grid>
       </Grid>
