@@ -19,11 +19,12 @@ import { CustomPopover } from "src/components/custom-popover";
 type Props = {
   item: LibraryItem;
   editHref: string;
+  practiceHref: string;
   onDelete: (id: string) => void;
 }
 
-export function ActivityCard({ item, editHref, onDelete }: Props) {
-  const { t } = useTranslate('activity');
+export function ActivityCard({ item, editHref, practiceHref, onDelete }: Props) {
+  const { t } = useTranslate();
   const menuActions = usePopover();
 
   const handleDelete = () => {
@@ -42,7 +43,7 @@ export function ActivityCard({ item, editHref, onDelete }: Props) {
         <li>
           <MenuItem href={editHref} component={RouterLink} onClick={() => menuActions.onClose()}>
             <Iconify icon="solar:pen-bold" />
-            Edit
+            {t('edit')}
           </MenuItem>
         </li>
 
@@ -51,7 +52,7 @@ export function ActivityCard({ item, editHref, onDelete }: Props) {
           sx={{ color: 'error.main' }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          {t('delete')}
         </MenuItem>
       </MenuList>
     </CustomPopover>
@@ -121,9 +122,15 @@ export function ActivityCard({ item, editHref, onDelete }: Props) {
           justifyContent: 'space-between',
           position: 'relative'
         }}>
-          <Button variant="soft" color="secondary" sx={{ flexGrow: 1, justifyContent: 'center' }}>
+          <Button
+            variant="soft"
+            color="secondary"
+            sx={{ flexGrow: 1, justifyContent: 'center' }}
+            href={practiceHref}
+            component={RouterLink}
+          >
             <Iconify icon="solar:play-circle-bold-duotone" sx={{ mr: 1 }} />
-            Practice
+            {t('practice')}
           </Button>
 
           <IconButton

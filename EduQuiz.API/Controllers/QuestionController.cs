@@ -1,4 +1,3 @@
-using EduQuiz.Application.DTOs.Question;
 using EduQuiz.Application.Services.Question;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,27 +16,27 @@ public class QuestionController : BaseController
         _questionService = questionService;
     }
 
-    [HttpPut("update")]
-    public async Task<IActionResult> UpdateQuestion(QuestionDto questionDto)
+    [HttpGet("by-index")]
+    public async Task<IActionResult> GetQuestionByIndex([FromQuery] Guid quizId, [FromQuery] int index)
     {
-        var result = await _questionService.UpdateQuestionAsync(questionDto);
-        if (result.Succeeded)
+        var question = await _questionService.GetQuestionByIndexAsync(quizId, index);
+        if (question == null)
         {
-            return Ok("Question Updated Successfully");
+            return NotFound();
         }
 
-        return BadRequest($"Question Update Failed: {result.Errors}");
+        return Ok(question);
     }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteQuestion(Guid id)
+    
+    [HttpGet("list")]
+    public async Task<IActionResult> GetQuestions([FromQuery] Guid quizId)
     {
-        var result = await _questionService.DeleteQuestionAsync(id);
-        if (result.Succeeded)
+        var questions = await _questionService.GetQuestionsAsync(quizId);
+        if (questions == null)
         {
-            return Ok("Question Deleted Successfully");
+            return NotFound();
         }
 
-        return BadRequest($"Question Deletion Failed: {result.Errors}");
+        return Ok(questions);
     }
 }

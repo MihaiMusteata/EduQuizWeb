@@ -27,7 +27,7 @@ type QuestionViewCardProps = {
 };
 
 export function QuestionViewCard({ index, question, onEdit, onDelete }: QuestionViewCardProps) {
-  const { t } = useTranslate('common');
+  const { t } = useTranslate();
   const renderChoiceBased = () => (
     <List>
       {question.answers.map((answer, idx) => (

@@ -23,8 +23,7 @@ type Props = {
 }
 
 export function QuestionForm({ onSave, onCancel, questionType, initialData }: Props) {
-  const { t } = useTranslate('activity');
-  const { t: tCommon } = useTranslate('common');
+  const { t } = useTranslate();
   const [totalAnswers, setTotalAnswers] = useState(
     questionType === 'multiple-choice' || questionType === 'single-choice'
       ? initialData?.answers.length || 4
@@ -117,7 +116,7 @@ export function QuestionForm({ onSave, onCancel, questionType, initialData }: Pr
         label={t('answer-hint')}
         multiline rows={2}
         fullWidth margin='normal'
-        name='hint'
+        name='question.hint'
         helperText={t('hint-caption')}
         sx={{
           '& .MuiInputBase-root': {
@@ -126,10 +125,10 @@ export function QuestionForm({ onSave, onCancel, questionType, initialData }: Pr
         }} />
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, marginTop: 2 }}>
         <Button variant='outlined' color='inherit' onClick={handleCancel}>
-          {tCommon('cancel')}
+          {t('cancel')}
         </Button>
         <Button variant='contained' color='primary' type='submit'>
-          {tCommon('save')}
+          {t('save')}
         </Button>
       </Box>
     </Form>

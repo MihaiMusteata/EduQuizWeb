@@ -36,8 +36,13 @@ export default defineConfig({
       },
     ],
   },
-  server: { 
-    port: PORT, 
+  server: {
+    port: PORT,
+    host: "0.0.0.0",
+    strictPort: true,
+  },
+  preview: {
+    port: PORT,
     host: "0.0.0.0",
     strictPort: true,
   },

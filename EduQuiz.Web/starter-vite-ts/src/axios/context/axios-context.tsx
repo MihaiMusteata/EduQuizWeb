@@ -1,4 +1,4 @@
-import type { AxiosInstance, AxiosResponse } from "axios";
+import type { AxiosInstance } from "axios";
 
 import { createContext } from 'react';
 
@@ -7,10 +7,10 @@ interface AuthContextProps {
   axiosLogin: AxiosInstance;
   axiosDefault: AxiosInstance;
   setJwt: (jwt: string) => void;
-  postAuth: (url: string, data: any) => Promise<AxiosResponse>;
-  putAuth: (url: string, data: any) => Promise<AxiosResponse>;
+  postAuth: <T = any> (url: string, data: any) => Promise<T>;
+  putAuth: <T = any> (url: string, data: any) => Promise<T>;
   getAuth: <T = any>(url: string, options?: any) => Promise<T>;
-  deleteAuth: (url: string) => Promise<AxiosResponse>;
+  deleteAuth: <T = any> (url: string) => Promise<T>;
   isLoading: boolean;
 }
 

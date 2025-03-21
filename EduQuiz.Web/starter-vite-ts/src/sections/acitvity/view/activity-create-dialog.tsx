@@ -13,7 +13,7 @@ import { FullScreenDialog } from "src/components/dialog/full-screen-dialog";
 
 export function ActivityCreateDialog() {
   const router = useRouter();
-  const { t } = useTranslate('activity');
+  const { t } = useTranslate();
 
   return (
     <FullScreenDialog>

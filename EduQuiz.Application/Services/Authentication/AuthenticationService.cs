@@ -72,7 +72,7 @@ public class AuthenticationService : IAuthenticationService
         var response = new LoginResponse
         {
             IsLogin = true,
-            JwtToken = await GenerateJwtToken(user),
+            JwtToken = GenerateJwtToken(user),
             RefreshToken = GenerateRefreshToken()
         };
 
@@ -83,7 +83,7 @@ public class AuthenticationService : IAuthenticationService
         return response;
     }
 
-    private async Task<string> GenerateJwtToken(UserData user)
+    private string GenerateJwtToken(UserData user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

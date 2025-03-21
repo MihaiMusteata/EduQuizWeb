@@ -37,7 +37,7 @@ type Props = {
 export function ActivityList({ data, onDelete }: Props) {
   const table = useTable();
 
-  const { t } = useTranslate('common');
+  const { t } = useTranslate();
 
   const notFound = (!data.length);
 

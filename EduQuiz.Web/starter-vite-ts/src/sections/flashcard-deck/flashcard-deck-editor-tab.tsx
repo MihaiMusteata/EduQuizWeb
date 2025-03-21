@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function FlashcardDeckEditorTab({ flashcards, setFlashcards }: Props) {
-  const { t } = useTranslate('activity');
+  const { t } = useTranslate();
   const [editingIndex, setEditingIndex] = useState<number | undefined>(undefined)
 
   const addFlashcard = () => {

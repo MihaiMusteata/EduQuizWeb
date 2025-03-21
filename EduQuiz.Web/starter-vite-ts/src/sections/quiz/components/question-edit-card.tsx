@@ -15,7 +15,7 @@ type Props = {
 
 export function QuestionEditCard({ onSave, onCancel, initialData }: Props) {
   const [questionType, setQuestionType] = useState<QuestionType| undefined>(initialData?.type);
-  const { t } = useTranslate('activity');
+  const { t } = useTranslate();
 
   return (
     <Card sx={{ border: '1px solid #ddd', borderRadius: '10px', padding: 2, marginTop: 2 }}>

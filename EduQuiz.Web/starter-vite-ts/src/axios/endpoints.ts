@@ -9,6 +9,12 @@ export const endpoints = {
     create: '/quiz/create',
     update: '/quiz/update',
     delete: (id: string) => `/quiz/${id}`,
+    totalQuestions: (id: string) => `/quiz/${id}/total-questions`,
+    submit: (id: string) => `/quiz/${id}/submit`,
+  },
+  question: {
+    getByIndex: '/question/by-index',
+    getList: '/question/list',
   },
   flashcardDeck: {
     create: '/flashcard-deck/create',

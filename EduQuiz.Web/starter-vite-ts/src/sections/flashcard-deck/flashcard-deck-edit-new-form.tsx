@@ -20,7 +20,7 @@ type Props = {
 }
 
 export function FlashcardDeckEditNewForm({ currentFlashcardDeck }: Props) {
-  const { t } = useTranslate('common');
+  const { t } = useTranslate();
   const router = useRouter();
 
   const { postAuth, putAuth } = useAxios();

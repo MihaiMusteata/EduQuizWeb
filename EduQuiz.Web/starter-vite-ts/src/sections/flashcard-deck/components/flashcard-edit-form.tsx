@@ -20,8 +20,7 @@ type Props = {
 };
 
 export function FlashcardEditForm({ onSave, onCancel, initialData }: Props) {
-  const { t } = useTranslate('activity');
-  const { t: tCommon } = useTranslate('common');
+  const { t } = useTranslate();
 
   const methods = useForm<FieldsSchemaType>({
     resolver: zodResolver(FieldsSchema),
@@ -85,11 +84,11 @@ export function FlashcardEditForm({ onSave, onCancel, initialData }: Props) {
           }}
         />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, marginTop: 2 }}>
-          <Button variant='outlined' color='inherit' onClick={onCancel}>
-            {tCommon('cancel')}
+          <Button variant='outlined' color='inherit' onClick={handleCancel}>
+            {t('cancel')}
           </Button>
           <Button variant='contained' color='primary' type='submit'>
-            {tCommon('save')}
+            {t('save')}
           </Button>
         </Box>
       </Form>

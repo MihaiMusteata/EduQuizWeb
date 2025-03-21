@@ -1,6 +1,6 @@
 using EduQuiz.Application.DTOs.Question;
+using EduQuiz.Application.Mappers.Question;
 using EduQuiz.Infrastructure;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduQuiz.Application.Services.Question;
@@ -14,35 +14,25 @@ public class QuestionService : IQuestionService
         _context = context;
     }
 
-    public async Task<IdentityResult> UpdateQuestionAsync(QuestionDto questionDto)
+    public async Task<QuestionSummaryDto?> GetQuestionByIndexAsync(Guid quizId, int index)
     {
-        var oldQuestion = await _context.Questions.FindAsync(questionDto.Id);
-        if (oldQuestion is null)
-        {
-            return IdentityResult.Failed(new IdentityError { Description = "Question Not Found" });
-        }
+        var questions = await GetQuestionsAsync(quizId);
 
-        oldQuestion.Text = questionDto.Text;
-        oldQuestion.Hint = questionDto.Hint;
-        oldQuestion.Type = questionDto.Type;
-
-        _context.Questions.Update(oldQuestion);
-        await _context.SaveChangesAsync();
-
-        return IdentityResult.Success;
+        return questions?[index];
     }
 
-    public async Task<IdentityResult> DeleteQuestionAsync(Guid id)
+    public async Task<List<QuestionSummaryDto>?> GetQuestionsAsync(Guid quizId)
     {
-        var question = await _context.Questions.FirstOrDefaultAsync(q => q.TrackingId == id);
-        if (question is null)
-        {
-            return IdentityResult.Failed(new IdentityError { Description = "Question Not Found" });
-        }
+        var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.TrackingId == quizId);
+        if (quiz is null)
+            return null;
 
-        _context.Questions.Remove(question);
-        await _context.SaveChangesAsync();
+        var questions = await _context.Questions
+            .Include(q => q.Answers).OrderBy(x => x.Id)
+            .Where(x => x.QuizId == quiz.Id)
+            .Select(x => x.ToSummaryDto())
+            .ToListAsync();
 
-        return IdentityResult.Success;
+        return questions;
     }
 }

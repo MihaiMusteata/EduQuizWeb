@@ -54,6 +54,8 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
           const response = await axiosLogin.post(endpoints.auth.refresh, { jwtToken: jwt });
           if (response.status === 401) {
             sessionStorage.removeItem("jwtToken");
+            router.push(paths.auth.jwt.signIn);
+            toast.error("Sesiunea a expirat. Redirectionare la pagina de login.");
           }
 
           const { jwtToken } = response.data;
@@ -64,6 +66,7 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
 
           return axios(originalRequest);
         } catch (er) {
+          router.push(paths.auth.jwt.signIn);
           console.log("RefreshError : ", er);
           sessionStorage.removeItem("jwtToken");
         }
@@ -106,11 +109,11 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const postAuth = (url: string, data: any) => requestHandler(() => axiosInstance.post(url, data));
-  const putAuth = (url: string, data: any) => requestHandler(() => axiosInstance.put(url, data));
+  const postAuth = <T = any> (url: string, data: any) => requestHandler(() => axiosInstance.post<T>(url, data));
+  const putAuth = <T = any>(url: string, data: any) => requestHandler(() => axiosInstance.put<T>(url, data));
   const getAuth = <T = any>(url: string, options?: any) => requestHandler(() => axiosInstance.get<T>(url, options));
 
-  const deleteAuth = (url: string) => requestHandler(() => axiosInstance.delete(url));
+  const deleteAuth = <T = any> (url: string) => requestHandler(() => axiosInstance.delete<T>(url));
 
   return (
     <AxiosContext.Provider

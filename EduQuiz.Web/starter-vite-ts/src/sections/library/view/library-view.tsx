@@ -24,15 +24,13 @@ import { endpoints } from "src/axios/endpoints";
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Label } from 'src/components/label';
+import { toast } from "src/components/snackbar";
 import { Iconify } from 'src/components/iconify';
 
 import { ActivityList } from "../activity-list";
-import { toast } from "../../../components/snackbar";
 
 export function LibraryView() {
-  const { t: tPages } = useTranslate('pages');
-  const { t: tActivity } = useTranslate('activity');
-  const { t: tCommon } = useTranslate('common');
+  const { t } = useTranslate();
   const router = useRouter();
   const { getAuth, deleteAuth } = useAxios();
 
@@ -69,9 +67,9 @@ export function LibraryView() {
     const promise = deleteAuth(url);
     try {
       toast.promise(promise, {
-        loading: tCommon('deleting'),
-        success: tCommon('deleted'),
-        error: tCommon('error')
+        loading: t('deleting'),
+        success: t('deleted'),
+        error: t('error')
       });
 
       await promise
@@ -105,7 +103,7 @@ export function LibraryView() {
         }}
       >
         <Typography variant="h4" sx={{ mb: 1 }}>
-          {tPages('library-page.title')}
+          {t('library-page.title')}
         </Typography>
         <Button
           variant='soft'
@@ -113,7 +111,7 @@ export function LibraryView() {
           onClick={handleAddNewActivity}
         >
           <Iconify icon='material-symbols:add-rounded' sx={{ mr: 1 }} />
-          {tActivity('add-new-activity')}
+          {t('add-new-activity')}
         </Button>
       </Box>
       <Divider sx={{ mb: 4 }} />
@@ -166,7 +164,7 @@ export function LibraryView() {
           <TextField
             fullWidth
             size='small'
-            placeholder="Search..."
+            placeholder={`${t('search')}...`}
             value={currentFilters.search}
             onChange={handleSearch}
             sx={{ mr: 1 }}
@@ -181,7 +179,7 @@ export function LibraryView() {
             }}
           />
           <Button variant='soft' color='primary' onClick={handleResetSearch}>
-            Reset
+            {t('reset')}
           </Button>
         </Box>
         <ActivityList data={dataFiltered} onDelete={handleDelete} />

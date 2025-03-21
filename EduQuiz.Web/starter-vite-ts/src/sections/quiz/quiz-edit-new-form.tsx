@@ -19,7 +19,7 @@ type Props = {
   currentQuiz?: Quiz;
 }
 export function QuizEditNewForm({ currentQuiz }: Props) {
-  const { t } = useTranslate('common');
+  const { t } = useTranslate();
   const router = useRouter();
 
   const { postAuth, putAuth } = useAxios();

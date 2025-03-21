@@ -1,3 +1,4 @@
+using EduQuiz.Application.DTOs.Answer;
 using EduQuiz.Application.DTOs.Quiz;
 using EduQuiz.Application.Services.Quiz;
 using Microsoft.AspNetCore.Authorization;
@@ -31,6 +32,15 @@ public class QuizController : BaseController
         return BadRequest($"Quiz Creation Failed: {result.Errors}");
     }
 
+    [HttpPost("{id}/submit")]
+    public async Task<IActionResult> SubmitQuiz([FromBody] List<AnswerGiven> answers, Guid id)
+    {
+        var userId = GetUserIdFromJwt();
+        var result = await _quizService.SubmitQuizAsync(answers, id, userId);
+
+        return Ok(result);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetQuizById(Guid id)
     {
@@ -41,6 +51,18 @@ public class QuizController : BaseController
         }
 
         return Ok(quiz);
+    }
+
+    [HttpGet("{id}/total-questions")]
+    public async Task<IActionResult> GetTotalQuestions(Guid id)
+    {
+        var total = await _quizService.GetTotalQuestions(id);
+        if (total == -1)
+        {
+            return NotFound("Quiz Not Found");
+        }
+
+        return Ok(total);
     }
     
     [HttpPut("update")]

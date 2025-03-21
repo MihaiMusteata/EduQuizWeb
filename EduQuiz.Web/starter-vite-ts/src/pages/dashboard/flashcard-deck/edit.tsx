@@ -28,6 +28,7 @@ export default function Page() {
     getAuth(endpoints.flashcardDeck.get(id)).then((response) => {
       setData(response);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (

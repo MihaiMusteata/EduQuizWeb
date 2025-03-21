@@ -47,6 +47,20 @@ public class QuizService : IQuizService
         return quiz?.ToDto();
     }
 
+    public async Task<int> GetTotalQuestions(Guid id)
+    {
+        var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.TrackingId == id);
+
+        if (quiz is null)
+            return -1;
+
+        var total = await _context.Questions
+            .Where(q => q.QuizId == quiz.Id)
+            .CountAsync();
+
+        return total;
+    }
+
     public async Task<IdentityResult> UpdateQuizAsync(QuizDto quizDto)
     {
         var oldQuiz = await _context.Quizzes
@@ -105,7 +119,7 @@ public class QuizService : IQuizService
             .ToList();
 
         _context.Questions.AddRange(questionsToAdd);
-       
+
         quiz.Questions.AddRange(questionsToAdd);
     }
 
@@ -151,5 +165,69 @@ public class QuizService : IQuizService
         await _context.SaveChangesAsync();
 
         return IdentityResult.Success;
+    }
+
+    public async Task<SubmissionResponse> SubmitQuizAsync(List<AnswerGiven> answers, Guid id, string userId)
+    {
+        var quiz = await _context.Quizzes
+            .Include(q => q.Questions)
+            .ThenInclude(q => q.Answers)
+            .FirstOrDefaultAsync(q => q.TrackingId == id);
+
+        if (quiz is null)
+        {
+            throw new Exception("Quiz Not Found");
+        }
+
+        float totalPoints = 0;
+        var totalQuestions = quiz.Questions.Count;
+
+        foreach (var answer in answers)
+        {
+            var question = quiz.Questions.FirstOrDefault(q => q.TrackingId == answer.QuestionId);
+            if (question is null)
+            {
+                throw new Exception("Question Not Found");
+            }
+
+            switch (question.Type)
+            {
+                case "multiple-choice":
+                    var totalCorrectAnswers = question.Answers.Count(a => a.IsCorrect);
+                    var correctAnswersSelected =
+                        question.Answers.Count(a => a.IsCorrect && answer.UserAnswer == a.TrackingId.ToString());
+                    var wrongAnswersSelected =
+                        question.Answers.Count(a => !a.IsCorrect && answer.UserAnswer == a.TrackingId.ToString());
+                    var points = wrongAnswersSelected == 0
+                        ? (float)correctAnswersSelected / totalCorrectAnswers
+                        : Math.Max(0,
+                            (float)correctAnswersSelected / totalCorrectAnswers -
+                            (float)wrongAnswersSelected / totalCorrectAnswers);
+                    totalPoints += points;
+                    break;
+
+                case "single-choice":
+                    totalPoints +=
+                        question.Answers.Any(a => a.TrackingId.ToString() == answer.UserAnswer && a.IsCorrect) ? 1 : 0;
+                    break;
+
+                case "true/false":
+                    bool.TryParse(answer.UserAnswer, out var ans);
+                    if (question.Answers[0].IsCorrect == ans)
+                        totalPoints += 1;
+                    break;
+
+                case "short-answer":
+                    if (question.Answers[0].Text.Equals(answer.UserAnswer, StringComparison.CurrentCultureIgnoreCase))
+                        totalPoints += 1;
+                    break;
+            }
+        }
+
+        return new SubmissionResponse
+        {
+            FinalGrade = totalPoints / totalQuestions * 10,
+            Questions = quiz.Questions.Select(q => q.ToDto()).ToList()
+        };
     }
 }

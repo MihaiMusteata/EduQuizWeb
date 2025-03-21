@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function QuizEditorTab({ questions, setQuestions }: Props) {
-  const { t } = useTranslate('activity');
+  const { t } = useTranslate();
   const [editingIndex, setEditingIndex] = useState<number | undefined>(undefined)
   const addQuestion = () => {
     setEditingIndex(questions.length);

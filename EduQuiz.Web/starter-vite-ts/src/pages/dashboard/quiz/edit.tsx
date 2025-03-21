@@ -7,11 +7,12 @@ import { useParams } from "src/routes/hooks";
 
 import { CONFIG } from 'src/global-config';
 import { useAxios } from 'src/axios/hooks';
+import { endpoints } from 'src/axios/endpoints';
+
+import { LoadingScreen } from "src/components/loading-screen";
 
 import { QuizEditView } from 'src/sections/quiz/view';
 
-import { LoadingScreen } from "../../../components/loading-screen";
-import { endpoints } from 'src/axios/endpoints';
 
 
 // ----------------------------------------------------------------------
@@ -27,6 +28,7 @@ export default function Page() {
     getAuth(endpoints.quiz.get(id)).then((response) => {
       setData(response);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (

@@ -18,9 +18,14 @@ type Props = {
 type ActivityPathGenerator = (id: string) => string;
 
 export function ActivityTableRow({ row, onDelete }: Props) {
-  const hrefMap: Record<string, ActivityPathGenerator> = {
+  const editHrefMap: Record<string, ActivityPathGenerator> = {
     Quizzes: (id: string) => paths.activity.quiz.edit(id),
     Flashcards: (id: string) => paths.activity.flashcardDeck.edit(id),
+  };
+
+  const practiceHrefMap: Record<string, ActivityPathGenerator> = {
+    Quizzes: (id: string) => paths.activity.quiz.practice(id),
+    Flashcards: (id: string) => paths.activity.flashcardDeck.practice(id),
   };
 
   return (
@@ -36,7 +41,8 @@ export function ActivityTableRow({ row, onDelete }: Props) {
         <ActivityCard
           item={row}
           onDelete={onDelete}
-          editHref={hrefMap[row.activity](row.id)}
+          editHref={editHrefMap[row.activity](row.id)}
+          practiceHref={practiceHrefMap[row.activity](row.id)}
         />
       </TableCell>
     </TableRow>

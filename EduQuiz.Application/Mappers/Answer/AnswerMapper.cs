@@ -23,4 +23,13 @@ public static class AnswerMapper
             IsCorrect = dto.IsCorrect
         };
     }
+
+    public static AnswerSummaryDto ToSummaryDto(this AnswerDbTable entity)
+    {
+        return new AnswerSummaryDto
+        {
+            Id = entity.TrackingId,
+            Text = entity.Text
+        };
+    }
 }

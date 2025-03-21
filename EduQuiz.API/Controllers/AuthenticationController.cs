@@ -45,7 +45,7 @@ public class AuthenticationController : ControllerBase
 
         if (string.IsNullOrEmpty(refreshToken) || string.IsNullOrEmpty(request.JwtToken))
         {
-            return BadRequest("Token Refresh Failed");
+            return Unauthorized("Token Refresh Failed");
         }
 
         var result = await _authenticationService.RefreshToken(new RefreshTokenDto
@@ -54,7 +54,7 @@ public class AuthenticationController : ControllerBase
             RefreshToken = refreshToken
         });
 
-        if (!result.IsLogin) return BadRequest("Token Refresh Failed");
+        if (!result.IsLogin) return Unauthorized("Token Refresh Failed");
 
         SetAuthCookies(result.RefreshToken);
         return Ok(new { result.JwtToken });

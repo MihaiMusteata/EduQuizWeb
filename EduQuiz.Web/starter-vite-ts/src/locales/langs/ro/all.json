@@ -1,0 +1,105 @@
+{
+  "editor": "Editor",
+  "settings": "Setări",
+  "cancel": "Anulare",
+  "save": "Salvare",
+  "true": "Adevărat",
+  "false": "Fals",
+  "activity": "Activitate",
+  "title": "Titlu",
+  "deleting": "Se șterge...",
+  "deleted": "Șters",
+  "error": "Eroare",
+  "search": "Caută",
+  "reset": "Curăță",
+  "edit": "Editează",
+  "delete": "Șterge",
+  "start": "Începe",
+  "tools-page": {
+    "title": "Instrumente",
+    "description": "Îmbunătățește-ți experiența de învățare cu instrumente inteligente concepute pentru a simplifica studiul, a genera teste dinamice și a eficientiza evaluarea cunoștințelor fără efort. "
+  },
+  "tools": {
+    "manual-activity": {
+      "title": "Manual",
+      "description": "Creează o nouă activitate manual."
+    }
+  },
+  "library-page": {
+    "title": "Biblioteca mea"
+  },
+  "question-type": {
+    "label": "Tipuri de Întrebări",
+    "types": {
+      "true-false": "Adevărat/Fals",
+      "multiple-choice": "Variante multiple de răspuns",
+      "single-choice": "O singură variantă de răspuns",
+      "short-answer": "Răspuns Scurt"
+    }
+  },
+  "add-answer": "Adaugă răspuns",
+  "hint-caption": "Acesta va fi afișat utilizatorului pentru ajutor.",
+  "answer-hint": "Indiciu de răspuns (opțional)",
+  "question": "Întrebare",
+  "answer": "Răspuns",
+  "tool-tip": {
+    "check-correct-answer": "Bifează dacă acesta este răspunsul corect",
+    "delete-answer": "Șterge acest răspuns",
+    "add-new-question": "Ar trebui să salvezi întrebarea înainte de a adăuga alta",
+    "add-new-flashcard": "Ar trebui să salvezi cartonașul înainte de a adăuga altul"
+  },
+  "add-new-question": "Adaugă o nouă întrebare",
+  "add-new-flashcard": "Adaugă un nou cartonaș",
+  "generate-new-activity": "Generează o nouă activitate",
+  "select-activity-type": "Selectează tipul de activitate",
+  "test-your-knowledge": "Testează-ți cunoștințele",
+  "learn-with-flash-cards": "Învață și memorează cu ajutorul cardurilor",
+  "short-answer-label": "Răspuns scurt",
+  "visibility": {
+    "label": "Vizibilitate",
+    "public": {
+      "label": "Public",
+      "description": "Oricine poate accesa această activitate."
+    },
+    "private": {
+      "label": "Privat",
+      "description": "Doar tu poți accesa această activitate."
+    }
+  },
+  "add-new-activity": "Adaugă o nouă activitate",
+  "total-questions": "Numărul total de întrebări",
+  "created-at": "Data creării",
+  "category": "Categoria",
+  "front-side-text": "Partea frontală",
+  "back-side-text": "Partea dorsală",
+  "select-practice-mode": "Selectează modul de exersare",
+  "start-practice": "Începe să exersezi",
+  "singleplayer": {
+    "title": "Individual",
+    "description": "Exersează singur"
+  },
+  "multiplayer": {
+    "title": "Multiplayer",
+    "description": "Pornește o sesiune de exersare cu prietenii"
+  },
+  "practice-mode-config": {
+    "how-would-you-like": "Cum ți-ar plăcea să exersezi?",
+    "adjust-the-settings": "Ajustează setările de mai jos",
+    "number-of-questions": "Numărul de întrebări pe pagină",
+    "shuffle-questions": "Amestecă ordinea întrebărilor",
+    "shuffle-answers": "Amestecă ordinea variantelor de răspuns",
+    "show-correct-answer": "Arată răspunsul corect",
+    "set-time-limit": "Setează limita de timp",
+    "with-timer": "Limită de timp",
+    "timer-duration": "Introdu timpul (numărul de minute)",
+    "all-in-page": "Toate Întrebările vor fi listate într-o pagină",
+    "one-in-page": "Fiecare întrebare va fi afișată pe o pagină separată"
+  },
+  "practice": "Exersează",
+  "ok": "Ok",
+  "hint": "Indiciu",
+  "finish": "Finalizează",
+  "home": "Pagina principală",
+  "finalGrade": "Nota finală",
+  "yourAnswer": "Răspunsul tău"
+}

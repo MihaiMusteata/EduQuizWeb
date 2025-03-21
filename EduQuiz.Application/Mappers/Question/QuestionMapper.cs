@@ -28,5 +28,16 @@ public static class QuestionMapper
             Answers = dto.Answers.Select(x => x.ToEntity()).ToList()
         };
     }
+    public static QuestionSummaryDto ToSummaryDto (this QuestionDbTable entity)
+    {
+        return new QuestionSummaryDto
+        {
+            Id = entity.TrackingId,
+            Text = entity.Text,
+            Type = entity.Type,
+            Hint = entity.Hint ?? string.Empty,
+            Answers = entity.Answers.Select(x => x.ToSummaryDto()).ToList()
+        };
+    }
     
 }

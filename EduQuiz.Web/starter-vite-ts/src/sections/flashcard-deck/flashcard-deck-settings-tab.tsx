@@ -24,8 +24,7 @@ type Props = {
 }
 
 export function FlashcardDeckSettingsTab({ onSubmit, flashcardDeck, setFlashcardDeck }: Props) {
-  const { t: tActivity } = useTranslate('activity');
-  const { t: tCommon } = useTranslate('common');
+  const { t } = useTranslate();
 
   return (
     <Container sx={{ width: '100%' }}>
@@ -39,7 +38,7 @@ export function FlashcardDeckSettingsTab({ onSubmit, flashcardDeck, setFlashcard
       >
         <TextField
           value={flashcardDeck.title}
-          label={tCommon('title')}
+          label={t('title')}
           fullWidth
           onChange={(e) => setFlashcardDeck({ ...flashcardDeck, title: e.target.value })}
           sx={{
@@ -68,12 +67,12 @@ export function FlashcardDeckSettingsTab({ onSubmit, flashcardDeck, setFlashcard
               <>
                 <Box display="flex" flexDirection="row" alignItems="center">
                   <Typography variant="body1" fontWeight="bold" mr={1}>
-                    {tActivity("visibility.public.label")}
+                    {t("visibility.public.label")}
                   </Typography>
                   <Iconify width={16} icon="solar:lock-keyhole-minimalistic-unlocked-bold-duotone" />
                 </Box>
                 <Typography variant="body2" color="text.secondary">
-                  {tActivity("visibility.public.description")}
+                  {t("visibility.public.description")}
                 </Typography>
               </>
             }
@@ -93,12 +92,12 @@ export function FlashcardDeckSettingsTab({ onSubmit, flashcardDeck, setFlashcard
               <>
                 <Box display="flex" flexDirection="row" alignItems="center">
                   <Typography variant="body1" fontWeight="bold" mr={1}>
-                    {tActivity('visibility.private.label')}
+                    {t('visibility.private.label')}
                   </Typography>
                   <Iconify width={16} icon="solar:lock-keyhole-minimalistic-bold-duotone" />
                 </Box>
                 <Typography variant="body2" color="text.secondary">
-                  {tActivity('visibility.private.description')}
+                  {t('visibility.private.description')}
                 </Typography>
               </>
             }
@@ -106,7 +105,7 @@ export function FlashcardDeckSettingsTab({ onSubmit, flashcardDeck, setFlashcard
         </RadioGroup>
         <Box display="flex" justifyContent="flex-end">
           <Button variant="contained" color="primary" onClick={onSubmit}>
-            {tCommon("save")}
+            {t("save")}
           </Button>
         </Box>
       </Card>

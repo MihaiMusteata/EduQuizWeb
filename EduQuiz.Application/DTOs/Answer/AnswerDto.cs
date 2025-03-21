@@ -1,8 +1,6 @@
 namespace EduQuiz.Application.DTOs.Answer;
 
-public class AnswerDto
+public class AnswerDto: AnswerSummaryDto
 {
-    public Guid? Id { get; set; }
-    public string Text { get; set; }
     public bool IsCorrect { get; set; }
 }

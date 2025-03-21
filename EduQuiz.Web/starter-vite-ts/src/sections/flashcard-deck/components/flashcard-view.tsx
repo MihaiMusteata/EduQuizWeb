@@ -22,7 +22,7 @@ type FlashcardViewProps = {
 };
 
 export function FlashcardView({ index, flashcard, onEdit, onDelete }: FlashcardViewProps) {
-  const { t } = useTranslate('activity');
+  const { t } = useTranslate();
 
   const renderFlashcard = (side: "front" | "back", text: string) => (
     <Box sx={{ flex: 1, padding: '10px' }}>

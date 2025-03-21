@@ -2,7 +2,7 @@
 
 export const fallbackLng = 'ro';
 export const languages = ['ro', 'en', 'ru'];
-export const defaultNS = 'common';
+export const defaultNS = 'all';
 
 export type LanguageValue = (typeof languages)[number];
 

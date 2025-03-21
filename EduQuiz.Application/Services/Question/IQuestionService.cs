@@ -1,10 +1,9 @@
 using EduQuiz.Application.DTOs.Question;
-using Microsoft.AspNetCore.Identity;
 
 namespace EduQuiz.Application.Services.Question;
 
 public interface IQuestionService
 {
-    Task<IdentityResult> UpdateQuestionAsync(QuestionDto questionDto);
-    Task<IdentityResult> DeleteQuestionAsync(Guid id);
+    Task<QuestionSummaryDto?> GetQuestionByIndexAsync(Guid quizId, int index);
+    Task<List<QuestionSummaryDto>?> GetQuestionsAsync(Guid quizId);
 }

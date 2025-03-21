@@ -14,8 +14,9 @@ import { AuthGuard } from 'src/auth/guard';
 // Quiz
 const QuizCreatePage = lazy(() => import('src/pages/dashboard/quiz/new'));
 const QuizEditPage = lazy(() => import('src/pages/dashboard/quiz/edit'));
+const QuizPracticePage = lazy(() => import('src/pages/dashboard/quiz/practice'));
 
- //Flashcard Deck
+//Flashcard Deck
 const FlashcardDeckCreatePage = lazy(() => import('src/pages/dashboard/flashcard-deck/new'));
 const FlashcardDeckEditPage = lazy(() => import('src/pages/dashboard/flashcard-deck/edit'));
 // ----------------------------------------------------------------------
@@ -36,7 +37,8 @@ export const activityRoutes: RouteObject[] = [
         path: 'quiz',
         children: [
           { path: 'new', element: <QuizCreatePage /> },
-          { path: 'edit/:id', element: <QuizEditPage /> }
+          { path: 'edit/:id', element: <QuizEditPage /> },
+          { path: 'practice/:id', element: <QuizPracticePage /> }
         ]
       },
       {
@@ -45,7 +47,7 @@ export const activityRoutes: RouteObject[] = [
           { path: 'new', element: <FlashcardDeckCreatePage /> },
           { path: 'edit/:id', element: <FlashcardDeckEditPage /> }
         ]
-      }
+      },
     ]
   }
 ];
