@@ -1,6 +1,7 @@
 using EduQuiz.Application.DTOs.Question;
 using EduQuiz.Application.Mappers.Answer;
 using EduQuiz.Domain.Entities.Question;
+using EduQuiz.Domain.ValueObjects.QuestionType;
 
 namespace EduQuiz.Application.Mappers.Question;
 
@@ -10,9 +11,9 @@ public static class QuestionMapper
     {
         return new QuestionDto
         {
-            Id = entity.TrackingId,
+            Id = entity.Id,
             Text = entity.Text,
-            Type = entity.Type,
+            Type = entity.Type.Value,
             Hint = entity.Hint ?? string.Empty,
             Answers = entity.Answers.Select(x => x.ToDto()).ToList()
         };
@@ -23,7 +24,7 @@ public static class QuestionMapper
         return new QuestionDbTable
         {
             Text = dto.Text,
-            Type = dto.Type,
+            Type = QuestionType.FromString(dto.Type),
             Hint = dto.Hint,
             Answers = dto.Answers.Select(x => x.ToEntity()).ToList()
         };
@@ -32,9 +33,9 @@ public static class QuestionMapper
     {
         return new QuestionSummaryDto
         {
-            Id = entity.TrackingId,
+            Id = entity.Id,
             Text = entity.Text,
-            Type = entity.Type,
+            Type = entity.Type.Value,
             Hint = entity.Hint ?? string.Empty,
             Answers = entity.Answers.Select(x => x.ToSummaryDto()).ToList()
         };

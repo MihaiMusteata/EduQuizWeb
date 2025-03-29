@@ -38,7 +38,7 @@ export function QuestionEditCard({ onSave, onCancel, initialData }: Props) {
                 },
               }}
             >
-              <MenuItem value="true/false">{t('question-type.types.true-false')}</MenuItem>
+              <MenuItem value="true-false">{t('question-type.types.true-false')}</MenuItem>
               <MenuItem value="multiple-choice">{t('question-type.types.multiple-choice')}</MenuItem>
               <MenuItem value="single-choice">{t('question-type.types.single-choice')}</MenuItem>
               <MenuItem value="short-answer">{t('question-type.types.short-answer')}</MenuItem>

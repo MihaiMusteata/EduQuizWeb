@@ -22,11 +22,11 @@ public class LibraryService : ILibraryService
             .Where(x => x.UserId == userId)
             .Select(x => new LibraryItemDto
             {
-                Id = x.TrackingId,
+                Id = x.Id,
                 Activity = "Quizzes",
                 Title = x.Title,
                 CreatedAt = x.CreatedAt.ToUserTimeZone(),
-                Visibility = x.Visibility,
+                Visibility = x.Visibility.Value,
                 TotalItems = x.Questions.Count
             })
             .ToListAsync());
@@ -35,11 +35,11 @@ public class LibraryService : ILibraryService
             .Where(x => x.UserId == userId)
             .Select(x => new LibraryItemDto
             {
-                Id = x.TrackingId,
+                Id = x.Id,
                 Activity = "Flashcards",
                 Title = x.Title,
                 CreatedAt = x.CreatedAt.ToUserTimeZone(),
-                Visibility = x.Visibility,
+                Visibility = x.Visibility.Value,
                 TotalItems = x.Flashcards.Count
             })
             .ToListAsync());

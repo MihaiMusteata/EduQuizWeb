@@ -10,9 +10,6 @@ public class AnswerDbTable
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid TrackingId { get; set; } = Guid.NewGuid();
-
     public string Text { get; set; }
     public bool IsCorrect { get; set; }
 

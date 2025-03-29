@@ -23,7 +23,7 @@ public class QuestionService : IQuestionService
 
     public async Task<List<QuestionSummaryDto>?> GetQuestionsAsync(Guid quizId)
     {
-        var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.TrackingId == quizId);
+        var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.Id == quizId);
         if (quiz is null)
             return null;
 

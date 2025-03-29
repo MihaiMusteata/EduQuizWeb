@@ -171,7 +171,7 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
           </List>
         );
 
-      case 'true/false':
+      case 'true-false':
         return (
           <List>
             <ListItemHover onClick={() => handleAnswerSelect(question.id!, 'true', false)}>

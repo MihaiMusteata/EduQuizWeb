@@ -78,7 +78,7 @@ export function QuestionViewCard({ index, question, onEdit, onDelete }: Question
     <Card sx={{ borderRadius: '10px', padding: '20px 20px 10px 20px', marginTop: 2 }}>
       <Typography variant="h6" sx={{ my: 1 }}>{index + 1}. {question.text}</Typography>
       {
-        question.type === 'true/false' &&
+        question.type === 'true-false' &&
         renderTrueFalse()
       }
       {

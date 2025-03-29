@@ -4,7 +4,6 @@ using EduQuiz.Domain.Entities.FlashcardDeck;
 using EduQuiz.Domain.Entities.Question;
 using EduQuiz.Domain.Entities.Quiz;
 using EduQuiz.Domain.Entities.User;
-using EduQuiz.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +29,7 @@ public class EduQuizDbContext : IdentityDbContext<UserData>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyQuizRelationships();
+        
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(EduQuizDbContext).Assembly);
     }
 }

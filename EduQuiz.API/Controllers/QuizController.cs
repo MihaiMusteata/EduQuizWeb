@@ -36,9 +36,9 @@ public class QuizController : BaseController
     public async Task<IActionResult> SubmitQuiz([FromBody] List<AnswerGiven> answers, Guid id)
     {
         var userId = GetUserIdFromJwt();
-        var result = await _quizService.SubmitQuizAsync(answers, id, userId);
+        // var result = await _quizService.SubmitQuizAsync(answers, id, userId);
 
-        return Ok(result);
+        return Ok();
     }
 
     [HttpGet("{id}")]

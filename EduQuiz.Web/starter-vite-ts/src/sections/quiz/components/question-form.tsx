@@ -98,7 +98,7 @@ export function QuestionForm({ onSave, onCancel, questionType, initialData }: Pr
         />
       }
       {
-        questionType === 'true/false' &&
+        questionType === 'true-false' &&
         <TrueFalseQuestion
           updateAnswers={updateAnswers}
           setUpdateAnswers={setUpdateAnswers}

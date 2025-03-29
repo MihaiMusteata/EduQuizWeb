@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using EduQuiz.Domain.Entities.FlashcardDeck;
 using EduQuiz.Domain.Entities.Quiz;
 using Microsoft.AspNetCore.Identity;
 
@@ -10,7 +11,8 @@ public class UserData : IdentityUser
     public string LastName { get; set; }
     public string? RefreshToken { get; set; }
     public DateTime RefreshTokenExpiryTime { get; set; }
-    
-    [InverseProperty("User")]
-    public ICollection<QuizDbTable> Quizzes { get; set; }
+
+    [InverseProperty("User")] public ICollection<QuizDbTable> Quizzes { get; set; }
+
+    [InverseProperty("User")] public ICollection<FlashcardDeckDbTable> FlashcardDecks { get; set; }
 }

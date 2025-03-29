@@ -29,5 +29,5 @@ export type SubmissionResponse = {
   questions: Question[];
 }
 
-export type QuestionType = 'true/false' | 'multiple-choice' | 'single-choice' | 'short-answer' | undefined;
+export type QuestionType = 'true-false' | 'multiple-choice' | 'single-choice' | 'short-answer' | undefined;
 export type Visibility = 'public' | 'private';

@@ -9,7 +9,7 @@ public static class FlashcardMapper
     {
         return new FlashcardDto
         {
-            Id = entity.TrackingId,
+            Id = entity.Id,
             FrontSideText = entity.FrontSideText,
             BackSideText = entity.BackSideText,
             Hint = entity.Hint ?? string.Empty

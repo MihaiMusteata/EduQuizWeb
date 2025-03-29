@@ -11,5 +11,5 @@ public interface IQuizService
     Task<int> GetTotalQuestions(Guid id);
     Task<IdentityResult> UpdateQuizAsync(QuizDto quizDto);
     Task<IdentityResult> DeleteQuizAsync(Guid id);
-    Task<SubmissionResponse> SubmitQuizAsync(List<AnswerGiven> answers, Guid id, string userId);
+    Task<SubmissionResponse> SubmitQuizAsync(List<AnswerGiven> answers, int id, string userId);
 }
