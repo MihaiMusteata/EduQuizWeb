@@ -3,6 +3,7 @@ import type { Flashcard } from "src/types/flashcard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { LoadingButton } from "@mui/lab";
 import { Box, Card, Button } from '@mui/material';
 
 import { useTranslate } from "src/locales";
@@ -17,9 +18,10 @@ type Props = {
   onSave: (flashcard: Flashcard) => void;
   onCancel: () => void;
   initialData?: Flashcard;
+  isLoading: boolean;
 };
 
-export function FlashcardEditForm({ onSave, onCancel, initialData }: Props) {
+export function FlashcardEditForm({ onSave, onCancel, initialData, isLoading }: Props) {
   const { t } = useTranslate();
 
   const methods = useForm<FieldsSchemaType>({
@@ -33,14 +35,14 @@ export function FlashcardEditForm({ onSave, onCancel, initialData }: Props) {
   });
 
   const {
-    handleSubmit,
+    getValues,
     reset,
   } = methods;
 
-  const onSubmit = handleSubmit(async (data) => {
+  const handleSave = () => {
+    const data = getValues();
     onSave(data.flashcard);
-  });
-
+  }
   const handleCancel = () => {
     reset();
     onCancel();
@@ -49,7 +51,7 @@ export function FlashcardEditForm({ onSave, onCancel, initialData }: Props) {
 
   return (
     <Card sx={{ border: '1px solid #ddd', borderRadius: '10px', padding: 2, marginTop: 2 }}>
-      <Form methods={methods} onSubmit={onSubmit}>
+      <Form methods={methods}>
         <Field.Text
           label={t('front-side-text')}
           name='flashcard.frontSideText'
@@ -84,12 +86,21 @@ export function FlashcardEditForm({ onSave, onCancel, initialData }: Props) {
           }}
         />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, marginTop: 2 }}>
-          <Button variant='outlined' color='inherit' onClick={handleCancel}>
+          <Button
+            variant='outlined'
+            color='inherit'
+            onClick={handleCancel}
+          >
             {t('cancel')}
           </Button>
-          <Button variant='contained' color='primary' type='submit'>
+          <LoadingButton
+            variant='contained'
+            color='primary'
+            onClick={handleSave}
+            loading={isLoading}
+          >
             {t('save')}
-          </Button>
+          </LoadingButton>
         </Box>
       </Form>
     </Card>

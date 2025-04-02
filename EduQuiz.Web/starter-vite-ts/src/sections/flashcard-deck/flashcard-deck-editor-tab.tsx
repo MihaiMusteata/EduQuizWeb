@@ -1,61 +1,62 @@
 import type { Flashcard } from "src/types/flashcard";
+import type { Operation } from "src/types/operation";
 
 import { useState } from "react";
 
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Tooltip, Container } from '@mui/material';
 
+import { useParams } from "src/routes/hooks";
+
 import { useTranslate } from "src/locales";
+import { useCreateFlashcard, useUpdateFlashcard } from "src/actions/flashcard";
 
 import { FlashcardView } from "./components/flashcard-view";
 import { FlashcardEditForm } from "./components/flashcard-edit-form";
 
 type Props = {
+  flashcardDeckOperation: Operation;
   flashcards: Flashcard[];
   setFlashcards: (flashcards: Flashcard[]) => void;
 };
 
-export function FlashcardDeckEditorTab({ flashcards, setFlashcards }: Props) {
+export function FlashcardDeckEditorTab({ flashcardDeckOperation, flashcards, setFlashcards }: Props) {
   const { t } = useTranslate();
-  const [editingIndex, setEditingIndex] = useState<number | undefined>(undefined)
+  const [editingIndex, setEditingIndex] = useState<number | undefined>(undefined);
+  const { id: deckId = "" } = useParams();
 
-  const addFlashcard = () => {
-    setEditingIndex(flashcards.length);
-  };
+  const {
+    createFlashcard,
+    isCreating
+  } = useCreateFlashcard(deckId, flashcardDeckOperation, flashcards, setFlashcards, setEditingIndex);
+  const {
+    updateFlashcard,
+    isUpdating
+  } = useUpdateFlashcard(flashcardDeckOperation, flashcards, setFlashcards, setEditingIndex);
 
-  const removeFlashcard = (index: number) => {
-    setFlashcards(flashcards.filter((_, i) => i !== index));
-  };
+  const addFlashcard = () => setEditingIndex(flashcards.length);
 
-  const handleSave = (flashcard: Flashcard, index: number | undefined) => {
-    if (index !== undefined) {
-      const updatedFlashcards = [...flashcards];
-      updatedFlashcards[index] = flashcard;
-      setFlashcards(updatedFlashcards);
-    } else {
-      setFlashcards([...flashcards, flashcard]);
-    }
-    setEditingIndex(undefined);
-  }
-
-  const handleCancel = () => {
-    setEditingIndex(undefined);
-  }
+  const handleCancel = () => setEditingIndex(undefined);
 
   return (
     <Container sx={{ width: '100%' }}>
       {
         flashcards.map((flashcard, index) => (
           editingIndex === index ? (
-            <FlashcardEditForm key={index} onSave={(q) => handleSave(q, index)} onCancel={handleCancel}
-                               initialData={flashcard} />
+            <FlashcardEditForm
+              key={index}
+              onSave={(q) => updateFlashcard(q, index)}
+              onCancel={handleCancel}
+              initialData={flashcard}
+              isLoading={isUpdating}
+            />
           ) : (
             <FlashcardView
               key={index}
               index={index}
               flashcard={flashcard}
-              onDelete={() => removeFlashcard(index)}
               onEdit={() => setEditingIndex(index)}
+              editorProps={{ flashcardDeckOperation, flashcards, setFlashcards }}
             />
           )
         ))
@@ -63,7 +64,11 @@ export function FlashcardDeckEditorTab({ flashcards, setFlashcards }: Props) {
 
       {
         editingIndex === flashcards.length && (
-          <FlashcardEditForm onSave={(q) => handleSave(q, editingIndex)} onCancel={handleCancel} />
+          <FlashcardEditForm
+            onSave={createFlashcard}
+            onCancel={handleCancel}
+            isLoading={isCreating}
+          />
         )}
 
       <div style={{ marginBottom: '70px' }}>

@@ -1,18 +1,17 @@
 import type { FlashcardDeck } from 'src/types/flashcard';
 
+import { useEffect } from "react";
 import { Helmet } from 'react-helmet-async';
-import { useState, useEffect } from "react";
 
 import { useParams } from "src/routes/hooks";
 
 import { CONFIG } from 'src/global-config';
-import { useAxios } from 'src/axios/hooks';
 import { endpoints } from 'src/axios/endpoints';
+import { useAxios, usePromise } from 'src/axios/hooks';
 
 import { LoadingScreen } from "src/components/loading-screen";
 
 import { FlashcardDeckEditView } from 'src/sections/flashcard-deck/view';
-
 
 
 // ----------------------------------------------------------------------
@@ -20,14 +19,18 @@ import { FlashcardDeckEditView } from 'src/sections/flashcard-deck/view';
 const metadata = { title: `Flashcard deck edit | Dashboard - ${CONFIG.appName}` };
 export default function Page() {
   const { id = '' } = useParams();
-  const { getAuth, isLoading } = useAxios();
+  const { getAuth } = useAxios();
 
-  const [data, setData] = useState<FlashcardDeck | undefined>(undefined);
+  const {
+    execute: getFlashcardDeck,
+    data,
+    isLoading
+  } = usePromise<FlashcardDeck>(() => getAuth<FlashcardDeck>(endpoints.flashcardDeck.get(id)));
 
   useEffect(() => {
-    getAuth(endpoints.flashcardDeck.get(id)).then((response) => {
-      setData(response);
-    });
+    if (data === undefined) {
+      getFlashcardDeck();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 

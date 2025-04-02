@@ -1,10 +1,11 @@
+import type { Operation } from "src/types/operation";
 import type { Quiz, Visibility } from "src/types/quiz";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Card,
   Radio,
-  Button,
   Container,
   TextField,
   Typography,
@@ -12,18 +13,45 @@ import {
   FormControlLabel
 } from "@mui/material";
 
-import { useTranslate } from "src/locales";
+import { paths } from "src/routes/paths";
+import { useRouter } from "src/routes/hooks";
 
-import { Iconify } from "../../components/iconify";
+import { useTranslate } from "src/locales";
+import { usePromise } from "src/axios/hooks";
+
+import { toast } from "src/components/snackbar";
+import { Iconify } from "src/components/iconify";
 
 type Props = {
+  operation: Operation;
+  action: () => Promise<any>;
   quiz: Quiz;
   setQuiz: (quiz: Quiz) => void;
-  onSubmit: () => void;
 }
 
-export function QuizSettingsTab({ onSubmit, quiz, setQuiz }: Props) {
+export function QuizSettingsTab({ operation, action, quiz, setQuiz }: Props) {
   const { t } = useTranslate();
+  const router = useRouter();
+  const { execute: saveQuiz, isLoading } = usePromise(action);
+
+  const onSubmit = async () => {
+    try {
+      await saveQuiz();
+      router.push(paths.dashboard.library);
+      if (operation === "create") {
+        toast.success(t("quiz-created.success"));
+      } else {
+        toast.success(t("quiz-updated.success"));
+      }
+    } catch (error) {
+      if (operation === "create") {
+        toast.error(t("quiz-created.error"));
+      } else {
+        toast.error(t("quiz-updated.error"));
+      }
+      console.error("Error saving quiz", error);
+    }
+  };
 
   return (
     <Container sx={{ width: '100%' }}>
@@ -103,9 +131,14 @@ export function QuizSettingsTab({ onSubmit, quiz, setQuiz }: Props) {
           />
         </RadioGroup>
         <Box display="flex" justifyContent="flex-end">
-          <Button variant="contained" color="primary" onClick={onSubmit}>
+          <LoadingButton
+            variant="contained"
+            color="primary"
+            onClick={onSubmit}
+            loading={isLoading}
+          >
             {t("save")}
-          </Button>
+          </LoadingButton>
         </Box>
       </Card>
     </Container>

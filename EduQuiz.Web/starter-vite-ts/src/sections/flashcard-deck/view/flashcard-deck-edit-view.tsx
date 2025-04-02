@@ -12,7 +12,7 @@ type Props = {
 export function FlashcardDeckEditView({ flashcardDeck }: Props) {
   return (
     <FullScreenDialog>
-      <FlashcardDeckEditNewForm currentFlashcardDeck={flashcardDeck} />
+      <FlashcardDeckEditNewForm operation="edit" currentFlashcardDeck={flashcardDeck} />
     </FullScreenDialog>
   )
 }

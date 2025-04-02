@@ -16,8 +16,8 @@ import { useParams } from "src/routes/hooks";
 
 import { CONFIG } from "src/global-config";
 import { useTranslate } from "src/locales";
-import { useAxios } from "src/axios/hooks";
 import { endpoints } from "src/axios/endpoints";
+import { useAxios, usePromise } from "src/axios/hooks";
 import { DashboardContent } from 'src/layouts/dashboard/content'
 
 import { Iconify } from "src/components/iconify";
@@ -27,7 +27,6 @@ import { FullScreenDialog } from 'src/components/dialog/full-screen-dialog';
 import { QuizPracticeContent } from "../quiz-practice-content";
 
 export function QuizPracticeView() {
-  const [totalQuestions, setTotalQuestions] = useState<number | undefined>(undefined)
   const [practiceMode, setPracticeMode] = useState<PracticeMode | undefined>(undefined);
   const [practiceConfig, setPracticeConfig] = useState<PracticeConfig>({
     timer: 5,
@@ -37,19 +36,22 @@ export function QuizPracticeView() {
     withTimer: false
   });
 
-  const { getAuth, isLoading } = useAxios();
+  const { getAuth } = useAxios();
 
   const { t } = useTranslate();
   const { id = '' } = useParams();
 
+  const { execute: fetchTotalQuestions, isLoading, data: totalQuestions } = usePromise(() =>
+    getAuth<number>(endpoints.quiz.totalQuestions(id))
+  );
+
   const handleStart = async () => {
     try {
-      const total = await getAuth(endpoints.quiz.totalQuestions(id));
-      setTotalQuestions(total);
+      await fetchTotalQuestions();
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching total questions:', error);
     }
-  }
+  };
 
   const renderSelectMode = () => (
     <>
@@ -168,7 +170,7 @@ export function QuizPracticeView() {
               onChange={(e) => {
                 let newValue = e.target.value.replace(/[^0-9]/g, "");
                 newValue = newValue ? Math.min(parseInt(newValue, 10), 1440).toString() : "";
-                setPracticeConfig({ ...practiceConfig, timer: newValue ? parseInt(newValue, 10) : undefined});
+                setPracticeConfig({ ...practiceConfig, timer: newValue ? parseInt(newValue, 10) : undefined });
               }}
               slotProps={{
                 input: {

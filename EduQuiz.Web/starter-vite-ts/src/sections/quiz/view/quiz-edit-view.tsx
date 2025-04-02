@@ -12,7 +12,7 @@ type Props = {
 export function QuizEditView({ quiz }: Props) {
   return (
     <FullScreenDialog>
-      <QuizEditNewForm currentQuiz={quiz} />
+      <QuizEditNewForm operation="edit" currentQuiz={quiz} />
     </FullScreenDialog>
   )
 }

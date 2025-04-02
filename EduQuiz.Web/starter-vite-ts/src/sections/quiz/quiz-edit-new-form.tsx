@@ -1,11 +1,11 @@
 import type { Quiz, Question } from "src/types/quiz";
+import type { Operation } from "src/types/operation";
 
 import { useState, useCallback } from "react";
 import { varAlpha } from "minimal-shared/utils";
 
 import { Tab, Tabs, Container } from "@mui/material";
 
-import { paths } from "src/routes/paths";
 import { useRouter } from "src/routes/hooks";
 
 import { useTranslate } from "src/locales";
@@ -16,13 +16,14 @@ import { QuizEditorTab } from "./quiz-editor-tab";
 import { QuizSettingsTab } from "./quiz-settings-tab";
 
 type Props = {
+  operation: Operation;
   currentQuiz?: Quiz;
 }
-export function QuizEditNewForm({ currentQuiz }: Props) {
-  const { t } = useTranslate();
-  const router = useRouter();
 
-  const { postAuth, putAuth } = useAxios();
+export function QuizEditNewForm({ operation, currentQuiz }: Props) {
+  const { t } = useTranslate();
+
+  const { postAuth, patchAuth } = useAxios();
   const [currentTab, setCurrentTab] = useState('Editor');
   const [quiz, setQuiz] = useState<Quiz>(currentQuiz ?? {
     title: '',
@@ -30,26 +31,20 @@ export function QuizEditNewForm({ currentQuiz }: Props) {
     questions: [],
   });
 
+  const saveAction = () => {
+    if (operation === "create") {
+      return () => postAuth(endpoints.quiz.create, quiz);
+    } else {
+      return () => patchAuth(endpoints.quiz.update, quiz);
+    }
+  }
+
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   }, []);
 
   const handleSetQuestions = (questions: Question[]) => {
     setQuiz({ ...quiz, questions });
-  };
-
-  const handleSave = async () => {
-    try {
-      if (currentQuiz) {
-        await putAuth(endpoints.quiz.update, quiz);
-      } else {
-        await postAuth(endpoints.quiz.create, quiz);
-      }
-
-      router.push(paths.dashboard.library);
-    } catch (error) {
-      console.error("Error saving quiz", error);
-    }
   };
 
   return (
@@ -77,11 +72,20 @@ export function QuizEditNewForm({ currentQuiz }: Props) {
       </Tabs>
       {
         currentTab === 'Editor' &&
-        <QuizEditorTab questions={quiz.questions} setQuestions={handleSetQuestions} />
+        <QuizEditorTab
+          quizOperation={operation}
+          questions={quiz.questions}
+          setQuestions={handleSetQuestions}
+        />
       }
       {
         currentTab === 'Settings' &&
-        <QuizSettingsTab onSubmit={handleSave} quiz={quiz} setQuiz={setQuiz} />
+        <QuizSettingsTab
+          operation={operation}
+          action={saveAction()}
+          quiz={quiz}
+          setQuiz={setQuiz}
+        />
       }
     </Container>
   );

@@ -22,11 +22,11 @@ import {
   ListItemText
 } from "@mui/material"
 
+import { paths } from "src/routes/paths";
 import { useRouter } from "src/routes/hooks";
 
 import { useTranslate } from "src/locales";
 import { useAxios } from "src/axios/hooks";
-import { paths } from "src/routes/paths";
 import { endpoints } from "src/axios/endpoints";
 
 import { Iconify } from "src/components/iconify";
@@ -48,7 +48,7 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
   const [finalGrade, setFinalGrade] = useState<number | undefined>(undefined);
   const [page, setPage] = useState(0);
   const [answersGiven, setAnswersGiven] = useState<AnswerGiven[]>([]);
-  const { getAuth, postAuth, isLoading } = useAxios();
+  const { getAuth, postAuth } = useAxios();
   const submitted = useBoolean(false);
   const router = useRouter();
   const { t } = useTranslate();
@@ -235,7 +235,7 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
                           mb: '2px'
                         }}
                       >
-                        {`${t('yourAnswer')} :`}
+                        {`${t('your-answer')} :`}
                       </Typography>,
                   },
                 }} />
@@ -370,7 +370,7 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
               <LoadingButton
                 variant='soft'
                 color='primary'
-                loading={isLoading}
+                loading={false}
                 onClick={handleSubmit}
               >
                 {t('finish')}
@@ -380,11 +380,11 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
               submitted.value &&
               <>
                 <Alert
-                  sx={{width: '100%', mr:1}}
+                  sx={{ width: '100%', mr: 1 }}
                   severity='success'
                 >
                   {
-                    `${t('finalGrade')}: ${finalGrade}`
+                    `${t('final-grade')}: ${finalGrade}`
                   }
                 </Alert>
                 <Button

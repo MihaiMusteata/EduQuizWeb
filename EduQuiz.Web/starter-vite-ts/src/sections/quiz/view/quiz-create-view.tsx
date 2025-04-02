@@ -5,7 +5,7 @@ import { QuizEditNewForm } from "../quiz-edit-new-form";
 export function QuizCreateView() {
   return (
     <FullScreenDialog>
-      <QuizEditNewForm />
+      <QuizEditNewForm operation="create"/>
     </FullScreenDialog>
   );
 }

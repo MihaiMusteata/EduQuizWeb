@@ -23,10 +23,10 @@ public static class QuizMapper
     {
         return new QuizDbTable
         {
-            Title = dto.Title,
+            Title = dto.Title ?? string.Empty,
             Visibility = Visibility.FromString(dto.Visibility),
             UserId = userId,
-            Questions = dto.Questions.Select(x => x.ToEntity()).ToList()
+            Questions = dto.Questions?.Select(x => x.ToEntity()).ToList() ?? []
         };
     }
     

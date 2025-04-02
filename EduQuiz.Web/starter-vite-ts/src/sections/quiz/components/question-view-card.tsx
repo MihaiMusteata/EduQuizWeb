@@ -1,3 +1,5 @@
+import type { Question } from "src/types/quiz";
+
 import Divider from "@mui/material/Divider";
 import EditIcon from '@mui/icons-material/Edit';
 import {
@@ -10,24 +12,32 @@ import {
   ListItem,
   Typography,
   IconButton,
-  ListItemText
+  ListItemText,
+  CircularProgress
 } from '@mui/material';
+
+import { useTranslate } from "src/locales";
+import { useDeleteQuestion } from "src/actions/quiz";
 
 import { Iconify } from "src/components/iconify";
 
-import { useTranslate } from "../../../locales";
-
-import type { Question } from "../../../types/quiz";
+import type { Operation } from "../../../types/operation";
 
 type QuestionViewCardProps = {
   index: number;
   question: Question;
   onEdit: () => void;
-  onDelete: () => void;
+  editorProps:{
+    quizOperation: Operation;
+    questions: Question[];
+    setQuestions: (questions: Question[]) => void;
+  };
 };
 
-export function QuestionViewCard({ index, question, onEdit, onDelete }: QuestionViewCardProps) {
+export function QuestionViewCard({ index, question, onEdit, editorProps }: QuestionViewCardProps) {
   const { t } = useTranslate();
+  const { deleteQuestion, isDeleting } = useDeleteQuestion(editorProps);
+
   const renderChoiceBased = () => (
     <List>
       {question.answers.map((answer, idx) => (
@@ -97,8 +107,13 @@ export function QuestionViewCard({ index, question, onEdit, onDelete }: Question
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete question" arrow>
-          <IconButton onClick={onDelete}>
-            <Iconify width={20} icon="solar:trash-bin-trash-bold" />
+          <IconButton onClick={() => deleteQuestion(index)} disabled={isDeleting}>
+            {
+              isDeleting ?
+                <CircularProgress size={20}/>
+                :
+                <Iconify width={20} icon="solar:trash-bin-trash-bold" />
+            }
           </IconButton>
         </Tooltip>
       </Box>

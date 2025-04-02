@@ -11,10 +11,11 @@ type Props = {
   onSave: (question: Question) => void;
   onCancel: () => void;
   initialData?: Question;
+  isLoading: boolean;
 };
 
-export function QuestionEditCard({ onSave, onCancel, initialData }: Props) {
-  const [questionType, setQuestionType] = useState<QuestionType| undefined>(initialData?.type);
+export function QuestionEditCard({ onSave, onCancel, initialData, isLoading }: Props) {
+  const [questionType, setQuestionType] = useState<QuestionType | undefined>(initialData?.type);
   const { t } = useTranslate();
 
   return (
@@ -45,7 +46,13 @@ export function QuestionEditCard({ onSave, onCancel, initialData }: Props) {
             </Select>
           </FormControl>
           :
-          <QuestionForm onSave={onSave} onCancel={onCancel} questionType={questionType} initialData={initialData}  />
+          <QuestionForm
+            onSave={onSave}
+            onCancel={onCancel}
+            questionType={questionType}
+            initialData={initialData}
+            isLoading={isLoading}
+          />
       }
     </Card>
   );

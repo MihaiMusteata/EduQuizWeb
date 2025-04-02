@@ -101,6 +101,54 @@
   "hint": "Hint",
   "finish": "Finish",
   "home": "Home",
-  "finalGrade": "Final Grade",
-  "yourAnswer": "Your Answer"
+  "final-grade": "Final Grade",
+  "your-answer": "Your Answer",
+  "question-updated": {
+    "success": "Question updated successfully",
+    "error": "Error updating question"
+  },
+  "question-added": {
+    "success": "Question added successfully",
+    "error": "Error adding question"
+  },
+  "question-deleted": {
+    "success": "Question deleted successfully",
+    "error": "Error deleting question"
+  },
+  "flashcard-updated": {
+    "success": "Flashcard updated successfully",
+    "error": "Error updating flashcard"
+  },
+  "flashcard-added": {
+    "success": "Flashcard added successfully",
+    "error": "Error adding flashcard"
+  },
+  "flashcard-deleted": {
+    "success": "Flashcard deleted successfully",
+    "error": "Error deleting flashcard"
+  },
+  "quiz-created": {
+    "success": "Quiz created successfully",
+    "error": "Error creating quiz"
+  },
+  "quiz-updated": {
+    "success": "Quiz updated successfully",
+    "error": "Error updating quiz"
+  },
+  "quiz-deleted": {
+    "success": "Quiz deleted successfully",
+    "error": "Error deleting quiz"
+  },
+  "flashcard-deck-created": {
+    "success": "Flashcard deck created successfully",
+    "error": "Error creating flashcard deck"
+  },
+  "flashcard-deck-updated": {
+    "success": "Flashcard deck updated successfully",
+    "error": "Error updating flashcard deck"
+  },
+  "flashcard-deck-deleted": {
+    "success": "Flashcard deck deleted successfully",
+    "error": "Error deleting flashcard deck"
+  }
 }

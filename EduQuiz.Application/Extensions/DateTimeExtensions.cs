@@ -12,15 +12,15 @@ public static class DateTimeExtensions
             var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
             var localTime = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, userTimeZone);
 
-            return localTime.ToString("dd/MM/yyyy HH:mm");
+            return localTime.ToString("HH:mm dd/MM/yyyy");
         }
         catch (TimeZoneNotFoundException)
         {
-            return utcDateTime.ToString("dd/MM/yyyy HH:mm");
+            return utcDateTime.ToString("HH:mm dd/MM/yyyy");
         }
         catch (InvalidTimeZoneException)
         {
-            return utcDateTime.ToString("dd/MM/yyyy HH:mm");
+            return utcDateTime.ToString("HH:mm dd/MM/yyyy");
         }
     }
 }

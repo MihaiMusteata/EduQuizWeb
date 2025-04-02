@@ -14,13 +14,12 @@ import { LoadingScreen } from "src/components/loading-screen";
 import { QuizEditView } from 'src/sections/quiz/view';
 
 
-
 // ----------------------------------------------------------------------
 
 const metadata = { title: `Quiz edit | Dashboard - ${CONFIG.appName}` };
 export default function Page() {
   const { id = '' } = useParams();
-  const { getAuth, isLoading } = useAxios();
+  const { getAuth } = useAxios();
 
   const [data, setData] = useState<Quiz | undefined>(undefined);
 
@@ -37,7 +36,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
       {
-        isLoading ? <LoadingScreen /> :
+        data === undefined ? <LoadingScreen /> :
           <QuizEditView quiz={data} />
       }
     </>

@@ -11,7 +11,7 @@ public class Visibility : ValueObject
         Value = value;
     }
 
-    public static Visibility FromString(string value)
+    public static Visibility FromString(string? value)
     {
         return value switch
         {

@@ -15,9 +15,9 @@ import { ActionCard } from "../../../components/action-card";
 
 const tools = (t: TFunction, router: any) => [
   {
-    title: t('tools-page.tools.manual-activity.title'),
+    title: t('tools.manual-activity.title'),
     image: `${CONFIG.assetsDir}/assets/icons/activity/ic-manual.png`,
-    description: t('tools-page.tools.manual-activity.description'),
+    description: t('tools.manual-activity.description'),
     onClick: () => {
       router.push(paths.activity.create);
     }

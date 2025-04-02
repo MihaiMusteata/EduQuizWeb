@@ -20,8 +20,8 @@ public static class FlashcardMapper
     {
         return new FlashcardDbTable
         {
-            FrontSideText = dto.FrontSideText,
-            BackSideText = dto.BackSideText,
+            FrontSideText = dto.FrontSideText ?? string.Empty,
+            BackSideText = dto.BackSideText ?? string.Empty,
             Hint = dto.Hint
         };
     }

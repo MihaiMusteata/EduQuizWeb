@@ -41,7 +41,7 @@ public class FlashcardDeckController: BaseController
         return Ok(flashcardDeck);
     }
     
-    [HttpPut("update")]
+    [HttpPatch("update")]
     public async Task<IActionResult> UpdateFlashcardDeckAsync([FromBody] FlashcardDeckDto flashcardDeckDto)
     {
         var result = await _flashcardDeckService.UpdateFlashcardDeckAsync(flashcardDeckDto);

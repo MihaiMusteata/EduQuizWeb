@@ -7,22 +7,30 @@ import {
   Card,
   Tooltip,
   Typography,
-  IconButton,
+  IconButton, CircularProgress,
 } from '@mui/material';
 
 import { Iconify } from "src/components/iconify";
 
 import { useTranslate } from "../../../locales";
+import { useDeleteFlashcard } from "../../../actions/flashcard";
+
+import type { Operation } from "../../../types/operation";
 
 type FlashcardViewProps = {
   index: number;
   flashcard: Flashcard;
   onEdit: () => void;
-  onDelete: () => void;
+  editorProps: {
+    flashcardDeckOperation: Operation;
+    flashcards: Flashcard[];
+    setFlashcards: (flashcards: Flashcard[]) => void;
+  }
 };
 
-export function FlashcardView({ index, flashcard, onEdit, onDelete }: FlashcardViewProps) {
+export function FlashcardView({ index, flashcard, onEdit, editorProps }: FlashcardViewProps) {
   const { t } = useTranslate();
+  const { deleteFlashcard, isDeleting } = useDeleteFlashcard(editorProps);
 
   const renderFlashcard = (side: "front" | "back", text: string) => (
     <Box sx={{ flex: 1, padding: '10px' }}>
@@ -69,8 +77,13 @@ export function FlashcardView({ index, flashcard, onEdit, onDelete }: FlashcardV
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete flashcard" arrow>
-          <IconButton onClick={onDelete}>
-            <Iconify width={20} icon="solar:trash-bin-trash-bold" />
+          <IconButton onClick={() => deleteFlashcard(index)} disabled={isDeleting}>
+            {
+              isDeleting ?
+                <CircularProgress size={20} />
+                :
+                <Iconify width={20} icon="solar:trash-bin-trash-bold" />
+            }
           </IconButton>
         </Tooltip>
       </Box>

@@ -5,25 +5,24 @@ import { varAlpha } from "minimal-shared/utils";
 
 import { Tab, Tabs, Container } from "@mui/material";
 
-import { paths } from "src/routes/paths";
-import { useRouter } from "src/routes/hooks";
-
-import { useAxios } from "src/axios/hooks";
 import { useTranslate } from "src/locales";
+import { useAxios } from "src/axios/hooks";
 import { endpoints } from "src/axios/endpoints";
 
 import { FlashcardDeckEditorTab } from "./flashcard-deck-editor-tab";
 import { FlashcardDeckSettingsTab } from "./flashcard-deck-settings-tab";
 
+import type { Operation } from "../../types/operation";
+
 type Props = {
+  operation: Operation;
   currentFlashcardDeck?: FlashcardDeck;
 }
 
-export function FlashcardDeckEditNewForm({ currentFlashcardDeck }: Props) {
+export function FlashcardDeckEditNewForm({ currentFlashcardDeck, operation }: Props) {
   const { t } = useTranslate();
-  const router = useRouter();
 
-  const { postAuth, putAuth } = useAxios();
+  const { postAuth, patchAuth } = useAxios();
   const [currentTab, setCurrentTab] = useState('Editor');
   const [flashcardDeck, setFlashcardDeck] = useState<FlashcardDeck>(currentFlashcardDeck ?? {
     title: '',
@@ -31,26 +30,20 @@ export function FlashcardDeckEditNewForm({ currentFlashcardDeck }: Props) {
     flashcards: [],
   });
 
+  const saveAction = () => {
+    if (operation === "create") {
+      return () => postAuth(endpoints.flashcardDeck.create, flashcardDeck);
+    } else {
+      return () => patchAuth(endpoints.flashcardDeck.update, flashcardDeck);
+    }
+  };
+
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   }, []);
 
   const handleSetFlashcards = (flashcards: Flashcard[]) => {
     setFlashcardDeck({ ...flashcardDeck, flashcards });
-  };
-
-  const handleSave = async () => {
-    try{
-      if(currentFlashcardDeck) {
-        await putAuth(endpoints.flashcardDeck.update, flashcardDeck);
-      } else {
-        await postAuth(endpoints.flashcardDeck.create, flashcardDeck);
-      }
-
-      router.push(paths.dashboard.library);
-    } catch (error) {
-      console.error("Error saving flashcard deck", error);
-    }
   };
 
   return (
@@ -78,11 +71,20 @@ export function FlashcardDeckEditNewForm({ currentFlashcardDeck }: Props) {
       </Tabs>
       {
         currentTab === 'Editor' &&
-        <FlashcardDeckEditorTab flashcards={flashcardDeck.flashcards} setFlashcards={handleSetFlashcards} />
+        <FlashcardDeckEditorTab
+          flashcardDeckOperation={operation}
+          flashcards={flashcardDeck.flashcards}
+          setFlashcards={handleSetFlashcards}
+        />
       }
       {
         currentTab === 'Settings' &&
-        <FlashcardDeckSettingsTab onSubmit={handleSave} flashcardDeck={flashcardDeck} setFlashcardDeck={setFlashcardDeck} />
+        <FlashcardDeckSettingsTab
+          operation={operation}
+          action={saveAction()}
+          flashcardDeck={flashcardDeck}
+          setFlashcardDeck={setFlashcardDeck}
+        />
       }
     </Container>
   );

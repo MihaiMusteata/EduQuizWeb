@@ -65,7 +65,7 @@ public class QuizController : BaseController
         return Ok(total);
     }
     
-    [HttpPut("update")]
+    [HttpPatch("update")]
     public async Task<IActionResult> UpdateQuiz(QuizDto quizDto)
     {
         var result = await _quizService.UpdateQuizAsync(quizDto);

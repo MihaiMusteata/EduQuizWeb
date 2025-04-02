@@ -59,29 +59,51 @@ public class QuizService : IQuizService
 
     public async Task<IdentityResult> UpdateQuizAsync(QuizDto quizDto)
     {
-        var oldQuiz = await _context.Quizzes
-            .Include(q => q.Questions)
-            .ThenInclude(q => q.Answers)
-            .FirstOrDefaultAsync(q => q.Id == quizDto.Id);
+        var quiz = await _context.Quizzes.FindAsync(quizDto.Id);
 
-        if (oldQuiz is null)
+        if (quiz == null)
         {
-            return IdentityResult.Failed(new IdentityError { Description = "Quiz Not Found" });
+            return IdentityResult.Failed(new IdentityError { Description = $"Quiz with ID {quizDto.Id} not found" });
         }
 
-        oldQuiz.Title = quizDto.Title;
-        oldQuiz.Visibility = Visibility.FromString(quizDto.Visibility);
+        var isModified = false;
 
-        _context.Quizzes.Update(oldQuiz);
+        if (!string.IsNullOrEmpty(quizDto.Title))
+        {
+            quiz.Title = quizDto.Title;
+            isModified = true;
+        }
+
+        if (!string.IsNullOrEmpty(quizDto.Visibility))
+        {
+            try
+            {
+                quiz.Visibility = Visibility.FromString(quizDto.Visibility);
+                isModified = true;
+            }
+            catch (ArgumentException ex)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = $"Invalid Visibility value: {ex.Message}" });
+            }
+        }
+
+        if (!isModified)
+        {
+            return IdentityResult.Success;
+        }
 
         try
         {
             await _context.SaveChangesAsync();
             return IdentityResult.Success;
         }
-        catch (Exception e)
+        catch (DbUpdateConcurrencyException ex)
         {
-            return IdentityResult.Failed(new IdentityError { Description = $"Exception: {e.Message}" });
+            return IdentityResult.Failed(new IdentityError { Description = "Concurrency error: Quiz was modified by another user." });
+        }
+        catch (DbUpdateException ex)
+        {
+            return IdentityResult.Failed(new IdentityError { Description = $"Database error: {ex.InnerException?.Message ?? ex.Message}" });
         }
     }
     

@@ -14,9 +14,7 @@ import { getJwt } from "../auth/context/jwt";
 import { AxiosContext } from "./context/axios-context";
 
 export const AxiosProvider = ({ children }: { children: ReactNode }) => {
-
   const [jwt, setJwt] = useState<string | undefined>(getJwt());
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const axiosInstance: AxiosInstance = axios.create({
@@ -78,9 +76,9 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
       return Promise.reject(error);
     },
   );
+
   const requestHandler = async <T = any>(request: () => Promise<AxiosResponse<T>>): Promise<T> => {
     try {
-      setIsLoading(true);
       const response = await request();
       return response.data;
     } catch (e: unknown) {
@@ -104,16 +102,19 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         console.error("Unexpected error:", e);
       }
       throw e;
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const postAuth = <T = any> (url: string, data: any) => requestHandler(() => axiosInstance.post<T>(url, data));
-  const putAuth = <T = any>(url: string, data: any) => requestHandler(() => axiosInstance.put<T>(url, data));
-  const getAuth = <T = any>(url: string, options?: any) => requestHandler(() => axiosInstance.get<T>(url, options));
-
-  const deleteAuth = <T = any> (url: string) => requestHandler(() => axiosInstance.delete<T>(url));
+  const postAuth = <T = any>(url: string, data: any) =>
+    requestHandler(() => axiosInstance.post<T>(url, data));
+  const putAuth = <T = any>(url: string, data: any) =>
+    requestHandler(() => axiosInstance.put<T>(url, data));
+  const getAuth = <T = any>(url: string, options?: any) =>
+    requestHandler(() => axiosInstance.get<T>(url, options));
+  const patchAuth = <T = any>(url: string, data: any) =>
+    requestHandler(() => axiosInstance.patch<T>(url, data));
+  const deleteAuth = <T = any>(url: string) =>
+    requestHandler(() => axiosInstance.delete<T>(url));
 
   return (
     <AxiosContext.Provider
@@ -126,7 +127,7 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         putAuth,
         getAuth,
         deleteAuth,
-        isLoading,
+        patchAuth,
       }}
     >
       {children}

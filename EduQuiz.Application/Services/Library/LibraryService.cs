@@ -1,3 +1,4 @@
+using System.Globalization;
 using EduQuiz.Application.DTOs.Library;
 using EduQuiz.Application.Extensions;
 using EduQuiz.Infrastructure;
@@ -44,6 +45,7 @@ public class LibraryService : ILibraryService
             })
             .ToListAsync());
 
-        return libraryItems.OrderBy(x => x.CreatedAt).ToList();
+        var r = libraryItems.OrderByDescending(x => DateTime.ParseExact(x.CreatedAt, "HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
+        return r;
     }
 }

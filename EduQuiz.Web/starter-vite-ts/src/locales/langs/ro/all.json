@@ -100,6 +100,54 @@
   "hint": "Indiciu",
   "finish": "Finalizează",
   "home": "Pagina principală",
-  "finalGrade": "Nota finală",
-  "yourAnswer": "Răspunsul tău"
+  "final-grade": "Nota finală",
+  "your-answer": "Răspunsul tău",
+  "question-updated": {
+    "success": "Întrebarea a fost actualizată cu succes",
+    "error": "Întrebarea nu a putut fi actualizată"
+  },
+  "question-added": {
+    "success": "Întrebarea a fost adăugată cu succes",
+    "error": "Întrebarea nu a putut fi adăugată"
+  },
+  "question-deleted": {
+    "success": "Întrebarea a fost ștearsă cu succes",
+    "error": "Întrebarea nu a putut fi ștearsă"
+  },
+  "flashcard-updated": {
+    "success": "Cartonașul a fost actualizat cu succes",
+    "error": "Cartonașul nu a putut fi actualizat"
+  },
+  "flashcard-added": {
+    "success": "Cartonașul a fost adăugat cu succes",
+    "error": "Cartonașul nu a putut fi adăugat"
+  },
+  "flashcard-deleted": {
+    "success": "Cartonașul a fost șters cu succes",
+    "error": "Cartonașul nu a putut fi șters"
+  },
+  "quiz-created": {
+    "success": "Quizul a fost creat cu succes",
+    "error": "Quizul nu a putut fi creat"
+  },
+  "quiz-updated": {
+    "success": "Quizul a fost actualizat cu succes",
+    "error": "Quizul nu a putut fi actualizat"
+  },
+  "quiz-deleted": {
+    "success": "Quizul a fost șters cu succes",
+    "error": "Quizul nu a putut fi șters"
+  },
+  "flashcard-deck-created": {
+    "success": "Setul de cartonașe a fost creat cu succes",
+    "error": "Setul de cartonașe nu a putut fi creat"
+  },
+  "flashcard-deck-updated": {
+    "success": "Setul de cartonașe a fost actualizat cu succes",
+    "error": "Setul de cartonașe nu a putut fi actualizat"
+  },
+  "flashcard-deck-deleted": {
+    "success": "Setul de cartonașe a fost șters cu succes",
+    "error": "Setul de cartonașe nu a putut fi șters"
+  }
 }

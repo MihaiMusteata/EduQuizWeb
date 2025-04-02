@@ -19,8 +19,8 @@ public static class AnswerMapper
     {
         return new AnswerDbTable
         {
-            Text = dto.Text,
-            IsCorrect = dto.IsCorrect
+            Text = dto.Text ?? string.Empty,
+            IsCorrect = dto.IsCorrect ?? false
         };
     }
 

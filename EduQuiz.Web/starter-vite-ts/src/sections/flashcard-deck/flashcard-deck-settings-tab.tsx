@@ -1,11 +1,14 @@
 import type { Visibility } from "src/types/quiz";
+import type { Operation } from "src/types/operation";
 import type { FlashcardDeck } from "src/types/flashcard";
 
+import {
+  LoadingButton
+} from "@mui/lab";
 import {
   Box,
   Card,
   Radio,
-  Button,
   Container,
   TextField,
   Typography,
@@ -13,18 +16,44 @@ import {
   FormControlLabel
 } from "@mui/material";
 
-import { useTranslate } from "src/locales";
+import { paths } from "src/routes/paths";
+import { useRouter } from "src/routes/hooks";
 
-import { Iconify } from "../../components/iconify";
+import { useTranslate } from "src/locales";
+import { usePromise } from "src/axios/hooks";
+
+import { toast } from "src/components/snackbar";
+import { Iconify } from "src/components/iconify";
 
 type Props = {
+  operation: Operation;
+  action: () => Promise<any>;
   flashcardDeck: FlashcardDeck;
   setFlashcardDeck: (flashcardDeck: FlashcardDeck) => void;
-  onSubmit: () => void;
 }
 
-export function FlashcardDeckSettingsTab({ onSubmit, flashcardDeck, setFlashcardDeck }: Props) {
+export function FlashcardDeckSettingsTab({ operation, action, flashcardDeck, setFlashcardDeck }: Props) {
   const { t } = useTranslate();
+  const router = useRouter();
+  const { execute: saveFlashcardDeck, isLoading } = usePromise(action);
+  const onSubmit = async () => {
+    try {
+      await saveFlashcardDeck();
+      router.push(paths.dashboard.library);
+      if (operation === "create") {
+        toast.success(t("flashcard-deck-created.success"));
+      } else {
+        toast.success(t("flashcard-deck-updated.success"));
+      }
+    } catch (error) {
+      if (operation === "create") {
+        toast.error(t("flashcard-deck-created.error"));
+      } else {
+        toast.error(t("flashcard-deck-updated.error"));
+      }
+      console.error("Error saving flashcard deck", error);
+    }
+  };
 
   return (
     <Container sx={{ width: '100%' }}>
@@ -104,9 +133,14 @@ export function FlashcardDeckSettingsTab({ onSubmit, flashcardDeck, setFlashcard
           />
         </RadioGroup>
         <Box display="flex" justifyContent="flex-end">
-          <Button variant="contained" color="primary" onClick={onSubmit}>
+          <LoadingButton
+            variant="contained"
+            color="primary"
+            onClick={onSubmit}
+            loading={isLoading}
+          >
             {t("save")}
-          </Button>
+          </LoadingButton>
         </Box>
       </Card>
     </Container>

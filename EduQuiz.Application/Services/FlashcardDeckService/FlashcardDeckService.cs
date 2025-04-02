@@ -57,8 +57,6 @@ public class FlashcardDeckService : IFlashcardDeckService
         oldFlashcardDeck.Title = flashcardDeckDto.Title;
         oldFlashcardDeck.Visibility = Visibility.FromString(flashcardDeckDto.Visibility);
 
-        UpdateFlashcards(oldFlashcardDeck, flashcardDeckDto.Flashcards);
-
         _context.FlashcardDecks.Update(oldFlashcardDeck);
 
         try
@@ -70,35 +68,6 @@ public class FlashcardDeckService : IFlashcardDeckService
         {
             return IdentityResult.Failed(new IdentityError { Description = $"Exception: {e.Message}" });
         }
-    }
-
-    private void UpdateFlashcards(FlashcardDeckDbTable flashcardDeck, List<FlashcardDto> updatedFlashcardsDto)
-    {
-        // var updatedFlashcardIds = updatedFlashcardsDto.Select(x => x.Id).ToList();
-        //
-        // var flashcardsToRemove =
-        //     flashcardDeck.Flashcards.Where(x => !updatedFlashcardIds.Contains(x.Id)).ToList();
-        // _context.Flashcards.RemoveRange(flashcardsToRemove);
-        //
-        // var flashcardsToUpdate =
-        //     flashcardDeck.Flashcards.Where(x => updatedFlashcardIds.Contains(x.Id)).ToList();
-        //
-        // foreach (var flashcard in flashcardsToUpdate)
-        // {
-        //     var updatedFlashcard = updatedFlashcardsDto.First(x => x.Id == flashcard.Id);
-        //     flashcard.FrontSideText = updatedFlashcard.FrontSideText;
-        //     flashcard.BackSideText = updatedFlashcard.BackSideText;
-        //     flashcard.Hint = updatedFlashcard.Hint;
-        //
-        //     _context.Flashcards.Update(flashcard);
-        // }
-        //
-        // var flashcardsToAdd = updatedFlashcardsDto
-        //     .Where(x => x.Id is null || x.Id == Guid.Empty)
-        //     .Select(x => x.ToEntity())
-        //     .ToList();
-        //
-        // flashcardDeck.Flashcards.AddRange(flashcardsToAdd);
     }
 
     public async Task<IdentityResult> DeleteFlashcardDeckAsync(Guid id)

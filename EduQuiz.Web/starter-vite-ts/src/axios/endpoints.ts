@@ -15,12 +15,20 @@ export const endpoints = {
   question: {
     getByIndex: '/question/by-index',
     getList: '/question/list',
+    create: (quizId: string) => `/question/create?quizId=${quizId}`,
+    update: '/question/update',
+    delete: (id: string) => `/question/${id}`,
   },
   flashcardDeck: {
     create: '/flashcard-deck/create',
     get: (id: string) => `/flashcard-deck/${id}`,
     update: '/flashcard-deck/update',
     delete: (id: string) => `/flashcard-deck/${id}`,
+  },
+  flashcard: {
+    create: (deckId: string) => `/flashcard/create?flashcardDeckId=${deckId}`,
+    update: '/flashcard/update',
+    delete: (id: string) => `/flashcard/${id}`,
   },
   library: {
     get: '/library/my-library',

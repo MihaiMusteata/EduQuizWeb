@@ -1,28 +1,32 @@
+import type { Question, QuestionType } from 'src/types/quiz';
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Box, Button } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+
+import { useTranslate } from 'src/locales';
 
 import { Form, Field } from 'src/components/hook-form';
 
 import { FieldsSchema } from "../schema";
-import { useTranslate } from '../../../locales';
 import { TrueFalseQuestion } from "./true-false-question";
 import { ChoiceBasedQuestion } from "./choice-based-question";
 import { ShortAnswerQuestion } from "./short-answer-question";
 
 import type { FieldsSchemaType } from "../schema";
-import type { Question, QuestionType } from '../../../types/quiz';
 
 type Props = {
   onSave: (question: Question) => void;
   onCancel: () => void;
   questionType: QuestionType;
   initialData?: Question;
+  isLoading: boolean;
 }
 
-export function QuestionForm({ onSave, onCancel, questionType, initialData }: Props) {
+export function QuestionForm({ onSave, onCancel, questionType, initialData, isLoading }: Props) {
   const { t } = useTranslate();
   const [totalAnswers, setTotalAnswers] = useState(
     questionType === 'multiple-choice' || questionType === 'single-choice'
@@ -55,24 +59,23 @@ export function QuestionForm({ onSave, onCancel, questionType, initialData }: Pr
 
 
   const {
-    handleSubmit,
     setValue,
     getValues,
     reset,
   } = methods;
 
-  const onSubmit = handleSubmit(async (data) => {
+  const handleSave = () => {
+    const data = getValues();
     onSave(data.question);
-  });
+  }
 
   const handleCancel = () => {
     reset();
     onCancel();
   }
 
-
   return (
-    <Form methods={methods} onSubmit={onSubmit}>
+    <Form methods={methods}>
       <Field.Text
         label={t('question')}
         multiline rows={3}
@@ -127,9 +130,14 @@ export function QuestionForm({ onSave, onCancel, questionType, initialData }: Pr
         <Button variant='outlined' color='inherit' onClick={handleCancel}>
           {t('cancel')}
         </Button>
-        <Button variant='contained' color='primary' type='submit'>
+        <LoadingButton
+          variant='contained'
+          color='primary'
+          onClick={handleSave}
+          loading={isLoading}
+        >
           {t('save')}
-        </Button>
+        </LoadingButton>
       </Box>
     </Form>
   );
