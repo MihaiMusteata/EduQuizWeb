@@ -15,12 +15,23 @@ services:
     depends_on:
       - postgres
 
+  ai_service:
+    build:
+      context: ./EduQuiz.AI
+    ports:
+      - "0.0.0.0:5001:8001"
+    container_name: ai_service
+    env_file:
+      - ./EduQuiz.AI/.env
+    networks:
+      - eduquizweb-network
+
   proxy:
     build:
       context: ./EduQuiz.Web/starter-vite-ts
     image: nginx:latest
     ports:
-      - "0.0.0.0:8081:80"
+      - "0.0.0.0:80:80"
     container_name: proxy
     networks:
       - eduquizweb-network

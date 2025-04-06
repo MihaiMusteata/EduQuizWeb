@@ -1,9 +1,12 @@
+import type { Operation } from "src/types/operation";
 import type { Flashcard, FlashcardDeck } from "src/types/flashcard";
 
 import { useState, useCallback } from "react";
 import { varAlpha } from "minimal-shared/utils";
 
 import { Tab, Tabs, Container } from "@mui/material";
+
+import { useSearchParams } from "src/routes/hooks";
 
 import { useTranslate } from "src/locales";
 import { useAxios } from "src/axios/hooks";
@@ -12,8 +15,6 @@ import { endpoints } from "src/axios/endpoints";
 import { FlashcardDeckEditorTab } from "./flashcard-deck-editor-tab";
 import { FlashcardDeckSettingsTab } from "./flashcard-deck-settings-tab";
 
-import type { Operation } from "../../types/operation";
-
 type Props = {
   operation: Operation;
   currentFlashcardDeck?: FlashcardDeck;
@@ -21,6 +22,9 @@ type Props = {
 
 export function FlashcardDeckEditNewForm({ currentFlashcardDeck, operation }: Props) {
   const { t } = useTranslate();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode') || 'manual';
+  console.log("mode", mode);
 
   const { postAuth, patchAuth } = useAxios();
   const [currentTab, setCurrentTab] = useState('Editor');

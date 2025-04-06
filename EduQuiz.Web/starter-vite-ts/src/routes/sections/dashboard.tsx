@@ -8,8 +8,6 @@ import { DashboardLayout } from 'src/layouts/dashboard';
 
 import { LoadingScreen } from 'src/components/loading-screen';
 
-import { ActivityCreateDialog } from 'src/sections/acitvity/view/activity-create-dialog';
-
 import { AuthGuard } from 'src/auth/guard';
 
 import { usePathname } from '../hooks';
@@ -19,9 +17,6 @@ import { usePathname } from '../hooks';
 const IndexPage = lazy(() => import('src/pages/dashboard/one'));
 const ToolsPage = lazy(() => import('src/pages/dashboard/tools'));
 const LibraryPage = lazy(() => import('src/pages/dashboard/library'));
-// Quiz
-const QuizCreatePage = lazy(() => import('src/pages/dashboard/quiz/new'));
-const QuizEditPage = lazy(() => import('src/pages/dashboard/quiz/edit'));
 
 // ----------------------------------------------------------------------
 
@@ -48,19 +43,6 @@ export const dashboardRoutes: RouteObject[] = [
       { element: <IndexPage />, index: true },
       { path: 'tools', element: <ToolsPage /> },
       { path: 'library', element: <LibraryPage /> },
-      {
-        path: 'activity',
-        children: [
-          { path: 'create', element: <ActivityCreateDialog /> },
-          {
-            path: 'quiz',
-            children: [
-              { path: 'new', element: <QuizCreatePage /> },
-              { path: 'edit/:id', element: <QuizEditPage /> }
-            ]
-          }
-        ],
-      },
     ]
   },
 ];

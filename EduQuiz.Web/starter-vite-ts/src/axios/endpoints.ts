@@ -11,6 +11,7 @@ export const endpoints = {
     delete: (id: string) => `/quiz/${id}`,
     totalQuestions: (id: string) => `/quiz/${id}/total-questions`,
     submit: (id: string) => `/quiz/${id}/submit`,
+    generate: '/ai/quiz/generate',
   },
   question: {
     getByIndex: '/question/by-index',

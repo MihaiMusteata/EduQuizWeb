@@ -33,6 +33,7 @@ export const activityRoutes: RouteObject[] = [
     ),
     children: [
       { path: 'create', element: <ActivityCreateDialog /> },
+      { path: 'generate', element: <ActivityCreateDialog /> },
       {
         path: 'quiz',
         children: [

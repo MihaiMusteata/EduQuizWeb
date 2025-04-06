@@ -21,6 +21,14 @@ const tools = (t: TFunction, router: any) => [
     onClick: () => {
       router.push(paths.activity.create);
     }
+  },
+  {
+    title: t('tools.ai-activity.title'),
+    image: `${CONFIG.assetsDir}/assets/icons/activity/ic-ai.png`,
+    description: t('tools.ai-activity.description'),
+    onClick: () => {
+      router.push(paths.activity.generate);
+    }
   }
 ];
 

@@ -23,6 +23,10 @@
     "manual-activity": {
       "title": "Ручной",
       "description": "Создайте новую активность вручную."
+    },
+    "ai-activity": {
+      "title": "Создать с помощью ИИ",
+      "description": "Создайте новую активность."
     }
   },
   "library-page": {
@@ -52,6 +56,7 @@
   "add-new-question": "Добавить еще один вопрос",
   "add-new-flashcard": "Добавить новую карточку",
   "generate-new-activity": "Создать новую активность",
+  "create-new-activity": "Создать новую активность",
   "select-activity-type": "Выберите тип активности",
   "test-your-knowledge": "Проверьте свои знания",
   "learn-with-flash-cards": "Учите и запоминайте с карточками",
@@ -150,5 +155,14 @@
   "flashcard-deck-deleted": {
     "success": "Колода карточек успешно удалена",
     "error": "Не удалось удалить колоду карточек"
-  }
+  },
+  "generate-mode-config": {
+    "title": "Настройки режима генерации",
+    "description": "Настройте параметры для генерации активности с помощью ИИ.",
+    "subject": "Предмет",
+    "topic": "Тема",
+    "language": "Язык",
+    "number-of-questions": "Количество вопросов"
+  },
+  "generate": "Создать"
 }

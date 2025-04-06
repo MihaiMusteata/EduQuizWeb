@@ -30,6 +30,7 @@ export const paths = {
   // ACTIVITY
   activity: {
     create: `${ROOTS.ACTIVITY}/create`,
+    generate: `${ROOTS.ACTIVITY}/generate`,
     quiz: {
       new: `${ROOTS.ACTIVITY}/quiz/new`,
       edit: (id: string) => `${ROOTS.ACTIVITY}/quiz/edit/${id}`,

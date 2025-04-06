@@ -23,6 +23,10 @@
     "manual-activity": {
       "title": "Manual",
       "description": "Create a new activity manually."
+    },
+    "ai-activity": {
+      "title": "Generate with AI",
+      "description": "Generate a new activity."
     }
   },
   "library-page": {
@@ -52,6 +56,7 @@
   "add-new-question": "Add new question",
   "add-new-flashcard": "Add a new flashcard",
   "generate-new-activity": "Generate new activity",
+  "create-new-activity": "Create new activity",
   "select-activity-type": "Select activity type",
   "test-your-knowledge": "Test your knowledge",
   "learn-with-flash-cards": "Learn and memorize with flashcards",
@@ -150,5 +155,14 @@
   "flashcard-deck-deleted": {
     "success": "Flashcard deck deleted successfully",
     "error": "Error deleting flashcard deck"
-  }
+  },
+  "generate-mode-config": {
+    "title": "Configure generation mode",
+    "description": "Configure the generation mode settings below.",
+    "subject": "Subject",
+    "topic": "Topic",
+    "language": "Language",
+    "number-of-questions": "Number of questions"
+  },
+  "generate": "Generate"
 }

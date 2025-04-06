@@ -23,6 +23,10 @@
     "manual-activity": {
       "title": "Manual",
       "description": "Creează o nouă activitate manual."
+    },
+    "ai-activity": {
+      "title": "Generează cu AI",
+      "description": "Generează o nouă activitate."
     }
   },
   "library-page": {
@@ -51,6 +55,7 @@
   "add-new-question": "Adaugă o nouă întrebare",
   "add-new-flashcard": "Adaugă un nou cartonaș",
   "generate-new-activity": "Generează o nouă activitate",
+  "create-new-activity": "Creează o nouă activitate",
   "select-activity-type": "Selectează tipul de activitate",
   "test-your-knowledge": "Testează-ți cunoștințele",
   "learn-with-flash-cards": "Învață și memorează cu ajutorul cardurilor",
@@ -149,5 +154,14 @@
   "flashcard-deck-deleted": {
     "success": "Setul de cartonașe a fost șters cu succes",
     "error": "Setul de cartonașe nu a putut fi șters"
-  }
+  },
+  "generate-mode-config": {
+    "title": "Configurează modul de generare",
+    "description": "Aici poți ajusta setările pentru modul de generare a activităților. Aceste setări vor influența modul în care sunt generate întrebările și răspunsurile.",
+    "subject": "Domeniu",
+    "topic": "Subiect",
+    "language": "Limba de redactare",
+    "number-of-questions": "Numărul de întrebări"
+  },
+  "generate": "Generează"
 }

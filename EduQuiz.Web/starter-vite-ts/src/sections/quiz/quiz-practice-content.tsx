@@ -251,7 +251,7 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
     if (config.numberOfQuestions === "all") {
       getQuestions();
     }
-  }, []);
+  });
 
   useEffect(() => {
     if (config.numberOfQuestions === "one") {

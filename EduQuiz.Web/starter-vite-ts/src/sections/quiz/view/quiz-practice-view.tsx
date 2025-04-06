@@ -12,7 +12,8 @@ import {
   Grid2 as Grid, InputAdornment
 } from "@mui/material";
 
-import { useParams } from "src/routes/hooks";
+import { paths } from "src/routes/paths";
+import { useParams, useRouter } from "src/routes/hooks";
 
 import { CONFIG } from "src/global-config";
 import { useTranslate } from "src/locales";
@@ -40,6 +41,8 @@ export function QuizPracticeView() {
 
   const { t } = useTranslate();
   const { id = '' } = useParams();
+
+  const router = useRouter();
 
   const { execute: fetchTotalQuestions, isLoading, data: totalQuestions } = usePromise(() =>
     getAuth<number>(endpoints.quiz.totalQuestions(id))
@@ -222,7 +225,7 @@ export function QuizPracticeView() {
     <DashboardContent>
       {
         totalQuestions === undefined ?
-          <FullScreenDialog>
+          <FullScreenDialog onClose={() => router.push(paths.dashboard.library)}>
             {
               practiceMode === undefined ? renderSelectMode() : renderConfig()
             }

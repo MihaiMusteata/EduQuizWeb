@@ -5,23 +5,25 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 
-import { useRouter } from "../../routes/hooks";
-
 export type FullScreenDialogProps = {
   children: React.ReactNode;
+  onClose?: () => void;
 };
-export function FullScreenDialog({children }: FullScreenDialogProps) {
+
+export function FullScreenDialog({ children, onClose }: FullScreenDialogProps) {
   const openDialog = useBoolean(true);
-  const router = useRouter();
-  const onClose = () => {
+  const handleClose = () => {
     openDialog.onFalse();
-    router.back();
+    if (onClose) {
+      onClose();
+    }
   };
   return (
     <Dialog
       fullScreen
       open={openDialog.value}
       onClose={openDialog.onFalse}
+      disableEscapeKeyDown
       disableEnforceFocus
       sx={{
         '& .MuiDialogContent-root': {
@@ -42,7 +44,7 @@ export function FullScreenDialog({children }: FullScreenDialogProps) {
         {children}
       </DialogContent>
       <DialogActions sx={{ py: 2, px: 3 }}>
-        <Button variant="outlined" color="inherit" onClick={onClose}>
+        <Button variant="outlined" color="inherit" onClick={handleClose}>
           Cancel
         </Button>
       </DialogActions>

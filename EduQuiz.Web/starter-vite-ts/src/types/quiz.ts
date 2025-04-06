@@ -31,3 +31,10 @@ export type SubmissionResponse = {
 
 export type QuestionType = 'true-false' | 'multiple-choice' | 'single-choice' | 'short-answer' | undefined;
 export type Visibility = 'public' | 'private';
+
+export type AIConfigParams = {
+  subject: string;
+  topic: string;
+  language: string;
+  numQuestions: string;
+}
