@@ -13,3 +13,10 @@ export type Flashcard = {
   backSideText: string;
   hint?: string;
 }
+
+export type AIConfigParams = {
+  subject: string;
+  topic: string;
+  language: string;
+  numFlashcards: string;
+}

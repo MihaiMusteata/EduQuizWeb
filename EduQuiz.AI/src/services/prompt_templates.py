@@ -6,7 +6,7 @@ QUIZ_PROMPT_TEMPLATE = [
     {{
         "text": "question text",
         "type": "true-false|multiple-choice|single-choice|short-answer",
-        "hint": "helpful hint",
+        "hint": "optional helpful hint",
         "answers": [{{"text": "answer text", "isCorrect": boolean}}]
     }}
     
@@ -21,3 +21,25 @@ QUIZ_PROMPT_TEMPLATE = [
     """),
     ("user", "Generate the quiz now")
 ]
+
+FLASHCARD_PROMPT_TEMPLATE = [
+    ("system", """
+    You are an educational assistant. Generate a set of flashcards with {num_flashcards} flashcards about {subject} - {topic}, written in {language}.
+    
+    Format each flashcard as a JSON object with this structure:
+    {{
+        "frontSideText": "text for the front side",
+        "backSideText": "text for the back side",
+        "hint": "optional helpful hint"
+    }}
+    
+    Return each flashcard as a separate JSON object, one per line, with NO array brackets (i.e., do NOT wrap the flashcards in []).
+    Each line must be a complete, valid JSON object, followed by a newline (\n).
+    Do NOT include any additional text, spaces, or newlines outside the JSON objects.
+    Example output:
+    {{ "frontSideText": "What is the capital of France?", "backSideText": "Paris", "hint": "Think about the Eiffel Tower" }}\n
+    {{ "frontSideText": "Do", "backSideText": "Did/Done", "hint": "Irregular verb" }}\n
+    """),
+    ("user", "Generate the flashcards now")
+]
+

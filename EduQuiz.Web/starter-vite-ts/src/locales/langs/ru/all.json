@@ -162,7 +162,8 @@
     "subject": "Предмет",
     "topic": "Тема",
     "language": "Язык",
-    "number-of-questions": "Количество вопросов"
+    "number-of-questions": "Количество вопросов",
+    "number-of-flashcards": "Количество карточек"
   },
   "generate": "Создать"
 }

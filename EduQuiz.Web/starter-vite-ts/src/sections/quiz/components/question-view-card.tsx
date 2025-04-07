@@ -77,7 +77,7 @@ export function QuestionViewCard({ index, question, onEdit, editorProps }: Quest
           defaultChecked
           disabled
         />
-        <Typography variant="body1" sx={{ fontWeight: 'bold', opacity: 0.7 }}>Answer:</Typography>
+        <Typography variant="body1" sx={{ fontWeight: 'bold', opacity: 0.7 }}>{`${t('answer')} :`}</Typography>
         <ListItemText sx={{ ml: 1 }} primary={question.answers[0].text} />
       </ListItem>
     </List>

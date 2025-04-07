@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import Literal, List
-
 class Answer(BaseModel):
     text: str
     isCorrect: bool

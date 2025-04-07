@@ -162,7 +162,8 @@
     "subject": "Subject",
     "topic": "Topic",
     "language": "Language",
-    "number-of-questions": "Number of questions"
+    "number-of-questions": "Number of questions",
+    "number-of-flashcards": "Number of flashcards"
   },
   "generate": "Generate"
 }

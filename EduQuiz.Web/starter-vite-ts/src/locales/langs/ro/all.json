@@ -161,7 +161,8 @@
     "subject": "Domeniu",
     "topic": "Subiect",
     "language": "Limba de redactare",
-    "number-of-questions": "Numărul de întrebări"
+    "number-of-questions": "Numărul de întrebări",
+    "number-of-flashcards": "Numărul de cartonașe"
   },
   "generate": "Generează"
 }

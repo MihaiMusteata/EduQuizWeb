@@ -25,6 +25,7 @@ export const endpoints = {
     get: (id: string) => `/flashcard-deck/${id}`,
     update: '/flashcard-deck/update',
     delete: (id: string) => `/flashcard-deck/${id}`,
+    generate: '/ai/flashcard/generate',
   },
   flashcard: {
     create: (deckId: string) => `/flashcard/create?flashcardDeckId=${deckId}`,
