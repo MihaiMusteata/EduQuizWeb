@@ -7,6 +7,7 @@ import { CONFIG } from 'src/global-config';
 
 import { authRoutes } from './auth';
 import { mainRoutes } from './main';
+import { sessionRoutes } from './session';
 import { activityRoutes } from "./activity";
 import { dashboardRoutes } from './dashboard';
 
@@ -28,6 +29,9 @@ export const routesSection: RouteObject[] = [
 
   // Activity
   ...activityRoutes,
+
+  // Quiz Session
+  ...sessionRoutes,
 
   // Main
   ...mainRoutes,

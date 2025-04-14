@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/global-config';
 
-import { LibraryView } from "../../../sections/library/view";
+import { LibraryView } from "src/sections/library/view";
 
 // ----------------------------------------------------------------------
 

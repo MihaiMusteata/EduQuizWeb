@@ -8,12 +8,14 @@ import type { CountdownTimerProps } from "./types";
 
 interface Props {
   timer: CountdownTimerProps;
+  size?: "small" | "medium" | "large";
 }
 
-export function CountdownTimer({ timer }: Props) {
-  const [timeLeft, setTimeLeft] = useState<number>(Math.floor((timer.end.getTime() - new Date().getTime()) / 1000));
+export function CountdownTimer({ timer, size = "small" }: Props) {
+  const [timeLeft, setTimeLeft] = useState<number>(
+    Math.max(0, Math.floor((timer.end.getTime() - new Date().getTime()) / 1000))
+  );
   const [isRunning, setIsRunning] = useState<boolean>(true);
-
   // eslint-disable-next-line
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
@@ -36,9 +38,20 @@ export function CountdownTimer({ timer }: Props) {
   const progress = (timeLeft / ((timer.end.getTime() - timer.start.getTime()) / 1000)) * 100;
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
-      <IconButton sx={{ mr: 2 }}>
-        <Iconify icon="icon-park-twotone:timer" width={30} />
+    <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      textAlign: 'center',
+      width: '100%'
+    }}
+    >
+      <IconButton
+        sx={{
+          m: size === "small" ? 1 : 2,
+        }}
+      >
+        <Iconify icon="icon-park-twotone:timer" width={size === "small" ? 30 : size === "medium" ? 60 : 80} />
       </IconButton>
 
       <Box sx={{ width: '100%' }}>
@@ -46,18 +59,68 @@ export function CountdownTimer({ timer }: Props) {
           variant="determinate"
           value={progress}
           color={progress > 10 ? 'primary' : progress > 4 ? 'warning' : 'error'}
+          sx={{
+            height: size === "small" ? 4 : size === "medium" ? 15 : 8,
+          }}
         />
       </Box>
       <Box
-        sx={{ width: '83px', textAlign: 'center' }}
+        sx={{
+          ml: size === "small" ? 1 : 2,
+          textAlign: 'center',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
         color={progress > 10 ? '#FFF' : progress > 5 ? 'warning.main' : 'error.main'}
       >
-        <Typography variant="h6" sx={{ fontWeight: 'bold', ml: 2 }}>
-          {hours < 10 ? `0${hours}` : hours}:
-          {minutes < 10 ? `0${minutes}` : minutes}:
+        <Typography
+          variant={size === "small" ? "h4" : size === "medium" ? "h3" : "h2"}
+          sx={{
+            fontWeight: 'bold',
+            width: size === "small" ? 34 : size === "medium" ? 35 : 50,
+          }}
+        >
+          {hours < 10 ? `0${hours}` : hours}
+        </Typography>
+
+        <Typography
+          variant={size === "small" ? "h4" : size === "medium" ? "h3" : "h2"}
+          sx={{
+            fontWeight: 'bold'
+          }}
+        >
+          :
+        </Typography>
+
+        <Typography
+          variant={size === "small" ? "h4" : size === "medium" ? "h3" : "h2"}
+          sx={{
+            fontWeight: 'bold',
+            width: size === "small" ? 34 : size === "medium" ? 35 : 50,
+          }}
+        >
+          {minutes < 10 ? `0${minutes}` : minutes}
+        </Typography>
+
+        <Typography
+          variant={size === "small" ? "h4" : size === "medium" ? "h3" : "h2"}
+          sx={{ fontWeight: 'bold' }}
+        >
+          :
+        </Typography>
+
+        <Typography
+          variant={size === "small" ? "h4" : size === "medium" ? "h3" : "h2"}
+          sx={{
+            fontWeight: 'bold',
+            width: size === "small" ? 34 : size === "medium" ? 35 : 50,
+          }}
+        >
           {seconds < 10 ? `0${seconds}` : seconds}
         </Typography>
       </Box>
+
     </Box>
   );
 }

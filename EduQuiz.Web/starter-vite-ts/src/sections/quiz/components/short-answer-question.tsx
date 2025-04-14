@@ -2,7 +2,7 @@ import type { TFunction } from "i18next";
 
 import { Box } from "@mui/material";
 
-import { Field } from "../../../components/hook-form";
+import { Field } from "src/components/hook-form";
 
 type Props = {
   t: TFunction;

@@ -1,5 +1,5 @@
 using EduQuiz.Domain.Entities.Question;
-using EduQuiz.Domain.ValueObjects.QuestionType;
+using EduQuiz.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

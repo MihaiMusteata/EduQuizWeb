@@ -7,6 +7,7 @@ export type ConfigValue = {
   appName: string;
   appVersion: string;
   serverUrl: string;
+  hubUrl: string;
   assetsDir: string;
   auth: {
     skip: boolean;
@@ -20,6 +21,7 @@ export const CONFIG: ConfigValue = {
   appName: 'EduQuiz',
   appVersion: '1.0',
   serverUrl: import.meta.env.VITE_SERVER_URL ?? '',
+  hubUrl: import.meta.env.VITE_HUB_URL ?? '',
   assetsDir: import.meta.env.VITE_ASSETS_DIR ?? '',
   auth: {
     skip: false,

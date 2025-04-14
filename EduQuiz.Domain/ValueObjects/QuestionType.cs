@@ -1,4 +1,4 @@
-namespace EduQuiz.Domain.ValueObjects.QuestionType;
+namespace EduQuiz.Domain.ValueObjects;
 
 public class QuestionType : ValueObject
 {

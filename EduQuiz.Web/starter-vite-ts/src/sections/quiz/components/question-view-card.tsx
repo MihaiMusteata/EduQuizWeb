@@ -1,4 +1,5 @@
 import type { Question } from "src/types/quiz";
+import type { Operation } from "src/types/operation";
 
 import Divider from "@mui/material/Divider";
 import EditIcon from '@mui/icons-material/Edit';
@@ -20,8 +21,6 @@ import { useTranslate } from "src/locales";
 import { useDeleteQuestion } from "src/actions/quiz";
 
 import { Iconify } from "src/components/iconify";
-
-import type { Operation } from "../../../types/operation";
 
 type QuestionViewCardProps = {
   index: number;

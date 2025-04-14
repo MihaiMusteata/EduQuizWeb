@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using EduQuiz.Domain.Entities.Flashcard;
 using EduQuiz.Domain.Entities.User;
-using EduQuiz.Domain.ValueObjects.Visibility;
+using EduQuiz.Domain.ValueObjects;
 
 namespace EduQuiz.Domain.Entities.FlashcardDeck;
 

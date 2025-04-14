@@ -1,4 +1,4 @@
-namespace EduQuiz.Domain.ValueObjects.Visibility;
+namespace EduQuiz.Domain.ValueObjects;
 
 public class Visibility : ValueObject
 {

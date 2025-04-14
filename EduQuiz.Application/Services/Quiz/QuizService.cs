@@ -1,7 +1,7 @@
 using EduQuiz.Application.DTOs.Answer;
 using EduQuiz.Application.DTOs.Quiz;
 using EduQuiz.Application.Mappers.Quiz;
-using EduQuiz.Domain.ValueObjects.Visibility;
+using EduQuiz.Domain.ValueObjects;
 using EduQuiz.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

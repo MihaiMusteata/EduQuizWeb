@@ -3,7 +3,7 @@ import type { UseFormSetValue, UseFormGetValues } from "react-hook-form";
 
 import { Box } from "@mui/material";
 
-import { Field } from "../../../components/hook-form";
+import { Field } from "src/components/hook-form";
 
 import type { FieldsSchemaType } from "../schema";
 

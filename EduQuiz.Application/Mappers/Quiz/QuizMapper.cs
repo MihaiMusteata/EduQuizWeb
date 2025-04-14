@@ -1,7 +1,7 @@
 using EduQuiz.Application.DTOs.Quiz;
 using EduQuiz.Application.Mappers.Question;
 using EduQuiz.Domain.Entities.Quiz;
-using EduQuiz.Domain.ValueObjects.Visibility;
+using EduQuiz.Domain.ValueObjects;
 
 namespace EduQuiz.Application.Mappers.Quiz;
 
@@ -29,5 +29,4 @@ public static class QuizMapper
             Questions = dto.Questions?.Select(x => x.ToEntity()).ToList() ?? []
         };
     }
-    
 }

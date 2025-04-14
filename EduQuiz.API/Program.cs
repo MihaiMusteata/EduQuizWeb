@@ -1,4 +1,6 @@
 using System.Text;
+using EduQuiz.API.BackgroundServices;
+using EduQuiz.API.Hubs;
 using EduQuiz.API.Middleware;
 using EduQuiz.Application.Services.Authentication;
 using EduQuiz.Application.Services.FlashcardDeckService;
@@ -6,12 +8,14 @@ using EduQuiz.Application.Services.FlashcardService;
 using EduQuiz.Application.Services.Library;
 using EduQuiz.Application.Services.Question;
 using EduQuiz.Application.Services.Quiz;
+using EduQuiz.Application.Services.QuizSession;
 using EduQuiz.Domain.Entities.User;
 using EduQuiz.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +23,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLogging();
+builder.Services.AddSignalR();
+
+NpgsqlConnection.GlobalTypeMapper.EnableDynamicJson();
 
 builder.Services.AddDbContext<EduQuizDbContext>(options =>
 {
@@ -35,6 +42,9 @@ builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IFlashcardDeckService, FlashcardDeckService>();
 builder.Services.AddScoped<IFlashcardService, FlashcardService>();
 builder.Services.AddScoped<ILibraryService, LibraryService>();
+builder.Services.AddScoped<IQuizSessionService, QuizSessionService>();
+
+builder.Services.AddHostedService<SessionExpirationBackgroundService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
@@ -79,6 +89,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseTimeZoneMiddleware();
 app.UseHttpsRedirection();
 
@@ -88,5 +99,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<QuizSessionHub>("/hub/quiz-session");
 
 app.Run();

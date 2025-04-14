@@ -2,7 +2,6 @@ using EduQuiz.Application.DTOs.Question;
 using EduQuiz.Application.Mappers.Answer;
 using EduQuiz.Application.Mappers.Question;
 using EduQuiz.Domain.Entities.Answer;
-using EduQuiz.Domain.ValueObjects.QuestionType;
 using EduQuiz.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

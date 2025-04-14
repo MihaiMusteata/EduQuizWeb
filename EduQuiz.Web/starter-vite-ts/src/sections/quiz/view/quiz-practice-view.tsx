@@ -19,7 +19,6 @@ import { CONFIG } from "src/global-config";
 import { useTranslate } from "src/locales";
 import { endpoints } from "src/axios/endpoints";
 import { useAxios, usePromise } from "src/axios/hooks";
-import { DashboardContent } from 'src/layouts/dashboard/content'
 
 import { Iconify } from "src/components/iconify";
 import { ActionCard } from "src/components/action-card";
@@ -37,7 +36,7 @@ export function QuizPracticeView() {
     withTimer: false
   });
 
-  const { getAuth } = useAxios();
+  const { getAuth, postAuth } = useAxios();
 
   const { t } = useTranslate();
   const { id = '' } = useParams();
@@ -48,7 +47,31 @@ export function QuizPracticeView() {
     getAuth<number>(endpoints.quiz.totalQuestions(id))
   );
 
+  const { execute: createSession, isLoading: isCreating } = usePromise<string>(() =>
+    postAuth(endpoints.quizSession.create, {
+      quizId: id,
+      shuffleQuestions: practiceConfig.shuffleQuestions,
+      shuffleAnswers: practiceConfig.shuffleAnswers,
+    })
+  );
+
+  const handleCreateSession = async () => {
+    try {
+      const sessionId = await createSession();
+      const query = practiceConfig.withTimer ? `?time=${practiceConfig.timer}` : '';
+      router.push(`${paths.session.host(sessionId)}${query}`);
+
+    } catch (error) {
+      console.error("Error creating quiz session", error);
+    }
+  }
+
   const handleStart = async () => {
+    if (practiceMode === "multiplayer") {
+      await handleCreateSession();
+      return
+    }
+
     try {
       await fetchTotalQuestions();
     } catch (error) {
@@ -204,7 +227,7 @@ export function QuizPracticeView() {
         <Grid container justifyContent="center" spacing={3}>
           <Grid>
             <LoadingButton
-              loading={isLoading}
+              loading={isLoading || isCreating}
               variant="soft"
               color="primary"
               sx={{ width: '200px' }}
@@ -222,7 +245,7 @@ export function QuizPracticeView() {
 
 
   return (
-    <DashboardContent>
+    <>
       {
         totalQuestions === undefined ?
           <FullScreenDialog onClose={() => router.push(paths.dashboard.library)}>
@@ -231,8 +254,13 @@ export function QuizPracticeView() {
             }
           </FullScreenDialog>
           :
-          <QuizPracticeContent quizId={id} totalQuestions={totalQuestions} config={practiceConfig} />
+          <>
+            {
+              practiceMode === "singleplayer" &&
+              <QuizPracticeContent quizId={id} totalQuestions={totalQuestions} config={practiceConfig} />
+            }
+          </>
       }
-    </DashboardContent>
+    </>
   );
 }

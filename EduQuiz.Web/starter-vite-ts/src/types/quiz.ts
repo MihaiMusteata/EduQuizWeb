@@ -21,11 +21,12 @@ export type Quiz = {
 
 export type AnswerGiven = {
   questionId: string;
-  userAnswer: string;
+  userAnswer?: string;
+  selectedIds?: string[];
 };
 
-export type SubmissionResponse = {
-  finalGrade: number;
+export type QuizResult = {
+  finalScore: number;
   questions: Question[];
 }
 
@@ -38,3 +39,17 @@ export type AIConfigParams = {
   language: string;
   numQuestions: string;
 }
+
+export type QuizSession = {
+    id: string;
+    quizId?: string;
+    accessPin?: string;
+    status: QuizSessionStatus;
+    startTime?: string;
+    endTime?: string;
+    totalQuestions: number;
+    // participants: Participant[];
+    // currentQuestionId?: number;
+}
+
+export type QuizSessionStatus = "waiting" | "running" | "finished";

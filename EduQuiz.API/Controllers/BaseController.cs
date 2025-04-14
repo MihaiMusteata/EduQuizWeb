@@ -6,7 +6,7 @@ public class BaseController : ControllerBase
 {
     protected string GetUserIdFromJwt()
     {
-        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "Id");
+        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
         if (userIdClaim is null)
             throw new Exception("User Id not found in JWT token");
 

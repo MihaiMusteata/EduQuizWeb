@@ -9,7 +9,7 @@ import { CONFIG } from "src/global-config";
 import { useTranslate } from "src/locales";
 import { DashboardContent } from 'src/layouts/dashboard';
 
-import { ActionCard } from "../../../components/action-card";
+import { ActionCard } from "src/components/action-card";
 
 // ----------------------------------------------------------------------
 

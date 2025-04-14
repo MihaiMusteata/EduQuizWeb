@@ -1,8 +1,6 @@
-using EduQuiz.Application.DTOs.Flashcard;
 using EduQuiz.Application.DTOs.FlashcardDeck;
 using EduQuiz.Application.Mappers.FlashcardDeck;
-using EduQuiz.Domain.Entities.FlashcardDeck;
-using EduQuiz.Domain.ValueObjects.Visibility;
+using EduQuiz.Domain.ValueObjects;
 using EduQuiz.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

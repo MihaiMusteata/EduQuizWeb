@@ -2,7 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using EduQuiz.Domain.Entities.Answer;
 using EduQuiz.Domain.Entities.Quiz;
-using EduQuiz.Domain.ValueObjects.QuestionType;
+using EduQuiz.Domain.Entities.UserAnswer;
+using EduQuiz.Domain.ValueObjects;
 
 namespace EduQuiz.Domain.Entities.Question;
 
@@ -21,4 +22,6 @@ public class QuestionDbTable
     [InverseProperty("Questions")] public QuizDbTable Quiz { get; set; }
 
     [InverseProperty("Question")] public List<AnswerDbTable> Answers { get; set; }
+
+    [InverseProperty("Question")] public List<UserAnswerDbTable> AnswersGiven { get; set; }
 }

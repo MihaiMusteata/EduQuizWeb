@@ -13,6 +13,7 @@ import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/component
 
 import { AuthProvider } from './auth/context/jwt';
 import { AxiosProvider } from './axios/axios-provider';
+import { SignalRProvider } from './signalR/signalR-provider';
 import { I18nProvider, LocalizationProvider } from "./locales";
 
 // ----------------------------------------------------------------------
@@ -28,22 +29,24 @@ export default function App({ children }: AppProps) {
     <I18nProvider>
       <AxiosProvider>
         <AuthProvider>
-          <SettingsProvider defaultSettings={defaultSettings}>
-            <LocalizationProvider>
-              <ThemeProvider
-                noSsr
-                defaultMode={themeConfig.defaultMode}
-                modeStorageKey={themeConfig.modeStorageKey}
-              >
-                <MotionLazy>
-                  <Snackbar />
-                  <ProgressBar />
-                  <SettingsDrawer defaultSettings={defaultSettings} />
-                  {children}
-                </MotionLazy>
-              </ThemeProvider>
-            </LocalizationProvider>
-          </SettingsProvider>
+          <SignalRProvider>
+            <SettingsProvider defaultSettings={defaultSettings}>
+              <LocalizationProvider>
+                <ThemeProvider
+                  noSsr
+                  defaultMode={themeConfig.defaultMode}
+                  modeStorageKey={themeConfig.modeStorageKey}
+                >
+                  <MotionLazy>
+                    <Snackbar />
+                    <ProgressBar />
+                    <SettingsDrawer defaultSettings={defaultSettings} />
+                    {children}
+                  </MotionLazy>
+                </ThemeProvider>
+              </LocalizationProvider>
+            </SettingsProvider>
+          </SignalRProvider>
         </AuthProvider>
       </AxiosProvider>
     </I18nProvider>

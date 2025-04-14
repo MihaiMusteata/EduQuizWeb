@@ -1,6 +1,6 @@
 QUIZ_PROMPT_TEMPLATE = [
     ("system", """
-    You are an educational assistant. Generate a quiz with {num_questions} questions about {subject} - {topic}, written in {language}.
+    You are an educational assistant. Generate a quiz with exact {num_questions} questions about {subject} - {topic}, written in {language}.
     
     Format each question as a JSON object with this structure:
     {{

@@ -1,4 +1,5 @@
 import type { TFunction } from "i18next";
+import type { Answer, QuestionType } from "src/types/quiz";
 import type { UseFormSetValue, UseFormGetValues } from "react-hook-form";
 
 import { Box, Radio, Tooltip, Checkbox, TextField, IconButton } from '@mui/material';
@@ -7,7 +8,6 @@ import { Field } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 
 import type { FieldsSchemaType } from "../schema";
-import type { Answer, QuestionType } from "../../../types/quiz";
 
 type Props = {
   totalAnswers: number;

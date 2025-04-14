@@ -3,7 +3,10 @@ using EduQuiz.Domain.Entities.Flashcard;
 using EduQuiz.Domain.Entities.FlashcardDeck;
 using EduQuiz.Domain.Entities.Question;
 using EduQuiz.Domain.Entities.Quiz;
+using EduQuiz.Domain.Entities.QuizSession;
+using EduQuiz.Domain.Entities.SessionParticipant;
 using EduQuiz.Domain.Entities.User;
+using EduQuiz.Domain.Entities.UserAnswer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +28,9 @@ public class EduQuizDbContext : IdentityDbContext<UserData>
     public DbSet<AnswerDbTable> Answers { get; set; }
     public DbSet<FlashcardDeckDbTable> FlashcardDecks { get; set; }
     public DbSet<FlashcardDbTable> Flashcards { get; set; }
+    public DbSet<UserAnswerDbTable> UserAnswers { get; set; }
+    public DbSet<QuizSessionDbTable> QuizSessions { get; set; }
+    public DbSet<SessionParticipantDbTable> SessionParticipants { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

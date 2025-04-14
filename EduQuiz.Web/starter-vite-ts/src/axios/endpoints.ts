@@ -13,6 +13,15 @@ export const endpoints = {
     submit: (id: string) => `/quiz/${id}/submit`,
     generate: '/ai/quiz/generate',
   },
+  quizSession: {
+    get: (id: string) => `/quiz-session/${id}`,
+    create: '/quiz-session/create',
+    start: (id: string) => `/quiz-session/${id}/start`,
+    getQuestion: (id: string, nickname: string, index: number) => `/quiz-session/${id}/question?nickname=${nickname}&index=${index}`,
+    submitAnswer: (id: string) => `/quiz-session/${id}/submit-answer`,
+    getResult: (id: string, nickname: string) => `/quiz-session/${id}/result?nickname=${nickname}`,
+    end: (id: string) => `/quiz-session/${id}/end`,
+  },
   question: {
     getByIndex: '/question/by-index',
     getList: '/question/list',

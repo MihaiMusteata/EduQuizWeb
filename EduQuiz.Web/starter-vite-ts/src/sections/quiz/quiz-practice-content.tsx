@@ -1,5 +1,5 @@
 import type { PracticeConfig } from "src/types/activity"
-import type { Question, AnswerGiven, SubmissionResponse } from "src/types/quiz"
+import type { Question, QuizResult, AnswerGiven } from "src/types/quiz"
 
 import { useState, useEffect } from "react"
 import { useBoolean } from "minimal-shared/hooks";
@@ -8,18 +8,12 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Card,
-  List,
   Stack,
-  Radio,
   Alert,
   Button,
   Slider,
-  ListItem,
-  Checkbox,
-  TextField,
   Container,
-  Typography,
-  ListItemText
+  Typography
 } from "@mui/material"
 
 import { paths } from "src/routes/paths";
@@ -31,9 +25,10 @@ import { endpoints } from "src/axios/endpoints";
 
 import { Iconify } from "src/components/iconify";
 import { Hint } from "src/components/activity/hint";
-import { ListItemHover } from "src/components/List";
 import { Scrollbar } from "src/components/scrollbar";
 import { CountdownTimer } from "src/components/timer";
+
+import { RenderQuestion } from "./components/render-question";
 
 
 type Props = {
@@ -76,9 +71,9 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
   const handleSubmit = () => {
     const url = endpoints.quiz.submit(quizId);
     try {
-      postAuth<SubmissionResponse>(url, answersGiven).then((result) => {
+      postAuth<QuizResult>(url, answersGiven).then((result) => {
           setQuestions(result.questions);
-          setFinalGrade(result.finalGrade);
+          setFinalGrade(result.finalScore);
         }
       )
       submitted.onTrue();
@@ -125,127 +120,6 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
       console.error(error);
     }
   }
-
-  const renderQuestion = (question: Question) => {
-    switch (question.type) {
-      case 'single-choice':
-        return (
-          <List>
-            {question.answers.map((answer, idx) => (
-              <ListItemHover key={idx} onClick={() => handleAnswerSelect(question.id!, answer.id!, false)}>
-                <ListItemText sx={{ ml: 1 }} primary={`${String.fromCharCode(97 + idx)}) ${answer.text}`} />
-                <Radio
-                  checked={answersGiven.some(a => a.questionId === question.id && a.userAnswer === answer.id)}
-                  disabled={submitted.value}
-                  sx={{
-                    '&.Mui-checked': {
-                      color: submitted.value ? answersGiven.some(a => a.questionId === question.id && a.userAnswer === answer.id) && answer.isCorrect ? 'success.main' : 'error.main'
-                        : 'default',
-                    },
-                  }}
-                />
-              </ListItemHover>
-            ))}
-          </List>
-        );
-
-      case 'multiple-choice':
-        return (
-          <List>
-            {question.answers.map((answer, idx) => (
-              <ListItemHover key={idx} onClick={() => handleAnswerSelect(question.id!, answer.id!, true)}>
-                <ListItemText sx={{ ml: 1 }} primary={`${String.fromCharCode(97 + idx)}) ${answer.text}`} />
-                <Checkbox
-                  checked={answersGiven.some(a => a.questionId === question.id && a.userAnswer === answer.id)}
-                  disabled={submitted.value}
-                  sx={{
-                    '&.Mui-checked': {
-                      color: submitted.value ?
-                        answersGiven.some(a => a.questionId === question.id && a.userAnswer === answer.id) && answer.isCorrect ? 'success.main' : 'error.main'
-                        : 'default',
-                    },
-                  }}
-                />
-              </ListItemHover>
-            ))}
-          </List>
-        );
-
-      case 'true-false':
-        return (
-          <List>
-            <ListItemHover onClick={() => handleAnswerSelect(question.id!, 'true', false)}>
-              <ListItemText sx={{ ml: 1 }} primary={t('true')} />
-              <Radio
-                checked={answersGiven.some(a => a.questionId === question.id && a.userAnswer === 'true')}
-                disabled={submitted.value}
-                sx={{
-                  '&.Mui-checked': {
-                    color: submitted.value ? answersGiven.some(a => a.questionId === question.id && a.userAnswer === 'true') && question.answers[0].isCorrect ? 'success.main' : 'error.main'
-                      : 'default',
-                  },
-                }}
-              />
-            </ListItemHover>
-            <ListItemHover onClick={() => handleAnswerSelect(question.id!, 'false', false)}>
-              <ListItemText sx={{ ml: 1 }} primary={t('false')} />
-              <Radio
-                checked={answersGiven.some(a => a.questionId === question.id && a.userAnswer === 'false')}
-                disabled={submitted.value}
-                sx={{
-                  '&.Mui-checked': {
-                    color: submitted.value ? answersGiven.some(a => a.questionId === question.id && a.userAnswer === 'true') && !question.answers[0].isCorrect ? 'success.main' : 'error.main'
-                      : 'default',
-                  },
-                }}
-              />
-            </ListItemHover>
-          </List>
-        );
-
-      case 'short-answer':
-        return (
-          <List>
-            <ListItem sx={{ p: 0 }}>
-              <TextField
-                fullWidth
-                variant="standard"
-                onBlur={(e) => {
-                  const newAnswer = e.target.value;
-                  setAnswersGiven((prev) => {
-                    const existingAnswer = prev.find(a => a.questionId === question.id);
-                    if (existingAnswer) {
-                      return prev.map(a => a.questionId === question.id ? { ...a, userAnswer: newAnswer } : a);
-                    } else {
-                      return [...prev, { questionId: question.id!, userAnswer: newAnswer }];
-                    }
-                  });
-                }}
-                slotProps={{
-                  input: {
-                    startAdornment:
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontWeight: "bold",
-                          opacity: 0.7,
-                          whiteSpace: 'nowrap',
-                          flexShrink: 0,
-                          mr: '2px',
-                          mb: '2px'
-                        }}
-                      >
-                        {`${t('your-answer')} :`}
-                      </Typography>,
-                  },
-                }} />
-            </ListItem>
-          </List>
-        );
-      default:
-        return <Typography variant="body2" color="error">Invalid question type</Typography>;
-    }
-  };
 
   useEffect(() => {
     if (config.numberOfQuestions === "all") {
@@ -332,9 +206,12 @@ export function QuizPracticeContent({ quizId, totalQuestions, config }: Props) {
                       <Hint text={question.hint} t={t} />
                     }
                   </Box>
-                  {
-                    renderQuestion(question)
-                  }
+                  <RenderQuestion
+                    question={question}
+                    setAnswersGiven={setAnswersGiven}
+                    answersGiven={answersGiven}
+                    submitted={submitted.value}
+                  />
                   {
                     submitted.value &&
                     <Alert

@@ -56,7 +56,7 @@ export function tokenExpired(exp: number) {
   setTimeout(() => {
     try {
       alert('Token expired!');
-      sessionStorage.removeItem(JWT_STORAGE_KEY);
+      localStorage.removeItem(JWT_STORAGE_KEY);
       window.location.href = paths.auth.jwt.signIn;
     } catch (error) {
       console.error('Error during token expiration:', error);
@@ -68,7 +68,7 @@ export function tokenExpired(exp: number) {
 // ----------------------------------------------------------------------
 export const getJwt = (): string | undefined => {
   try {
-    return sessionStorage.getItem(JWT_STORAGE_KEY) ?? undefined;
+    return localStorage.getItem(JWT_STORAGE_KEY) ?? undefined;
   } catch (error) {
     console.error("Error getting jwt:", error);
     return undefined;

@@ -4,9 +4,11 @@ import { jwtDecode } from "jwt-decode";
 import { useSetState } from 'minimal-shared/hooks';
 import { useMemo, useEffect, useCallback } from 'react';
 
+import { useRouter } from "src/routes/hooks";
+
+import { useAxios } from "src/axios/hooks";
+
 import { AuthContext } from '../auth-context';
-import { useAxios } from "../../../axios/hooks";
-import { useRouter } from "../../../routes/hooks";
 
 import type { UserType, LoginData, AuthState, SignupData } from "../../types";
 
@@ -25,7 +27,7 @@ export function AuthProvider({ children }: Props) {
       .post(`auth/login`, request)
       .then((response) => {
         const { jwtToken } = response.data;
-        sessionStorage.setItem("jwtToken", jwtToken);
+        localStorage.setItem("jwtToken", jwtToken);
         setJwt(jwtToken);
       })
       .catch((error) => {
@@ -57,6 +59,7 @@ export function AuthProvider({ children }: Props) {
           email: decoded.email,
           firstName: decoded.firstName,
           lastName: decoded.lastName,
+          nickname: decoded.nickname,
           role: decoded.role,
         },
         loading: false
@@ -80,7 +83,7 @@ export function AuthProvider({ children }: Props) {
 
   const memoizedValue = useMemo(
     () => ({
-      user: state.user ? { ...state.user, role: state.user?.role ?? 'admin' } : undefined,
+      user: state.user ? { ...state.user, role: state.user.nickname ? 'user' : 'guest' } : undefined,
       checkUserSession,
       loading: status === 'loading',
       authenticated: status === 'authenticated',

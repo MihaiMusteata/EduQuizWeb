@@ -12,6 +12,8 @@ interface AuthContextProps {
   getAuth: <T = any>(url: string, options?: any) => Promise<T>;
   deleteAuth: <T = any> (url: string) => Promise<T>;
   patchAuth: <T = any> (url: string, data: any) => Promise<T>;
+  getPublic: <T = any> (url: string, options?: any) => Promise<T>;
+  postPublic: <T = any> (url: string, data: any) => Promise<T>;
 }
 
 export const AxiosContext = createContext<AuthContextProps | undefined>(undefined);

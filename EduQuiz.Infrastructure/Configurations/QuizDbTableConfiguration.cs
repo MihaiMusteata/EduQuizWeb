@@ -1,5 +1,5 @@
 using EduQuiz.Domain.Entities.Quiz;
-using EduQuiz.Domain.ValueObjects.Visibility;
+using EduQuiz.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

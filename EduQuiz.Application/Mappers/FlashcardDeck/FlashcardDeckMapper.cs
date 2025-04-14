@@ -1,7 +1,7 @@
 using EduQuiz.Application.DTOs.FlashcardDeck;
 using EduQuiz.Application.Mappers.Flashcard;
 using EduQuiz.Domain.Entities.FlashcardDeck;
-using EduQuiz.Domain.ValueObjects.Visibility;
+using EduQuiz.Domain.ValueObjects;
 
 namespace EduQuiz.Application.Mappers.FlashcardDeck;
 

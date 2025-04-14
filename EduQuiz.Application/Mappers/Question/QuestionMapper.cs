@@ -1,7 +1,7 @@
 using EduQuiz.Application.DTOs.Question;
 using EduQuiz.Application.Mappers.Answer;
 using EduQuiz.Domain.Entities.Question;
-using EduQuiz.Domain.ValueObjects.QuestionType;
+using EduQuiz.Domain.ValueObjects;
 
 namespace EduQuiz.Application.Mappers.Question;
 

@@ -1,4 +1,5 @@
 import type { Flashcard } from "src/types/flashcard";
+import type { Operation } from "src/types/operation";
 
 import Divider from "@mui/material/Divider";
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,12 +11,11 @@ import {
   IconButton, CircularProgress,
 } from '@mui/material';
 
+import { useDeleteFlashcard } from "src/actions/flashcard";
+
 import { Iconify } from "src/components/iconify";
 
 import { useTranslate } from "../../../locales";
-import { useDeleteFlashcard } from "../../../actions/flashcard";
-
-import type { Operation } from "../../../types/operation";
 
 type FlashcardViewProps = {
   index: number;

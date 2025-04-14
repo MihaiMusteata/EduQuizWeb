@@ -41,5 +41,11 @@ export const paths = {
       edit: (id: string) => `${ROOTS.ACTIVITY}/flashcard-deck/edit/${id}`,
       practice: (id: string) => `${ROOTS.ACTIVITY}/flashcard-deck/practice/${id}`,
     },
-  }
+  },
+
+  // QUIZ SESSION
+  session: {
+    host: (id: string) => `/host/${id}`,
+    join: `/join`,
+  },
 };

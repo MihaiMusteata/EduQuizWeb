@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/global-config';
 
-import { ToolsView } from "../../../sections/tools/view";
+import { ToolsView } from "src/sections/tools/view";
 
 // ----------------------------------------------------------------------
 

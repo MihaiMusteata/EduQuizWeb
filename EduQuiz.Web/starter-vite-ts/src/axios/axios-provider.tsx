@@ -51,14 +51,14 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         try {
           const response = await axiosLogin.post(endpoints.auth.refresh, { jwtToken: jwt });
           if (response.status === 401) {
-            sessionStorage.removeItem("jwtToken");
+            localStorage.removeItem("jwtToken");
             router.push(paths.auth.jwt.signIn);
             toast.error("Sesiunea a expirat. Redirectionare la pagina de login.");
           }
 
           const { jwtToken } = response.data;
 
-          sessionStorage.setItem("jwtToken", jwtToken);
+          localStorage.setItem("jwtToken", jwtToken);
           setJwt(jwtToken);
           originalRequest.headers.Authorization = `Bearer ${jwtToken}`;
 
@@ -66,7 +66,7 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         } catch (er) {
           router.push(paths.auth.jwt.signIn);
           console.log("RefreshError : ", er);
-          sessionStorage.removeItem("jwtToken");
+          localStorage.removeItem("jwtToken");
         }
       } else if (error.response.status === 403) {
         console.error("403 error", error.response.data);
@@ -116,6 +116,12 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
   const deleteAuth = <T = any>(url: string) =>
     requestHandler(() => axiosInstance.delete<T>(url));
 
+
+  const postPublic = <T = any>(url: string, data: any) =>
+    requestHandler(() => axiosDefault.post<T>(url, data));
+  const getPublic = <T = any>(url: string, options?: any) =>
+    requestHandler(() => axiosDefault.get<T>(url, options));
+
   return (
     <AxiosContext.Provider
       value={{
@@ -128,6 +134,8 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         getAuth,
         deleteAuth,
         patchAuth,
+        getPublic,
+        postPublic
       }}
     >
       {children}
