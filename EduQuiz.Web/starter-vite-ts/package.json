@@ -45,6 +45,7 @@
     "@mui/x-data-grid": "^7.23.5",
     "@mui/x-date-pickers": "^7.23.3",
     "@mui/x-tree-view": "^7.23.2",
+    "@react-pdf/renderer": "^4.3.0",
     "@tiptap/react": "^2.11.5",
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.7.9",

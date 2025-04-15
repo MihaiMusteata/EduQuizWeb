@@ -22,6 +22,9 @@ const FlashcardDeckEditPage = lazy(() => import('src/pages/dashboard/flashcard-d
 
 //Import-Export
 const ImportExportPage = lazy(() => import('src/pages/dashboard/import-export/index'));
+
+//PDF Document
+const PDFDocumentPage = lazy(() => import('src/pages/dashboard/import-export/pdf'));
 // ----------------------------------------------------------------------
 
 export const activityRoutes: RouteObject[] = [
@@ -55,6 +58,10 @@ export const activityRoutes: RouteObject[] = [
       {
         path: 'import-export',
         element: <ImportExportPage/>
+      },
+      {
+        path: 'pdf-document/:id',
+        element: <PDFDocumentPage/>
       }
     ]
   }

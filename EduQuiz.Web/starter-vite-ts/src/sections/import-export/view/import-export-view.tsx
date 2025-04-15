@@ -33,7 +33,7 @@ export function ImportExportView() {
   const router = useRouter();
 
   const [action, setAction] = useState<Action>("Export");
-  const [format, setFormat] = useState<Format>("JSON");
+  const [format, setFormat] = useState<Format>("PDF");
   const [entityType, setEntityType] = useState<EntityType>("Quiz");
   const [itemSelected, setItemSelected] = useState<LibraryItem | undefined>(undefined);
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -48,6 +48,9 @@ export function ImportExportView() {
       const selectedItem = res.find((item) => item.id === id);
       if (selectedItem) {
         setItemSelected(selectedItem);
+        if (selectedItem.activity === "Flashcards") {
+          setFormat("JSON");
+        }
       }
     }
     setListItems(res);
@@ -70,6 +73,16 @@ export function ImportExportView() {
   }, []);
   const handleExport = async () => {
     try {
+      if (itemSelected === undefined) {
+        alert("Selectează o activitate!");
+        return;
+      }
+
+      if (action === "Export" && format === "PDF") {
+        router.push(paths.activity.pdfDocument(itemSelected.id ?? ''));
+        return;
+      }
+
       const requestData = {
         EntityType: itemSelected?.activity === "Quizzes" ? "Quiz" : "Flashcard",
         Format: format,
@@ -95,7 +108,10 @@ export function ImportExportView() {
   };
 
   const handleImport = async () => {
-    if (!file) return alert("Selectează un fișier!");
+    if (!file) {
+      alert("Selectează un fișier!");
+      return
+    }
 
     const formData = new FormData();
     formData.append("EntityType", entityType);
@@ -105,10 +121,10 @@ export function ImportExportView() {
     try {
       if (entityType === "Quiz") {
         const newEntity = await uploadFileAuth<Quiz>(endpoints.exportImport.import, formData);
-        router.push(paths.activity.quiz.edit(newEntity.id));
+        router.push(paths.activity.quiz.edit(newEntity.id ?? ''));
       } else if (entityType === "Flashcard") {
         const newEntity = await uploadFileAuth<FlashcardDeck>(endpoints.exportImport.import, formData);
-        router.push(paths.activity.flashcardDeck.edit(newEntity.id));
+        router.push(paths.activity.flashcardDeck.edit(newEntity.id ?? ''));
       }
       toast.success("Import reușit!");
     } catch (error) {
@@ -117,120 +133,128 @@ export function ImportExportView() {
   };
 
   const renderExport = () => (
-      <>
-        {
-          itemSelected === undefined ?
-            <SelectActivityDialog
-              setItemSelected={setItemSelected}
-              data={listItems}
-            />
-            :
-            <TextField
-              label={itemSelected.activity}
-              value={itemSelected.title}
-              fullWidth
-              InputProps={{
-                readOnly: true,
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      color="default"
-                      onClick={() => {
-                        setItemSelected(undefined)
-                      }}
-                    >
-                      <Iconify icon="mdi:clear" />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-        }
-        <Button
-          variant="contained"
-          color='primary'
-          onClick={handleExport}
-        >
-          Exportă și Descarcă
-          <Iconify
-            width={30}
-            icon='ic:twotone-cloud-download'
-            sx={{
-              marginLeft: 1,
+    <>
+      {
+        itemSelected === undefined ?
+          <SelectActivityDialog
+            setItemSelected={setItemSelected}
+            data={
+              format === "PDF"
+                ? listItems.filter((item) => item.activity === "Quizzes")
+                : listItems
+            }
+          />
+          :
+          <TextField
+            label={itemSelected.activity}
+            value={itemSelected.title}
+            fullWidth
+            InputProps={{
+              readOnly: true,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    color="default"
+                    onClick={() => {
+                      setItemSelected(undefined)
+                    }}
+                  >
+                    <Iconify icon="mdi:clear" />
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
           />
-        </Button>
-      </>
-    )
+      }
+      <Button
+        variant="contained"
+        color='primary'
+        onClick={handleExport}
+      >
+        {
+          format === "PDF"
+            ? 'Vizualizează PDF'
+            : 'Exportă și Descarcă'
+        }
+        <Iconify
+          width={30}
+          icon='ic:twotone-cloud-download'
+          sx={{
+            marginLeft: 1,
+          }}
+        />
+      </Button>
+    </>
+  )
 
   const renderImport = () => (
-      <>
-        <TextField
-          select
-          label="Tip activitate"
-          value={entityType}
-          onChange={(e) => setEntityType(e.target.value as EntityType)}
-          fullWidth
-        >
-          <MenuItem value="Quiz">Quiz</MenuItem>
-          <MenuItem value="Flashcard">Flashcard</MenuItem>
-        </TextField>
+    <>
+      <TextField
+        select
+        label="Tip activitate"
+        value={entityType}
+        onChange={(e) => setEntityType(e.target.value as EntityType)}
+        fullWidth
+      >
+        <MenuItem value="Quiz">Quiz</MenuItem>
+        <MenuItem value="Flashcard">Flashcard</MenuItem>
+      </TextField>
 
-        {
-          file === undefined ?
+      {
+        file === undefined ?
 
-            <Upload
-              onDrop={handleDropSingleFile}
-            />
-            :
-            <TextField
-              value={file.name}
-              fullWidth
-              InputProps={{
-                readOnly: true,
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      color="default"
-                      onClick={() => {
-                        setFile(undefined)
-                      }}
-                    >
-                      <Iconify icon="mdi:clear" />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <>
-                      {
-                        file.type === "application/json" || file.name.endsWith(".json") ?
-                          <Iconify width={25} icon='bi:filetype-json' />
-                          :
-                          <Iconify width={25} icon='bi:filetype-xml' />
-                      }
-                    </>
-                  </InputAdornment>
-                ),
-              }}
-            />
-        }
-        <Button
-          variant="contained"
-          color='primary'
-          onClick={handleImport}
-        >
-          Importează
-          <Iconify
-            width={30}
-            icon='ic:twotone-cloud-upload'
-            sx={{
-              marginLeft: 1,
+          <Upload
+            onDrop={handleDropSingleFile}
+          />
+          :
+          <TextField
+            value={file.name}
+            fullWidth
+            InputProps={{
+              readOnly: true,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    color="default"
+                    onClick={() => {
+                      setFile(undefined)
+                    }}
+                  >
+                    <Iconify icon="mdi:clear" />
+                  </IconButton>
+                </InputAdornment>
+              ),
+              startAdornment: (
+                <InputAdornment position="start">
+                  <>
+                    {
+                      file.type === "application/json" || file.name.endsWith(".json") ?
+                        <Iconify width={25} icon='bi:filetype-json' />
+                        :
+                        <Iconify width={25} icon='bi:filetype-xml' />
+                    }
+                  </>
+                </InputAdornment>
+              ),
             }}
           />
-        </Button>
-      </>
-    )
+      }
+      <Button
+        variant="contained"
+        color='primary'
+        onClick={handleImport}
+      >
+        Importează
+        <Iconify
+          width={30}
+          icon='ic:twotone-cloud-upload'
+          sx={{
+            marginLeft: 1,
+          }}
+        />
+      </Button>
+    </>
+  )
 
   useEffect(() => {
     getData();
@@ -275,6 +299,10 @@ export function ImportExportView() {
               onChange={(e) => setFormat(e.target.value as Format)}
               fullWidth
             >
+              {
+                action === "Export" && itemSelected?.activity !== "Flashcards" &&
+                <MenuItem value="PDF">PDF</MenuItem>
+              }
               <MenuItem value="JSON">JSON</MenuItem>
               <MenuItem value="XML">XML</MenuItem>
             </TextField>

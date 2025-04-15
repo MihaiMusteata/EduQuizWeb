@@ -41,8 +41,22 @@ export function ActivityCard({ item, editHref, practiceHref, onDelete }: Props) 
       slotProps={{ arrow: { placement: 'right-top' } }}
     >
       <MenuList>
-        <MenuItem href={paths.activity.importExport(item.id)} component={RouterLink}
-                  onClick={() => menuActions.onClose()}>
+        {
+          item.activity === 'Quizzes' &&
+          <MenuItem
+            href={paths.activity.pdfDocument(item.id)}
+            component={RouterLink}
+            onClick={() => menuActions.onClose()}
+          >
+            <Iconify icon="ant-design:file-pdf-twotone" />
+            Descarca PDF
+          </MenuItem>
+        }
+        <MenuItem
+          href={paths.activity.importExport(item.id)}
+          component={RouterLink}
+          onClick={() => menuActions.onClose()}
+        >
           <Iconify icon="ic:twotone-cloud-download" />
           Export
         </MenuItem>

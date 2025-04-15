@@ -1,6 +1,5 @@
 import type { LibraryItem, LibraryFilters } from 'src/types/library';
 
-import { useCallback } from 'react';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
 
 import {
@@ -17,11 +16,9 @@ import {
   ListItemButton
 } from '@mui/material';
 
-import { paths } from "src/routes/paths";
 import { useRouter } from 'src/routes/hooks';
 
 import { useTranslate } from "src/locales";
-import { useAxios } from "src/axios/hooks";
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
@@ -34,7 +31,6 @@ type Props = {
 export function SelectActivityDialog({ setItemSelected, data }: Props) {
   const { t } = useTranslate();
   const router = useRouter();
-  const { getAuth, deleteAuth } = useAxios();
   const openDialog = useBoolean();
 
   const filters = useSetState<LibraryFilters>({ search: '', activity: 'All' });
@@ -45,10 +41,6 @@ export function SelectActivityDialog({ setItemSelected, data }: Props) {
     filters: currentFilters
   });
 
-  const handleAddNewActivity = () => {
-    router.push(paths.activity.create);
-  };
-
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateFilters({ search: event.target.value });
   };
@@ -56,13 +48,6 @@ export function SelectActivityDialog({ setItemSelected, data }: Props) {
   const handleResetSearch = () => {
     updateFilters({ search: '', activity: 'All' });
   };
-
-  const handleFilterActivity = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
-      updateFilters({ activity: newValue });
-    },
-    [updateFilters]
-  );
 
   return (
     <>

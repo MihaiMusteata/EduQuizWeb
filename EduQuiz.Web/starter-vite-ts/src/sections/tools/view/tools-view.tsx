@@ -38,6 +38,14 @@ const tools = (t: TFunction, router: any) => [
       router.push(paths.activity.importExport());
     }
   },
+  {
+    title: 'PDF',
+    image: `${CONFIG.assetsDir}/assets/icons/activity/ic-pdf.png`,
+    description: 'Descarca quiz in format PDF',
+    onClick: () => {
+      router.push(paths.activity.importExport());
+    }
+  },
 ];
 
 export function ToolsView() {
