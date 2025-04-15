@@ -19,6 +19,9 @@ const QuizPracticePage = lazy(() => import('src/pages/dashboard/quiz/practice'))
 //Flashcard Deck
 const FlashcardDeckCreatePage = lazy(() => import('src/pages/dashboard/flashcard-deck/new'));
 const FlashcardDeckEditPage = lazy(() => import('src/pages/dashboard/flashcard-deck/edit'));
+
+//Import-Export
+const ImportExportPage = lazy(() => import('src/pages/dashboard/import-export/index'));
 // ----------------------------------------------------------------------
 
 export const activityRoutes: RouteObject[] = [
@@ -49,6 +52,10 @@ export const activityRoutes: RouteObject[] = [
           { path: 'edit/:id', element: <FlashcardDeckEditPage /> }
         ]
       },
+      {
+        path: 'import-export',
+        element: <ImportExportPage/>
+      }
     ]
   }
 ];

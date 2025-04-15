@@ -8,7 +8,7 @@ namespace EduQuiz.API.Controllers;
 [Route("api/flashcard-deck")]
 [ApiController]
 [Authorize]
-public class FlashcardDeckController: BaseController
+public class FlashcardDeckController : BaseController
 {
     private readonly IFlashcardDeckService _flashcardDeckService;
 
@@ -23,13 +23,14 @@ public class FlashcardDeckController: BaseController
         var userId = GetUserIdFromJwt();
 
         var result = await _flashcardDeckService.CreateFlashcardDeckAsync(flashcardDeckDto, userId);
-        if (result.Succeeded)
+        if (result is not null)
         {
-            return Ok("Flashcard Deck created successfully");
+            return Ok(result);
         }
-        return BadRequest($"Failed to create Flashcard Deck: {result.Errors}");
+
+        return BadRequest($"Failed to create Flashcard Deck");
     }
-    
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetFlashcardDeckByIdAsync(Guid id)
     {
@@ -38,9 +39,10 @@ public class FlashcardDeckController: BaseController
         {
             return NotFound("Flashcard Deck not found");
         }
+
         return Ok(flashcardDeck);
     }
-    
+
     [HttpPatch("update")]
     public async Task<IActionResult> UpdateFlashcardDeckAsync([FromBody] FlashcardDeckDto flashcardDeckDto)
     {
@@ -49,9 +51,10 @@ public class FlashcardDeckController: BaseController
         {
             return Ok("Flashcard Deck updated successfully");
         }
+
         return BadRequest($"Failed to update Flashcard Deck: {result.Errors}");
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteFlashcardDeckAsync(Guid id)
     {
@@ -60,7 +63,7 @@ public class FlashcardDeckController: BaseController
         {
             return Ok("Flashcard Deck deleted successfully");
         }
+
         return BadRequest($"Failed to delete Flashcard Deck: {result.Errors}");
     }
-    
 }

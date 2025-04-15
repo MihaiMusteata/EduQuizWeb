@@ -1,9 +1,14 @@
+using Newtonsoft.Json;
+using System.Xml.Serialization;
+using EduQuiz.Application.DTOs.ExportableDto;
 using EduQuiz.Application.DTOs.Question;
 
 namespace EduQuiz.Application.DTOs.Quiz;
 
-public class QuizDto
+public class QuizDto : IExportableDto
 {
+    [XmlIgnore]
+    [JsonIgnore]
     public Guid? Id { get; set; }
     public string? Title { get; set; }
     public DateTime? CreatedAt { get; set; }

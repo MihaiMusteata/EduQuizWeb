@@ -3,6 +3,7 @@ using EduQuiz.API.BackgroundServices;
 using EduQuiz.API.Hubs;
 using EduQuiz.API.Middleware;
 using EduQuiz.Application.Services.Authentication;
+using EduQuiz.Application.Services.ExportImport;
 using EduQuiz.Application.Services.FlashcardDeckService;
 using EduQuiz.Application.Services.FlashcardService;
 using EduQuiz.Application.Services.Library;
@@ -43,6 +44,7 @@ builder.Services.AddScoped<IFlashcardDeckService, FlashcardDeckService>();
 builder.Services.AddScoped<IFlashcardService, FlashcardService>();
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<IQuizSessionService, QuizSessionService>();
+builder.Services.AddScoped<IExportImportService, ExportImportService>();
 
 builder.Services.AddHostedService<SessionExpirationBackgroundService>();
 

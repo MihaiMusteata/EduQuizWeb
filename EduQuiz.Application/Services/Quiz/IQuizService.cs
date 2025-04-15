@@ -6,7 +6,7 @@ namespace EduQuiz.Application.Services.Quiz;
 
 public interface IQuizService
 {
-    Task<IdentityResult> CreateQuizAsync(QuizDto quizDto, string userId);
+    Task<QuizDto?> CreateQuizAsync(QuizDto quizDto, string userId);
     Task<QuizDto?> GetQuizByIdAsync(Guid id);
     Task<int> GetTotalQuestions(Guid id);
     Task<IdentityResult> UpdateQuizAsync(QuizDto quizDto);

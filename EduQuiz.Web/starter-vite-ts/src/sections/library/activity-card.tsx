@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Box, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 
+import { paths } from "src/routes/paths";
 import { RouterLink } from "src/routes/components";
 
 import { useTranslate } from 'src/locales';
@@ -40,12 +41,15 @@ export function ActivityCard({ item, editHref, practiceHref, onDelete }: Props) 
       slotProps={{ arrow: { placement: 'right-top' } }}
     >
       <MenuList>
-        <li>
-          <MenuItem href={editHref} component={RouterLink} onClick={() => menuActions.onClose()}>
-            <Iconify icon="solar:pen-bold" />
-            {t('edit')}
-          </MenuItem>
-        </li>
+        <MenuItem href={paths.activity.importExport(item.id)} component={RouterLink}
+                  onClick={() => menuActions.onClose()}>
+          <Iconify icon="ic:twotone-cloud-download" />
+          Export
+        </MenuItem>
+        <MenuItem href={editHref} component={RouterLink} onClick={() => menuActions.onClose()}>
+          <Iconify icon="solar:pen-bold" />
+          {t('edit')}
+        </MenuItem>
 
         <MenuItem
           onClick={handleDelete}

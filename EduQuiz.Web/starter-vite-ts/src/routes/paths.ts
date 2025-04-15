@@ -31,6 +31,7 @@ export const paths = {
   activity: {
     create: `${ROOTS.ACTIVITY}/create`,
     generate: `${ROOTS.ACTIVITY}/generate`,
+    importExport: (id?: string) => `${ROOTS.ACTIVITY}/import-export${id ? `?id=${id}` : ''}`,
     quiz: {
       new: `${ROOTS.ACTIVITY}/quiz/new`,
       edit: (id: string) => `${ROOTS.ACTIVITY}/quiz/edit/${id}`,

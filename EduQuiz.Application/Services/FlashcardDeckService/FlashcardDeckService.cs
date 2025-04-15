@@ -16,18 +16,18 @@ public class FlashcardDeckService : IFlashcardDeckService
         _context = context;
     }
 
-    public async Task<IdentityResult> CreateFlashcardDeckAsync(FlashcardDeckDto flashcardDeckDto, string userId)
+    public async Task<FlashcardDeckDto?> CreateFlashcardDeckAsync(FlashcardDeckDto flashcardDeckDto, string userId)
     {
         var newFlashcardDeck = flashcardDeckDto.ToEntity(userId);
         try
         {
             await _context.FlashcardDecks.AddAsync(newFlashcardDeck);
             await _context.SaveChangesAsync();
-            return IdentityResult.Success;
+            return newFlashcardDeck.ToDto();
         }
         catch (Exception e)
         {
-            return IdentityResult.Failed(new IdentityError { Description = e.Message });
+            return null;
         }
     }
 

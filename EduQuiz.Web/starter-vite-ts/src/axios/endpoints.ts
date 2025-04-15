@@ -43,5 +43,9 @@ export const endpoints = {
   },
   library: {
     get: '/library/my-library',
+  },
+  exportImport: {
+    export: '/export-import/export',
+    import: '/export-import/import',
   }
 }

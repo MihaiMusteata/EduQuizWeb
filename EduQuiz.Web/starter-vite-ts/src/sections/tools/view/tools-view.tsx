@@ -29,7 +29,15 @@ const tools = (t: TFunction, router: any) => [
     onClick: () => {
       router.push(paths.activity.generate);
     }
-  }
+  },
+  {
+    title: 'Import/Export',
+    image: `${CONFIG.assetsDir}/assets/icons/activity/ic-import-export.png`,
+    description: 'Import/Export activitate',
+    onClick: () => {
+      router.push(paths.activity.importExport());
+    }
+  },
 ];
 
 export function ToolsView() {

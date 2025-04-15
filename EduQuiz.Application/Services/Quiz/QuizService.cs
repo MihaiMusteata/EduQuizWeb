@@ -17,18 +17,18 @@ public class QuizService : IQuizService
         _context = context;
     }
 
-    public async Task<IdentityResult> CreateQuizAsync(QuizDto quizDto, string userId)
+    public async Task<QuizDto?> CreateQuizAsync(QuizDto quizDto, string userId)
     {
         var newQuiz = quizDto.ToEntity(userId);
         try
         {
             await _context.Quizzes.AddAsync(newQuiz);
             await _context.SaveChangesAsync();
-            return IdentityResult.Success;
+            return newQuiz.ToDto();
         }
         catch (Exception e)
         {
-            return IdentityResult.Failed(new IdentityError { Description = e.Message });
+            return null;
         }
     }
 
@@ -83,7 +83,8 @@ public class QuizService : IQuizService
             }
             catch (ArgumentException ex)
             {
-                return IdentityResult.Failed(new IdentityError { Description = $"Invalid Visibility value: {ex.Message}" });
+                return IdentityResult.Failed(new IdentityError
+                    { Description = $"Invalid Visibility value: {ex.Message}" });
             }
         }
 
@@ -99,14 +100,16 @@ public class QuizService : IQuizService
         }
         catch (DbUpdateConcurrencyException ex)
         {
-            return IdentityResult.Failed(new IdentityError { Description = "Concurrency error: Quiz was modified by another user." });
+            return IdentityResult.Failed(new IdentityError
+                { Description = "Concurrency error: Quiz was modified by another user." });
         }
         catch (DbUpdateException ex)
         {
-            return IdentityResult.Failed(new IdentityError { Description = $"Database error: {ex.InnerException?.Message ?? ex.Message}" });
+            return IdentityResult.Failed(new IdentityError
+                { Description = $"Database error: {ex.InnerException?.Message ?? ex.Message}" });
         }
     }
-    
+
     public async Task<IdentityResult> DeleteQuizAsync(Guid id)
     {
         var quiz = await _context.Quizzes.FirstOrDefaultAsync(x => x.Id == id);

@@ -115,7 +115,25 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
     requestHandler(() => axiosInstance.patch<T>(url, data));
   const deleteAuth = <T = any>(url: string) =>
     requestHandler(() => axiosInstance.delete<T>(url));
-
+  const postAuthBlob = async (url: string, data: any): Promise<Blob> => {
+    try {
+      const response = await axiosInstance.post(url, data, {
+        responseType: 'blob',
+      });
+      return response.data;
+    } catch (error) {
+      toast.error("Eroare la export.");
+      throw error;
+    }
+  };
+  const uploadFileAuth = <T = any>(url: string, formData: FormData) =>
+    requestHandler(() =>
+      axiosInstance.post<T>(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
+    );
 
   const postPublic = <T = any>(url: string, data: any) =>
     requestHandler(() => axiosDefault.post<T>(url, data));
@@ -135,7 +153,9 @@ export const AxiosProvider = ({ children }: { children: ReactNode }) => {
         deleteAuth,
         patchAuth,
         getPublic,
-        postPublic
+        postPublic,
+        postAuthBlob,
+        uploadFileAuth,
       }}
     >
       {children}

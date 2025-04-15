@@ -24,12 +24,12 @@ public class QuizController : BaseController
         var userId = GetUserIdFromJwt();
 
         var result = await _quizService.CreateQuizAsync(quizDto, userId);
-        if (result.Succeeded)
+        if (result is not null)
         {
-            return Ok("Quiz Created Successfully");
+            return Ok(result);
         }
 
-        return BadRequest($"Quiz Creation Failed: {result.Errors}");
+        return BadRequest($"Failed to create Quiz");
     }
 
     [HttpPost("{id}/submit")]
@@ -64,7 +64,7 @@ public class QuizController : BaseController
 
         return Ok(total);
     }
-    
+
     [HttpPatch("update")]
     public async Task<IActionResult> UpdateQuiz(QuizDto quizDto)
     {
@@ -76,7 +76,7 @@ public class QuizController : BaseController
 
         return BadRequest($"Quiz Update Failed: {result.Errors}");
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteQuiz(Guid id)
     {
